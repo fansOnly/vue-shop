@@ -2,7 +2,7 @@
 	<div>
 		<div class="topArea">
 			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
-			<a url="" class="search">
+			<a href="" class="search">
 				<span class="iconfont icon-search"></span>
 				搜索商品
 			</a>

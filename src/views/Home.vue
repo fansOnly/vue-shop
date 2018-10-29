@@ -1,29 +1,32 @@
 <template>
 	<div>
+		<Header></Header>
 		<div class="tabs_special">
-			<a url="" class="tabs_item">
+			<a href="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_01.png" />
 				<span class="tabs_title">领劵中心</span>
 			</a>
-			<a url="" class="tabs_item">
+			<a href="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_02.png" />
 				<span class="tabs_title">热卖产品</span>
 			</a>
-			<a url="" class="tabs_item">
+			<a href="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_03.png" />
 				<span class="tabs_title">积分兑换</span>
 			</a>
-			<a url="" class="tabs_item">
+			<a href="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_04.png" />
 				<span class="tabs_title">天天特价</span>
 			</a>
 		</div>
 
 		<div class="discount-area flex-box" style="margin-bottom: 10px;">
-			<a v-for="(item, index) in adverList" :key="index" :url="item.url" class="discount-area-item">
+			<a v-for="(item, index) in adverList" :key="index" :href="item.url" class="discount-area-item">
 				<img :src="item.image">
 			</a>
 		</div>
+
+		<router-link to="/category">分类跳转</router-link>
 
 		<div class="sectionC">
 			<div v-for="(item, index) in cateProList" :key="index">
@@ -32,7 +35,7 @@
 					<img class="pro-cate-bg" :src="imgs[index].tbg" >
 				</div>
 				<div class="picList">
-					<div v-for="(item2, index2) in item.data" :key="index2" class="picList-li"><a url="">
+					<div v-for="(item2, index2) in item.data" :key="index2" class="picList-li"><a href="">
 						<img :src="item.thumbnail" >
 						<div class="picList-desc">
 							<div class="picList-t">{{item.title}}</div>
@@ -42,10 +45,13 @@
 				</div>
 			</div>
 		</div>
+		<Footer></Footer>
 	</div>
 </template>
 
 <script>
+import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue";
 	const imgs = [
 		{ class: 'pro-cate-t1', tt: '../assets/images/tt1.png', tbg: '../assets/images/tbg1.png' },
 		{ class: 'pro-cate-t2', tt: '../assets/images/tt2.png', tbg: '../assets/images/tbg2.png' },
@@ -59,6 +65,10 @@
 	];
 	export default {
 		name: 'Home',
+		components: {
+		Header,
+		Footer
+	},
 		data() {
 			return {
 				adverList: [],
