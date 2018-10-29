@@ -1,0 +1,213 @@
+
+
+.section {
+    margin-bottom: 10px;
+    padding: 10px;
+    background: #fff;
+}
+.section-title {
+    padding-bottom: 10px;
+    text-align: center;
+}
+.section-h3 {
+    color: #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+.section-st {
+    font-size: 14px;
+    color: #767676;
+}
+
+.adver {
+    margin-bottom: 10px;
+}
+
+/*A*/
+.aisle {
+    width: 25%;
+    text-align: center;
+}
+.aisle-image {
+    width: 40px;
+    margin: 5px auto;
+}
+
+/*B*/
+.itemB-ul {
+    width: 100%;
+    white-space: nowrap;
+}
+.itemB-li {
+    display: inline-block;
+    width: 90px;
+    height: 120px;
+    padding: 5px;
+    vertical-align: top;
+}
+.img80 {
+    width: 80px;
+    height: 80px !important;
+}
+.itemB-t {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.itemB-p {
+    color: #E56768;
+    font-size: 12px;
+}
+
+/*c*/
+.sectionC {
+    padding: 5px 0 10px;
+    background: #f7f7f7;
+}
+.sectionC-title {
+    padding: 10px 0;
+    background: #fff;
+    text-align: center;
+}
+
+.tabs_special {
+    display: flex;
+    padding: 10px;
+    justify-content: center;
+    background: #fff;
+    margin-bottom: 10px;
+}
+
+.tabs_item {
+    width: 25%;
+    text-align: center;
+}
+
+.tabs_title {
+    display: block;
+    line-height: 32px;
+}
+
+.tabs_item .img {
+    width: 55px;
+    height: 55px;
+}
+
+.pro-cate-title {
+    position: relative;
+    margin-top: 2%;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 0 0 5px rgba(0,0,0,.05);
+}
+.pro-cate-t {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 40rpx;
+    font-weight: 600;
+    /*background: #fff;*/ 
+}
+.pro-cate-t1 { color: #88c546; }
+.pro-cate-t2 { color: #1f8cd4; }
+.pro-cate-t3 { color: #208b44; }
+.pro-cate-t4 { color: #5458ae; }
+.pro-cate-t5 { color: #fb6f19; }
+.pro-cate-t6 { color: #a56345; }
+.pro-cate-t7 { color: #cda808; }
+.pro-cate-t8 { color: #238e8e; }
+.pro-cate-t9 { color: #79238e; }
+.pro-cate-tt { width: 80rpx; margin-right: 8px; }
+.pro-cate-bg { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: -1; }
+
+.index-mask {
+    position: fixed;
+    /* width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; */
+    z-index: 99;
+}
+
+.mask {
+    position: fixed;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 98;
+}
+
+.adver-content {
+    position: fixed;
+    width: 200px;
+    /*height: 300px;*/
+    background: #fff;
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    z-index: 99;
+}
+
+.detail-content {
+    position: relative;
+}
+
+.detail-content .content {
+}
+
+.close-icon {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: 1px solid #eee;
+    border-radius: 50%;
+}
+
+.left-border,
+.right-border {
+    width: 1px;
+    height: 15px;
+    position: absolute;
+    top: 1;
+    left: 14rpx;
+    background: #eee;
+}
+
+.left-border {
+    transform: rotate(45deg);
+}
+
+.right-border {
+    transform: rotate(-45deg);
+}
+
+
+.set-text-center {
+    text-align: center;
+    display: block;
+}
+
+
+
+/* 打折区域 */
+.discount-area {
+    position: relative;
+    flex-wrap: wrap;
+    background: #fff;
+}
+
+.discount-area-item {
+    width: 50%;
+}
