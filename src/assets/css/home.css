@@ -1,3 +1,45 @@
+.topArea {
+    position: fixed;
+    left: 0;
+    top: 40px;
+    right: 0;
+    height: 40px;
+    padding: 0 10px;
+    background: #ff495f;
+    display: -webkit-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    z-index: 88;
+    overflow: hidden;
+}
+
+/*.location { margin: 0 10px; }*/
+/*.icon-location { margin-right: 3px; font-size: 18px; }*/
+.top-search {
+    width: 100%;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    color: #fff;
+    line-height: 25px;
+    text-align: center;
+}
+
+.icon-search {
+    font-size: 14px;
+    margin-right: 3px;
+}
+
+.icon-category {
+    margin-left: 5px;
+}
+
+.icon-category:before {
+    color: #fff;
+    font-size: 23px;
+}
 
 
 .section {

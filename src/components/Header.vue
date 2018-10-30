@@ -1,46 +1,92 @@
 <template>
 	<div>
-		<div class="topArea">
-			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
-			<a href="" class="search">
-				<span class="iconfont icon-search"></span>
-				搜索商品
-			</a>
-			<div class="category" bindtap="goCategory">
-				<span class="iconfont icon-category"></span>
+		<div class="header">
+			<div class="headerL">
+				<span v-show="!isIndex" class="iconfont icon-back" @click="goBack"></span>
+			</div>
+			<h3 class="header-t">我是标题啊</h3>
+			<div class="headerR">
+				<span class="iconfont icon-cart2" @click="goCart"></span>
+				<span class="iconfont icon-user" @click="goUser"></span>
 			</div>
 		</div>
-		<Banner :bannerList="bannerList" />
 	</div>
 </template>
 
 <script>
-	import Banner from './Banner.vue';
 	export default {
 		name: 'Header',
-		components: {
-			Banner
-		},
 		data() {
 			return {
-				bannerList: []
+				isIndex: true
 			}
 		},
 		created() {},
 		mounted() {
-			this.GetBannerList();
+		},
+		watch: {
+			$route(now, old){
+				if(now.path === '/'){
+					this.isIndex = true;
+				}else{
+					this.isIndex = false;
+				}
+			}
 		},
 		methods: {
-			GetBannerList: function () {
-				this.$api.get('index/getBannerList', {})
-					.then(res => {
-						console.log("Setting", res);
-						this.bannerList = res.bannerList;
-					})
+			goBack: function(){
+				console.log("goBack");
+				if(this.$router.options.routes.length > 0){
+					this.$router.go(-1);
+				}else{
+					this.$router.push('/');
+				}
+			},
+			goUser: function(){
+				console.log("goUser");
+			},
+			goCart: function(){
+				console.log("goCart");
 			}
 		}
 	}
 </script>
-<style>
-	@import '../assets/css/base.css';
+<style scoped>
+	.header{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 40px;
+		padding: 0 10px;
+		background: #ff495f;
+		color: #fff;
+		line-height: 40px;
+		display: -webkit-box;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+		z-index: 9999;
+	}
+	.header-t {
+		width: 60%;
+		color: #fff;
+		font-size: 16px;
+	}
+	.headerL, .headerR {
+		width: 20%;
+		display: -webkit-box;
+		display: flex;
+		align-items: center;
+	}
+	.icon-back{
+		width: 50%;
+		font-size: 26px;
+		text-align: left;
+	}
+	.icon-cart2, .icon-user {
+		width: 50%;
+		font-size: 26px;
+		text-align: right;
+	}
 </style>

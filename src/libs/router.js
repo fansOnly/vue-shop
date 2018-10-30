@@ -2,20 +2,15 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-
-
-import Home from "../views/Home.vue";
-import Category from "../views/Category.vue";
-
-
 const routes = [
-    { path: '/', name: 'name', component: Home },
-    { path: '/category', name: 'category', omponent: Category },
+	{ path: '/', name: 'home', component: resolve=> require(['@/views/Home.vue'], resolve) },
+	{ path: '/search', name: 'search', component: resolve=> require(['@/views/Search.vue'], resolve) },
+	{ path: '/category', name: 'category', component: resolve=> require(['@/views/Category.vue'], resolve) },
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    routes
+	mode: 'history',
+	routes
 })
 
 

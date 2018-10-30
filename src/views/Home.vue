@@ -1,6 +1,11 @@
 <template>
-	<div>
-		<Header></Header>
+	<div style="background:#f7f7f7;">
+		<div class="topArea">
+			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
+			<router-link to="/search" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>
+			<router-link to="/search" class="iconfont icon-category"></router-link>
+		</div>
+		<Banner :bannerList="bannerList" />
 		<div class="tabs_special">
 			<a href="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_01.png" />
@@ -26,22 +31,21 @@
 			</a>
 		</div>
 
-		<router-link to="/category">分类跳转</router-link>
-
 		<div class="sectionC">
 			<div v-for="(item, index) in cateProList" :key="index">
 				<div class="pro-cate-title">
-					<div :class="[pro-cate-t,imgs[index].class]"><img class="pro-cate-tt pro-cate-tt1" :src="imgs[index].tt" >{{ item.title }}</div>
-					<img class="pro-cate-bg" :src="imgs[index].tbg" >
+					<div :class="[pro-cate-t,imgs[index].class]"><img class="pro-cate-tt pro-cate-tt1" :src="imgs[index].tt">{{
+						item.title }}</div>
+					<img class="pro-cate-bg" :src="imgs[index].tbg">
 				</div>
 				<div class="picList">
 					<div v-for="(item2, index2) in item.data" :key="index2" class="picList-li"><a href="">
-						<img :src="item.thumbnail" >
-						<div class="picList-desc">
-							<div class="picList-t">{{item.title}}</div>
-							<div class="picList-p">￥<span class="picList-p1">{{item.price}}</span></div>
-						</div>
-					</a></div>
+							<img :src="item.thumbnail">
+							<div class="picList-desc">
+								<div class="picList-t">{{item.title}}</div>
+								<div class="picList-p">￥<span class="picList-p1">{{item.price}}</span></div>
+							</div>
+						</a></div>
 				</div>
 			</div>
 		</div>
@@ -50,27 +54,64 @@
 </template>
 
 <script>
-import Header from "../components/Header.vue"
-import Footer from "../components/Footer.vue";
-	const imgs = [
-		{ class: 'pro-cate-t1', tt: '../assets/images/tt1.png', tbg: '../assets/images/tbg1.png' },
-		{ class: 'pro-cate-t2', tt: '../assets/images/tt2.png', tbg: '../assets/images/tbg2.png' },
-		{ class: 'pro-cate-t3', tt: '../assets/images/tt3.png', tbg: '../assets/images/tbg3.png' },
-		{ class: 'pro-cate-t4', tt: '../assets/images/tt4.png', tbg: '../assets/images/tbg4.png' },
-		{ class: 'pro-cate-t5', tt: '../assets/images/tt5.png', tbg: '../assets/images/tbg5.png' },
-		{ class: 'pro-cate-t6', tt: '../assets/images/tt6.png', tbg: '../assets/images/tbg6.png' },
-		{ class: 'pro-cate-t7', tt: '../assets/images/tt7.png', tbg: '../assets/images/tbg7.png' },
-		{ class: 'pro-cate-t8', tt: '../assets/images/tt8.png', tbg: '../assets/images/tbg8.png' },
-		{ class: 'pro-cate-t9', tt: '../assets/images/tt9.png', tbg: '../assets/images/tbg9.png' }
+	
+	import Banner from "../components/Banner.vue"
+	import Footer from "../components/Footer.vue";
+	const imgs = [{
+			class: 'pro-cate-t1',
+			tt: '../assets/images/tt1.png',
+			tbg: '../assets/images/tbg1.png'
+		},
+		{
+			class: 'pro-cate-t2',
+			tt: '../assets/images/tt2.png',
+			tbg: '../assets/images/tbg2.png'
+		},
+		{
+			class: 'pro-cate-t3',
+			tt: '../assets/images/tt3.png',
+			tbg: '../assets/images/tbg3.png'
+		},
+		{
+			class: 'pro-cate-t4',
+			tt: '../assets/images/tt4.png',
+			tbg: '../assets/images/tbg4.png'
+		},
+		{
+			class: 'pro-cate-t5',
+			tt: '../assets/images/tt5.png',
+			tbg: '../assets/images/tbg5.png'
+		},
+		{
+			class: 'pro-cate-t6',
+			tt: '../assets/images/tt6.png',
+			tbg: '../assets/images/tbg6.png'
+		},
+		{
+			class: 'pro-cate-t7',
+			tt: '../assets/images/tt7.png',
+			tbg: '../assets/images/tbg7.png'
+		},
+		{
+			class: 'pro-cate-t8',
+			tt: '../assets/images/tt8.png',
+			tbg: '../assets/images/tbg8.png'
+		},
+		{
+			class: 'pro-cate-t9',
+			tt: '../assets/images/tt9.png',
+			tbg: '../assets/images/tbg9.png'
+		}
 	];
 	export default {
 		name: 'Home',
 		components: {
-		Header,
-		Footer
-	},
+			Banner,
+			Footer
+		},
 		data() {
 			return {
+				bannerList: [],
 				adverList: [],
 				popupList: [],
 				qrcodeList: [],
@@ -87,16 +128,17 @@ import Footer from "../components/Footer.vue";
 				this.$api.get('index/GetSlideList', {})
 					.then(res => {
 						console.log("GetSlideList", res);
-						this._data.adverList = res.slideList[2];
-						this._data.popupList = res.slideList[3];
-						this._data.qrcodeList = res.slideList[4];
+						this.bannerList = res.slideList[1];
+						this.adverList = res.slideList[2];
+						this.popupList = res.slideList[3];
+						this.qrcodeList = res.slideList[4];
 					})
 			},
 			getCateProList() {
 				this.$api.get('index/getCateProList', {})
 					.then(res => {
 						console.log("getCateProList", res);
-						this._data.cateProList = this.functionFactory(res.cateProList);
+						this.cateProList = this.functionFactory(res.cateProList);
 					})
 			},
 			functionFactory(obj) {
@@ -113,5 +155,5 @@ import Footer from "../components/Footer.vue";
 	}
 </script>
 <style>
-	@import '../assets/css/home.css';
+	@import '~@/assets/css/home.css';
 </style>

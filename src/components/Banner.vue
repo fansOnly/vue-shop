@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="swiper-container">
+		<div class="swiper-container banner">
 			<div class="swiper-wrapper">
 				<div v-for="(item, index) in bannerList" :key="index" class="swiper-slide">
 					<a href=""><img :src="item.image" alt=""></a>
@@ -42,5 +42,32 @@
 	.swiper-button-next,
 	.swiper-button-prev {
 		outline: none;
+	}
+
+	.banner {
+		position: relative;
+		margin-top: 35px;
+	}
+
+	.swiper-dots {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 15px;
+		justify-content: center;
+	}
+
+	.swiper-dot {
+		width: 5%;
+		height: 5px;
+		margin: 0 2px;
+		border-radius: 3px;
+		background: #fff;
+		opacity: 1;
+	}
+
+	.swiper-dot.on {
+		background: #fda522;
 	}
 </style>
