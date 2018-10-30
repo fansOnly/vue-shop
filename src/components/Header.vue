@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="header">
+		<div class="header" id="header">
 			<div class="headerL">
 				<span v-show="!isIndex" class="iconfont icon-back" @click="goBack"></span>
 			</div>

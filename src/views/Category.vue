@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<el-container>
+		<el-container id="category-container">
 			<el-aside class="cateL" width="30%">
-				<div v-for="(item, index) in categories" :key="index" :class="['cateMenu', cateIndex == item.id ? 'on': '']" :index="index" @click="changeCate">{{item.name}}</div>
+				<div v-for="(item, index) in categories" :key="index" :class="['cateMenu', cateIndex == item.id ? 'on': '']" :data-index="index" @click="changeCate">{{item.name}}</div>
 			</el-aside>
 			<el-main class="cateR">
 				<div v-for="(second, index) in category" :key="index">
@@ -14,7 +14,6 @@
 									<img v-else src="~@/assets/imgicon.png" class="">
 									<div class="cate-li_t">{{third.name}}</div>
 								</router-link>
-	
 						</div>
 						<div v-else class="cate-ul flex-box">
 						<router-link class="cate-li flex-col" to="">
@@ -32,6 +31,7 @@
 
 
 <script>
+
 	export default {
 		name: 'Category',
 		data() {
@@ -42,7 +42,12 @@
 			}
 		},
 		mounted() {
+			const windowHeight = window.screen.height;
+			const headerHeight = document.getElementById("header").offsetHeight;
+			document.getElementById("app").style = "padding-bottom:0";
+			document.getElementById("category-container").style = "height:"+ (windowHeight - headerHeight)+"px";
 			this.getCategory();
+			
 		},
 		methods: {
 			getCategory: function () {
@@ -51,9 +56,8 @@
 						console.log("getCategory", res);
 						if (res.state == 1) {
 							this.categories = res.categories;
-							const idx = res.categories[0].id;
-							this.cateIndex = idx;
-							return this.getCategoryById(idx);
+							this.cateIndex = res.categories[0].id;
+							return this.getCategoryById(this.cateIndex);
 						}
 					})
 			},
@@ -68,7 +72,9 @@
 			},
 			changeCate: function(e){
 				console.log(e);
-				// const index = e.currentTarget.dataset.id;
+				const index = e.target.dataset.index;
+				this.cateIndex = this.categories[index].id;
+				this.getCategoryById(this.cateIndex);
 			}
 		},
 	}
@@ -76,11 +82,12 @@
 <style scoped>
 	.cateL {
 		background: #f5f5f5;
+		overflow-y: scroll;
 	}
 
 	.cateMenu {
 		padding: 10px 5px;
-		font-size: 14px;
+		font-size: 12px;
 		text-align: center;
 		line-height: 1.5;
 	}
@@ -95,6 +102,7 @@
 	.cateR {
 		padding: 0 3%;
 		background: #fff;
+		overflow-y: scroll;
 	}
 
 	.cateItem {

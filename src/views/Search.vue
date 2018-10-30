@@ -14,14 +14,18 @@
 		<div class="hotbox">
 			<div class="hots">热词搜索</div>
 			<div class="hotwords flex-box">
-				<div v-for="(item, index) in hotwords" class="word">{{item}}</div>
+				<div v-for="(item, index) in hotwords" :key="index" class="word">{{item}}</div>
 			</div>
 		</div>
+		<button @click="add">xxxxxxxx</button>
+		<div>{{count}}</div>
 	</div>
+	
 </template>
 
 
 <script>
+
 	export default {
 		name: 'Search',
 		data() {
@@ -35,7 +39,17 @@
 				showClose: false
 			}
 		},
+		computed:{
+			count(){
+				return this.$store.state.count;
+			}
+		},
+		mounted(){
+		},
 		methods: {
+			add(){
+				this.$store.dispatch('increment');
+			},
 			showSearch: function () {
 				this.width = '80px';
 				this.marginRight = 0;
