@@ -56,7 +56,6 @@
 <script>
 	import Banner from "../components/Banner.vue"
 	import Footer from "../components/Footer.vue";
-	import { mapActions } from 'vuex'
 	const imgs = [{
 			class: 'pro-cate-t1',
 			tt: '../assets/images/tt1.png',
@@ -123,15 +122,10 @@
 		created() {
 		},
 		mounted() {
-			this.setPageTitle({pageTitle:'商城首页'});
-			// this.$store.dispatch('setPageTitle', {pageTitle:'商城首页'});
 			this.GetSlideList();
 			this.getCateProList();
 		},
 		methods: {
-			...mapActions({
-				setPageTitle: 'title/setPageTitle'
-			}),
 			GetSlideList: function () {
 				this.$api.get('index/GetSlideList', {})
 					.then(res => {

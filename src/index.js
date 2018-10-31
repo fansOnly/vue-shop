@@ -3,7 +3,7 @@ import App from './App.vue';
 import Element from 'element-ui';
 import api from './libs/api';
 import router from './libs/router';
-import store from './store/index';
+import store from './store/store';
 import Tools from './libs/Tools.js';
 
 Vue.use(Element);

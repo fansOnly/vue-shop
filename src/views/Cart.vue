@@ -50,8 +50,7 @@
 		<!-- 优惠券 -->
 		<div v-if="couponx.id" class="cart-coupon">
 			<div class="cart-coupon_p flex-box"><span class="iconfont icon-coupon06"><span class="cart-coupon-t1">满{{couponx.man}}减{{couponx.jian}}</span></span>用券立减{{couponx.jian}}元</div>
-		</div>
-		
+		</div>		
 		
 		<div v-if="editmode" class="editResult flex-box">
 				<el-checkbox v-model="allChecked" @change="handleCheckAllChange">全选</el-checkbox>
@@ -97,25 +96,23 @@
 				checkedCarts: [],
 				allChecked: false,
 				checkedNum: 0,
-				deleteids: ''
+				deleteids: '',
 			}
 		},
 		computed:{
+			...mapState({
+				// count: state => state.test.count
+			})
 		},
 		mounted() {
-			// console.log(this.$store);
-			this.setPageTitle({pageTitle:'购物车'})
-			// this.$store.dispatch('setPageTitle', {pageTitle:'购物车1'});
+			// this.setPageTitle({pageTitle:'购物车'})
 			this.user_id = 1;
 			this.GetUserCart();
 		},
 		methods:{
-			...mapActions({
-				setPageTitle: 'title/setPageTitle'
-			}),
-			// ...mapActions([
-			// 	'setPageTitle'
-			// ]),
+			// ...mapActions({
+			// 	setPageTitle: 'title/setPageTitle'
+			// }),
 			GetUserCart(){
 				this.$api.get('Cart/GetUserCart', {user_id:this.user_id})
 				.then(res=>{
@@ -154,7 +151,7 @@
 			minusNum(e){
 				const index = e.target.dataset.index;
 				const id = this.carts[index].id;
-				this.$store.dispatch('miusCartNum', {id});
+				this.$store.dispatch('cart/miusCartNum', {id});
 				
 				// this.carts[index].goods_num--;
 			},

@@ -1,5 +1,4 @@
 <template>
-	<div>
 		<div class="swiper-container banner">
 			<div class="swiper-wrapper">
 				<div v-for="(item, index) in bannerList" :key="index" class="swiper-slide">
@@ -10,7 +9,6 @@
 			<div class="swiper-button-prev"></div>
 			<div class="swiper-button-next"></div>
 		</div>
-	</div>
 </template>
 
 <script>

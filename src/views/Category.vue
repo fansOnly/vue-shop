@@ -27,12 +27,17 @@
 				</div>
 			</el-main>
 		</el-container>
+		<Footer></Footer>
 	</div>
 </template>
 
 <script>
+import Footer from '../components/Footer.vue'
 	export default {
 		name: 'Category',
+		components: {
+			Footer
+		},
 		data() {
 			return {
 				cateIndex: 1,
@@ -41,12 +46,10 @@
 			}
 		},
 		mounted() {
-			this.$store.dispatch('setPageTitle', {
-				pageTitle: '商品分类'
-			});
 			const windowHeight = window.screen.height;
 			const headerHeight = document.getElementById("header").offsetHeight;
-			document.getElementById("category-container").style = "height:" + (windowHeight - headerHeight) + "px";
+			const footerHeight = document.getElementById("footer").offsetHeight;
+			document.getElementById("category-container").style = "height:" + (windowHeight - headerHeight - footerHeight) + "px";
 			this.getCategory();
 		},
 		methods: {

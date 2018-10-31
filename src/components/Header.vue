@@ -1,5 +1,4 @@
 <template>
-	<div>
 		<div class="header" id="header">
 			<div class="headerL">
 				<span v-show="!isIndex" class="iconfont icon-back" @click="goBack"></span>
@@ -10,11 +9,10 @@
 				<span class="iconfont icon-user" @click="goUser"></span>
 			</div>
 		</div>
-	</div>
 </template>
 
 <script>
-	import { mapState } from 'vuex'
+	// import { mapState } from 'vuex'
 	export default {
 		name: 'Header',
 		data(){
@@ -23,32 +21,31 @@
 			}
 		},
 		created() {},
-		mounted() {},
 		computed:{
-			...mapState({
-				pageTitle: state => state.title.pageTitle
-			})
-			// pageTitle(){
-			// 	return this.$store.state.pageTitle;
-			// }
+			pageTitle(){
+				const routes = this.$router.options.routes;
+				let title = null;
+				routes.forEach(element => {
+					if(element.name == this.$route.name){
+						title = element.title
+					}
+				});
+				return title;
+			}
+			// ...mapState({
+			// 	pageTitle: state => state.title.pageTitle
+			// })
 		},
 		watch: {
 			$route(now, old){
-				if(now.path === '/'){
-					this.isIndex = true;
-				}else{
-					this.isIndex = false;
-				}
+				this.isIndex = now.path === '/' ? true : false;
 			}
+		},
+		mounted() {
 		},
 		methods: {
 			goBack: function(){
-				console.log("goBack");
-				if(this.$router.options.routes.length > 0){
-					this.$router.go(-1);
-				}else{
-					this.$router.push('/');
-				}
+				window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
 			},
 			goUser: function(){
 				console.log("goUser");
