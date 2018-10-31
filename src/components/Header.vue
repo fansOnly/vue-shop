@@ -4,7 +4,7 @@
 			<div class="headerL">
 				<span v-show="!isIndex" class="iconfont icon-back" @click="goBack"></span>
 			</div>
-			<h3 class="header-t">我是标题啊</h3>
+			<h3 class="header-t">{{pageTitle}}</h3>
 			<div class="headerR">
 				<span class="iconfont icon-cart2" @click="goCart"></span>
 				<span class="iconfont icon-user" @click="goUser"></span>
@@ -14,15 +14,23 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		name: 'Header',
-		data() {
+		data(){
 			return {
 				isIndex: true
 			}
 		},
 		created() {},
-		mounted() {
+		mounted() {},
+		computed:{
+			...mapState({
+				pageTitle: state => state.title.pageTitle
+			})
+			// pageTitle(){
+			// 	return this.$store.state.pageTitle;
+			// }
 		},
 		watch: {
 			$route(now, old){
@@ -57,11 +65,11 @@
 		top: 0;
 		left: 0;
 		right: 0;
-		height: 40px;
+		height: 48px;
 		padding: 0 10px;
 		background: #ff495f;
 		color: #fff;
-		line-height: 40px;
+		line-height: 48px;
 		display: -webkit-box;
 		display: flex;
 		align-items: center;
@@ -72,6 +80,7 @@
 		width: 60%;
 		color: #fff;
 		font-size: 16px;
+		text-align: center;
 	}
 	.headerL, .headerR {
 		width: 20%;

@@ -1,5 +1,5 @@
 <template>
-	<div style="background:#f7f7f7;">
+	<div class="page_bd">
 		<div class="topArea">
 			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
 			<router-link to="/search" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>
@@ -54,9 +54,9 @@
 </template>
 
 <script>
-	
 	import Banner from "../components/Banner.vue"
 	import Footer from "../components/Footer.vue";
+	import { mapActions } from 'vuex'
 	const imgs = [{
 			class: 'pro-cate-t1',
 			tt: '../assets/images/tt1.png',
@@ -109,7 +109,7 @@
 			Banner,
 			Footer
 		},
-		data() {
+		data(){
 			return {
 				bannerList: [],
 				adverList: [],
@@ -118,12 +118,20 @@
 				cateProList: []
 			}
 		},
-		created() {},
+		computed:{
+		},
+		created() {
+		},
 		mounted() {
+			this.setPageTitle({pageTitle:'商城首页'});
+			// this.$store.dispatch('setPageTitle', {pageTitle:'商城首页'});
 			this.GetSlideList();
 			this.getCateProList();
 		},
 		methods: {
+			...mapActions({
+				setPageTitle: 'title/setPageTitle'
+			}),
 			GetSlideList: function () {
 				this.$api.get('index/GetSlideList', {})
 					.then(res => {

@@ -21,9 +21,7 @@
 		font-family: "Avenir", Helvetica, Arial, sans-serif;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
-		padding-top: 40px;
-		padding-bottom: 60px;
-		text-align: center;
+		padding-top: 48px;
 		color: #333;
 		background-color: #fff;
 		font-size: 14px;

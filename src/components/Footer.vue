@@ -2,9 +2,9 @@
 	<div>
 		<div class="footer">
 			<div class="foot-item"><router-link to="/" class="foot-itema"><img v-if="footIndex == 1" class="foot-img" src="../assets/homes.png" alt=""><img v-else class="foot-img" src="../assets/home.png" alt="">首页</router-link></div>
-			<div class="foot-item"><router-link to="/category" class="foot-itema"><img v-if="footIndex == 2" class="foot-img" src="../assets/carts.png" alt=""><img v-else class="foot-img" src="../assets/cart.png" alt="">分类</router-link></div>
-			<div class="foot-item"><router-link to="/" class="foot-itema"><img v-if="footIndex == 3" class="foot-img" src="../assets/categorys.png" alt=""><img v-else class="foot-img" src="../assets/category.png" alt="">购物车</router-link></div>
-			<div class="foot-item"><router-link to="/" class="foot-itema"><img v-if="footIndex == 4" class="foot-img" src="../assets/mys.png" alt=""><img v-else class="foot-img" src="../assets/my.png" alt="">我的</router-link></div>
+			<div class="foot-item"><router-link to="/category" class="foot-itema"><img v-if="footIndex == 2" class="foot-img" src="../assets/categorys.png" alt=""><img v-else class="foot-img" src="../assets/category.png" alt="">分类</router-link></div>
+			<div class="foot-item"><router-link to="/cart" class="foot-itema"><img v-if="footIndex == 3" class="foot-img" src="../assets/carts.png" alt=""><img v-else class="foot-img" src="../assets/cart.png" alt="">购物车</router-link></div>
+			<div class="foot-item"><router-link to="/user" class="foot-itema"><img v-if="footIndex == 4" class="foot-img" src="../assets/mys.png" alt=""><img v-else class="foot-img" src="../assets/my.png" alt="">我的</router-link></div>
 		</div>
 	</div>
 </template>

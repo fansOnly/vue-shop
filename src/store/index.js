@@ -1,22 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import title from './modules/title.js';
+import cart from './modules/cart.js';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-    state: {
-        count: 0
-    },
-    strict: process.env.NODE_ENV !== 'production',
-    mutations: {
-        increment(state) {
-            state.count++;
-        }
-    },
-    actions: {
-        increment(context) {
-            context.commit('increment');
-        }
-    }
+	// state: {
+	// 	pageTitle: ''
+	// },
+	strict: process.env.NODE_ENV !== 'production',
+	modules: {
+		title,
+		cart
+	}
 });
 
 export default store;

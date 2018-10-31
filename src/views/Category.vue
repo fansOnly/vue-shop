@@ -2,26 +2,27 @@
 	<div>
 		<el-container id="category-container">
 			<el-aside class="cateL" width="30%">
-				<div v-for="(item, index) in categories" :key="index" :class="['cateMenu', cateIndex == item.id ? 'on': '']" :data-index="index" @click="changeCate">{{item.name}}</div>
+				<div v-for="(item, index) in categories" :key="index" :class="['cateMenu', cateIndex == item.id ? 'on': '']"
+				 :data-index="index" @click="changeCate">{{item.name}}</div>
 			</el-aside>
 			<el-main class="cateR">
 				<div v-for="(second, index) in category" :key="index">
 					<div v-if="cateIndex == second.parent_id" class="cateItem">
 						<div class="cateItem-t">{{second.name}}</div>
 						<div v-if="second.children.length" class="cate-ul flex-box">
-								<router-link v-for="(third, index2) in second.children" :key="index2" to="" class="cate-li flex-col">
-									<img v-if="third.more.thumbnail" :src="third.more.thumbnail" class="">
-									<img v-else src="~@/assets/imgicon.png" class="">
-									<div class="cate-li_t">{{third.name}}</div>
-								</router-link>
+							<router-link v-for="(third, index2) in second.children" :key="index2" to="" class="cate-li flex-col">
+								<img v-if="third.more.thumbnail" :src="third.more.thumbnail" class="">
+								<img v-else src="~@/assets/imgicon.png" class="">
+								<div class="cate-li_t">{{third.name}}</div>
+							</router-link>
 						</div>
 						<div v-else class="cate-ul flex-box">
-						<router-link class="cate-li flex-col" to="">
-							<img v-if="second.thumbnail" :src="second.thumbnail" class="">
-							<img v-else src="~@/assets/imgicon.png" class="">
-							<div class="cate-li_t">{{second.name}}</div>
-						</router-link>
-					</div>
+							<router-link class="cate-li flex-col" to="">
+								<img v-if="second.thumbnail" :src="second.thumbnail" class="">
+								<img v-else src="~@/assets/imgicon.png" class="">
+								<div class="cate-li_t">{{second.name}}</div>
+							</router-link>
+						</div>
 					</div>
 				</div>
 			</el-main>
@@ -29,9 +30,7 @@
 	</div>
 </template>
 
-
 <script>
-
 	export default {
 		name: 'Category',
 		data() {
@@ -42,12 +41,13 @@
 			}
 		},
 		mounted() {
+			this.$store.dispatch('setPageTitle', {
+				pageTitle: '商品分类'
+			});
 			const windowHeight = window.screen.height;
 			const headerHeight = document.getElementById("header").offsetHeight;
-			document.getElementById("app").style = "padding-bottom:0";
-			document.getElementById("category-container").style = "height:"+ (windowHeight - headerHeight)+"px";
+			document.getElementById("category-container").style = "height:" + (windowHeight - headerHeight) + "px";
 			this.getCategory();
-			
 		},
 		methods: {
 			getCategory: function () {
@@ -70,7 +70,7 @@
 						this.category = res.category;
 					})
 			},
-			changeCate: function(e){
+			changeCate: function (e) {
 				console.log(e);
 				const index = e.target.dataset.index;
 				this.cateIndex = this.categories[index].id;
