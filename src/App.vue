@@ -13,7 +13,6 @@
 			Header
 		}
 	}
-	import 'element-ui/lib/theme-chalk/index.css';
 </script>
 
 <style>
@@ -30,6 +29,5 @@
 	}
 
 	@import '//at.alicdn.com/t/font_667160_eifpxk8au6r.css';
-	@import '~@/assets/css/reset.css';
 	/* @import '~@/assets/iconfont/iconfont.css'; */
 </style>

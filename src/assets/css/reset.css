@@ -107,9 +107,14 @@ textarea:-ms-input-placeholder {
 	line-height: 2.58823529em;
 }
 
-.iconfont { line-height: 1; }
+.iconfont {
+	line-height: 1;
+}
 
-.page_bd { background: #f7f7f7; padding-bottom: 60px; }
+.page_bd {
+	background: #f7f7f7;
+	padding-bottom: 50px;
+}
 
 /* flex-box */
 .flex-box {
@@ -494,15 +499,41 @@ textarea:-ms-input-placeholder {
 /* **************************************************************************************** */
 /* **************************************************************************************** */
 /* **************************************************************************************** */
+
+/* Checkbox 多选框 */
 .el-input.is-active .el-input__inner,
 .el-input__inner:focus {
 	border-color: #ff495f;
 }
 
-.el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner{
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
 	background-color: #ff495f;
-    border-color: #ff495f;
+	border-color: #ff495f;
 }
+
 .el-checkbox__input.is-checked+.el-checkbox__label {
-	 color: #ff495f;
+	color: #ff495f;
 }
+
+.el-checkbox__label {
+	padding-left: 5px;
+}
+
+/* MessageBox 弹框 */
+.el-message-box {
+	width: auto;
+	vertical-align: inherit;
+}
+
+.el-message--info,.el-message--success {
+	min-width: auto;
+	width: auto;
+	top: 15%;
+}
+
+/* Dialog 对话框 */
+.el-dialog { transform: translate(0,-25%); }
+.el-dialog__header,.el-dialog__footer { padding: 5%;}
+.el-dialog__body { padding: 0 5%;}
+.el-button {padding: 8px 20px; }

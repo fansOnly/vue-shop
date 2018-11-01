@@ -47,7 +47,6 @@
 				this.marginRight = 0;
 				this.autofocus = true;
 				this.visibility = 'hidden';
-				console.log("autofocus", this.autofocus);
 			},
 			hideSearch: function () {
 				this.width = 'auto';

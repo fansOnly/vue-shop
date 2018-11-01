@@ -1,17 +1,22 @@
 import Vue from 'vue';
 import App from './App.vue';
 import Element from 'element-ui';
+// import Antd from 'ant-design-vue';
 import api from './libs/api';
 import router from './libs/router';
 import store from './store/store';
 import Tools from './libs/Tools.js';
+import 'element-ui/lib/theme-chalk/index.css';
+// import 'ant-design-vue/dist/antd.css';
+import '@/assets/css/reset.css';
 
 Vue.use(Element);
+// Vue.use(Antd);
 
 const tools = new Tools();
 
 Vue.prototype.$api = api;
-Vue.prototype.tools = tools;
+Vue.prototype.Tools = tools;
 
 Vue.config.productionTip = false;
 

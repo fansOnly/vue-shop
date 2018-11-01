@@ -5,8 +5,8 @@
 			</div>
 			<h3 class="header-t">{{pageTitle}}</h3>
 			<div class="headerR">
-				<span class="iconfont icon-cart2" @click="goCart"></span>
-				<span class="iconfont icon-user" @click="goUser"></span>
+				<span v-show="!isIndex" class="iconfont icon-cart2" @click="goCart"></span>
+				<span v-show="!isIndex" class="iconfont icon-user" @click="goUser"></span>
 			</div>
 		</div>
 </template>
@@ -48,10 +48,10 @@
 				window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
 			},
 			goUser: function(){
-				console.log("goUser");
+				this.$router.push('/user');
 			},
 			goCart: function(){
-				console.log("goCart");
+				this.$router.push('/cart');
 			}
 		}
 	}

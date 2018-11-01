@@ -2,12 +2,13 @@
 // const coupons = [];
 
 function calcSum(carts = []) {
-    return carts.filter(item => item.checked).reduce((a, b) => a + GetPrice(b) * b.goods_num, 0);
+    // return carts.filter(item => item.checked).reduce((a, b) => a + b.price * b.quantity, 0);
+    return carts.reduce((a, b) => a + b.price * b.quantity, 0);
 }
 
 function GetCommonIds(carts = [], coupons = []) {
     const result = [];
-    const cartIds = [].concat(carts.map(item => item.id));
+    const cartIds = [].concat(carts.map(item => item.category_id));
     // console.log("cartIds", cartIds);
     coupons.forEach(ele => {
         if (ele.isAll == 1) {
@@ -17,7 +18,7 @@ function GetCommonIds(carts = [], coupons = []) {
             // console.log("couponsIds", couponsIds);
             const commonIds = couponsIds.filter(item => cartIds.includes(item));
             // console.log("commonIds", commonIds);
-            const cartsChecked = carts.filter(item => commonIds.includes(item.id));
+            const cartsChecked = carts.filter(item => commonIds.includes(item.category_id));
             // console.log("cartsChecked", cartsChecked);
             const sum = calcSum(cartsChecked);
             if (commonIds.length && ele.man < sum) {
@@ -25,6 +26,7 @@ function GetCommonIds(carts = [], coupons = []) {
             }
         }
     })
+    // console.log(result);
     return result;
 }
 
@@ -44,7 +46,7 @@ function filterCoupon(carts = [], coupons = []) {
     // console.log("cp", cp);
     // 筛选优惠最大的
     const best = cp.sort((a, b) => b.jian - a.jian)[0];
-    console.log("best", best);
+    // console.log("best", best);
     return best ? best : {};
 }
 

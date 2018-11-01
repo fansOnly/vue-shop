@@ -28,7 +28,6 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		height: 60px;
 		background: #ff495f;
 		z-index: 999;
 	}
@@ -41,16 +40,16 @@
 		-webkit-box-sizing: border-box;
 		box-sizing: border-box;
 		display: block;
-		height: 60px;
-		padding-top: 7px;
+		height: 50px;
+		padding-top: 5px;
 		color: #fff;
-		font-size: 14px;
+		font-size: 12px;
 		text-align: center;
 	}
 
 	.foot-img {
 		display: block;
-		width: 30px;
+		width: 25px;
 		margin: 0 auto;
 	}
 </style>

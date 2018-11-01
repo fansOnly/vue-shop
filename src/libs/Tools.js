@@ -382,7 +382,7 @@ class Tools {
 	isPlainObject(obj) {
 		let getProto = Object.getPrototypeOf
 		let class2type = {}
-		let toString = class2type.toString
+		// let toString = class2type.toString
 		let hasOwn = class2type.hasOwnProperty
 		let fnToString = hasOwn.toString
 		let ObjectFunctionString = fnToString.call(Object)
@@ -807,8 +807,7 @@ class Tools {
 	 * @param  {String} str2  null/0
 	 * @return {String}
 	 */
-	Maxmin(x) {
-
+	Maxmin() {
 	}
 
 
