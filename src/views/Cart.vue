@@ -1,21 +1,17 @@
 <template>
-	<div class="page_bd" style="padding-bottom:100px;">
+	<div class="page__bd" style="padding-bottom:100px;">
 		<div class="edit flex-box">
 			<div class="edit-t1">我的购物车</div>
 			<div v-if="!editmode && carts.length" class="edit-t2" @click="editcart">编辑商品</div>
 			<div v-if="editmode" class="edit-t2" @click="editcart">完成</div>
 		</div>
-		<a-button>default</a-button>
-		<a-button type="primary">primary</a-button>
 		<div v-if="carts.length" class="cart-section">
 			<div class="cart-title flex-box">
 				<div class="cart-shop">官方旗舰店</div>
 				<router-link v-if="couponsList.length && !editmode" to="" class="get-coupon">领取优惠券</router-link>
 			</div>
 			<div class="cart-box flex-box">
-				<el-checkbox-group class="cart-left" v-model="checkedCarts" @change="handleCheckedCartsChange">
-					<el-checkbox v-for="(item, index) in carts" :label="item.id" :key="index">&nbsp;</el-checkbox>
-				</el-checkbox-group>
+				<a-checkbox-group  class="cart-left" :options="carts" v-model="checkedCarts" @change="handleCheckedCartsChange" />
 
 				<div class="cart-right" style="width: 100%;">
 					<div v-for="(item, index) in carts" :key="index" class="cart-goods flex-box">
@@ -56,7 +52,7 @@
 		</div>
 
 		<div v-if="editmode" class="editResult flex-box">
-			<el-checkbox v-model="allChecked" @change="handleCheckAllChange">全选</el-checkbox>
+			<a-checkbox :checked="checkAll" @change="handleCheckAllChange">全选</a-checkbox>
 
 			<div class="flex-box">
 				<span class="editok" @click="clearCart">清空购物车</span>
@@ -65,7 +61,7 @@
 		</div>
 		<div v-else class="editResult flex-box">
 			<div class="flex-box checkLeft">
-				<el-checkbox v-model="allChecked" @change="handleCheckAllChange">全选</el-checkbox>
+				<a-checkbox :checked="checkAll" @change="handleCheckAllChange">全选</a-checkbox>
 
 				<div class="total">
 					<div>总计：<span class="pe1">￥<span class="pe2">{{total}}</span></span></div>
@@ -79,9 +75,9 @@
 </template>
 
 <script>
-	import Footer from '../components/Footer'
-	import GetBestCoupon from "../libs/coupon.js"
-	import { Button } from 'ant-design-vue'
+	import Footer from '@/components/Footer'
+	// import GetBestCoupon from "../libs/coupon.js"
+	import { Checkbox } from 'ant-design-vue'
 	import {
 		mapGetters,
 		mapState,
@@ -91,7 +87,9 @@
 	export default {
 		name: 'Cart',
 		components: {
-			Footer
+			Footer,
+			'a-checkbox': Checkbox,
+			'a-checkbox-group': Checkbox.Group
 		},
 		data() {
 			return {
@@ -102,14 +100,14 @@
 				// couponx: {}, //  当前可用券
 				editmode: !1,
 				checkedCarts: [],
-				allChecked: false,
+				checkAll: false,
 				checkedNum: 0,
 				deleteids: ''
 			}
 		},
 		computed: {
 			...mapState({
-				// count: state => state.test.count
+				// carts: state => state.cart.carts
 			}),
 			...mapGetters({
 				total: 'cart/cartTotalPrice',
@@ -119,6 +117,7 @@
 		mounted() {
 			// this.setPageTitle({pageTitle:'购物车'})
 			this.user_id = 1;
+			
 			this.GetUserCart();
 		},
 		methods: {
@@ -130,21 +129,23 @@
 				decrementQuantity: 'cart/decrementQuantity',
 				setCouponsList: 'cart/setCouponsList'
 			}),
-			GetUserCart() {
+			async GetUserCart() {
+				
 				this.$api.get('Cart/GetUserCart', {
 						user_id: this.user_id
 					})
 					.then(res => {
+						this.carts = ['Apple', 'Pear', 'Orange']
 						console.log("GetUserCart", res);
 						if (res.cartList.length > 0) {
 							const total = res.cartTotal;
 							let carts = res.cartList;
-							const allChecked = (carts.length && carts.filter(item => !item.checked).length) ? false : true;
+							const checkAll = (carts.length && carts.filter(item => !item.checked).length) ? false : true;
 							let checkedNum = 0;
 							carts.filter(item => !!item.checked && checkedNum++);
 							this.carts = carts;
 							// this.total = this.Tools.Decimal(total);
-							this.allChecked = allChecked;
+							this.checkAll = checkAll;
 							this.checkedNum = checkedNum;
 							this.editmode = !1;
 							this.checkedCarts = this.Tools.pluck(this.carts.filter(item => item.checked), 'id');
@@ -152,15 +153,15 @@
 								carts: carts,
 								checkedCarts: this.checkedCarts
 							});
-							return this.GetUseCouponList();
 						} else {
 							this.carts = [];
 							// this.total = '0.00';
-							this.allChecked = !1;
+							this.checkAll = !1;
 							this.checkedNum = 0;
 							this.editmode = !1;
 						}
 					})
+					await this.GetUseCouponList();
 			},
 			GetUseCouponList: function(){
 				this.$api.get('coupon/GetUseCouponList', {user_id:this.user_id})
@@ -181,24 +182,31 @@
 					// })
 				})
 			},
-			handleCheckAllChange(val) {
-				this.checkedCarts = val ? this.Tools.pluck(this.carts, 'id') : [];
+			handleCheckAllChange(e) {
+				Object.assign(this, {
+					checkedCarts: e.target.checked ? this.Tools.pluck(this.carts, 'id') : [],
+					checkAll: e.target.checked
+				})
+				// this.checkedCarts = val ? this.Tools.pluck(this.carts, 'id') : [];
 				this.setCarts({
 					carts: this.carts,
 					checkedCarts: this.checkedCarts
 				});
 			},
-			handleCheckedCartsChange(value) {
-				let checkedCount = value.length;
-				this.allChecked = checkedCount === this.carts.length;
+			handleCheckedCartsChange(checkedCarts) {
+				// checkedCarts
+				this.checkAll = checkedCarts.length === this.carts.length
+	  
+				// let checkedCount = value.length;
+				// this.checkAll = checkedCount === this.carts.length;
 				this.setCarts({
 					carts: this.carts,
-					checkedCarts: [...value]
+					checkedCarts: [...checkedCarts]
 				});
 			},
 			editcart() {
 				this.editmode = !this.editmode;
-				this.allChecked = false;
+				this.checkAll = false;
 				this.checkedCarts = [];
 				this.setCarts({
 					carts: [],
@@ -230,13 +238,13 @@
 				if(!this.checkedCarts.length){
 					alert('请选择');
 				}else{
-				this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id));
-				this.checkedCarts = [];
-				this.setCarts({
-					carts: this.carts,
-					checkedCarts: this.checkedCarts
-				})
-			}
+					this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id));
+					this.checkedCarts = [];
+					this.setCarts({
+						carts: this.carts,
+						checkedCarts: this.checkedCarts
+					})
+				}
 			},
 			clearCart() {
 				if(this.checkedCarts.length){
@@ -336,15 +344,15 @@
 		/* padding: 0 0 0 5px; */
 	}
 
-	/*el-checkbox*/
-	.el-checkbox {
+	/*a-checkbox*/
+	.a-checkbox {
 		display: block;
 		height: 100px;
 		margin-left: 0;
 		line-height: 100px;
 	}
 
-	.checkLeft .el-checkbox {
+	.checkLeft .a-checkbox {
 		height: auto;
 		line-height: inherit;
 		/* padding-left: 5px; */
@@ -410,6 +418,8 @@
 	.cart-dis-p {
 		justify-content: space-between;
 		align-items: center;
+		height: 25px;
+		line-height: 25px;
 	}
 
 	.cart-dis-p1 {
@@ -540,7 +550,6 @@
 
 
 	.cart-coupon {
-		padding-top: 10px;
 		background: #fff;
 		font-size: 12px;
 	}

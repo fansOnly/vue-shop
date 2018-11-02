@@ -31,7 +31,7 @@ const getters = {
 	// 计算最佳优惠方案
 	getBestCoupon: (state, getters) => {
 		return GetBestCouponByCart(getters.checkedProducts, state.couponsList);
-	}
+	},
 };
 
 // 更改state状态 commit，同步操作

@@ -1,11 +1,11 @@
 <template>
 	<div>
-		<el-container id="category-container">
-			<el-aside class="cateL" width="30%">
+		<div id="category-container" class="categoty flex-box">
+			<div class="cateL" width="30%">
 				<div v-for="(item, index) in categories" :key="index" :class="['cateMenu', cateIndex == item.id ? 'on': '']"
 				 :data-index="index" @click="changeCate">{{item.name}}</div>
-			</el-aside>
-			<el-main class="cateR">
+			</div>
+			<div class="cateR">
 				<div v-for="(second, index) in category" :key="index">
 					<div v-if="cateIndex == second.parent_id" class="cateItem">
 						<div class="cateItem-t">{{second.name}}</div>
@@ -25,8 +25,8 @@
 						</div>
 					</div>
 				</div>
-			</el-main>
-		</el-container>
+			</div>
+		</div>
 		<Footer></Footer>
 	</div>
 </template>
@@ -57,7 +57,7 @@ import Footer from '../components/Footer.vue'
 				this.$api.get('category/index', {})
 					.then(res => {
 						console.log("getCategory", res);
-						if (res.state == 1) {
+						if (res.categories.length > 0) {
 							this.categories = res.categories;
 							this.cateIndex = res.categories[0].id;
 							return this.getCategoryById(this.cateIndex);
@@ -83,7 +83,9 @@ import Footer from '../components/Footer.vue'
 	}
 </script>
 <style scoped>
+	.categoty{ overflow: hidden;}
 	.cateL {
+		width: 30%;
 		background: #f5f5f5;
 		overflow-y: scroll;
 	}
@@ -103,6 +105,7 @@ import Footer from '../components/Footer.vue'
 
 
 	.cateR {
+		width: 70%;
 		padding: 0 3%;
 		background: #fff;
 		overflow-y: scroll;

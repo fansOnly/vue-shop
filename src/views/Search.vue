@@ -23,9 +23,10 @@
 
 
 <script>
-
 	export default {
 		name: 'Search',
+		components: {
+		},
 		data() {
 			return {
 				hotwords: ['手机', '电脑', 'PDA'],

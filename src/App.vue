@@ -27,7 +27,19 @@
 		line-height: 1.5;
 		overflow: hidden;
 	}
+	.mask{ 
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		background: rgba(0,0,0,.4);
+		z-index: 1000;
+		transition: all ease .5s;
+		opacity: 0;
+		z-index: -1;
+	}
 
-	@import '//at.alicdn.com/t/font_667160_eifpxk8au6r.css';
+	@import '//at.alicdn.com/t/font_667160_k1loj6k2ef.css';
 	/* @import '~@/assets/iconfont/iconfont.css'; */
 </style>

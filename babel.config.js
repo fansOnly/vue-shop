@@ -1,5 +1,9 @@
 module.exports = {
 	presets: [
+		// ["@babel/preset-env", {
+		// 	"modules": false,
+		// 	"useBuiltIns": "usage"
+		// }],
 		['@vue/app', {
 			polyfills: [
 				'es6.promise',
@@ -8,8 +12,11 @@ module.exports = {
 		}]
 	],
 	plugins: [
-		"transform-vue-jsx",
-		"transform-runtime",
+		// "transform-vue-jsx",
+		// ["@babel/plugin-transform-runtime", {
+		// 	// "useBuiltIns": true
+		// 	// "polyfill": false
+		// }],
 		[
 			"import",
 			{

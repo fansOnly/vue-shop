@@ -1,5 +1,5 @@
 <template>
-	<div class="page_bd">
+	<div class="page__bd">
 		<div class="topArea">
 			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
 			<router-link to="/search" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>

@@ -9,6 +9,12 @@ const routes = [{
 		title: '首页'
 	},
 	{
+		path: '/test',
+		name: 'test',
+		component: resolve => require(['@/views/test.vue'], resolve),
+		title: '测试'
+	},
+	{
 		path: '/search',
 		name: 'search',
 		component: resolve => require(['@/views/Search.vue'], resolve),
