@@ -86,8 +86,8 @@ module.exports = {
     // 有些值像 publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 baseUrl 同步以保障正常的工作
     devServer: {
         // 配置跨域处理,只有一个代理
-        // proxy: 'https://wx.qiushengyl.com/api',
-        proxy: 'http://localhost:1004/api',
+        proxy: 'https://wx.qiushengyl.com/api',
+        // proxy: 'http://localhost:1004/api',
         // 配置跨域处理,配置多个代理
         // proxy: {
         //     '/api': {

@@ -11,7 +11,7 @@
 				<router-link v-if="couponsList.length && !editmode" to="" class="get-coupon">领取优惠券</router-link>
 			</div>
 			<div class="cart-box flex-box">
-				<a-checkbox-group  class="cart-left" :options="carts" v-model="checkedCarts" @change="handleCheckedCartsChange" />
+				<a-checkbox-group  class="cart-left" :options="cartids" v-model="checkedCarts" @change="handleCheckedCartsChange" />
 
 				<div class="cart-right" style="width: 100%;">
 					<div v-for="(item, index) in carts" :key="index" class="cart-goods flex-box">
@@ -20,7 +20,7 @@
 						<div class="cart-dis">
 							<div class="cart-dis-t">{{item.title}}</div>
 							<div class="cart-dis-i">
-								<span v-for="(attr, index) in item.goods_attrs" :key="index" class="tags" :data-id="attr.valueId">{{attr.value}}</span>
+								<span v-for="(attr, index2) in item.goods_attrs" :key="index2" class="tags" :data-id="attr.valueId">{{attr.value}}</span>
 							</div>
 							<div class="cart-dis-p flex-box">
 								<div class="cart-dis-p1">
@@ -30,8 +30,7 @@
 								<div v-if="!editmode" class="attr-num">
 									<span v-if="item.goods_num <= 1" class="minus disabled">-</span>
 									<span v-else class="minus" :data-index="index" :data-cartid="item.id" @click="minusNum">-</span>
-									<input class="num-input" type="number" name="buyNum" maxlength="4" v-model="item.goods_num" :data-index="index"
-									 :data-cartid="item.id" disabled v-on:input="editNum" />
+									<input class="num-input" type="number" name="buyNum" maxlength="4" v-model="item.goods_num" :data-index="index" :data-cartid="item.id" disabled v-on:input="editNum" />
 									<span v-if="item.goods_num >= 9999" class="plus disabled">+</span>
 									<span v-else class="plus" :data-index="index" :data-cartid="item.id" @click="plusNum">+</span>
 								</div>
@@ -52,7 +51,7 @@
 		</div>
 
 		<div v-if="editmode" class="editResult flex-box">
-			<a-checkbox :checked="checkAll" @change="handleCheckAllChange">全选</a-checkbox>
+			<a-checkbox :checked="checkAll" @change="handleCheckAllChange"></a-checkbox>
 
 			<div class="flex-box">
 				<span class="editok" @click="clearCart">清空购物车</span>
@@ -61,7 +60,9 @@
 		</div>
 		<div v-else class="editResult flex-box">
 			<div class="flex-box checkLeft">
-				<a-checkbox :checked="checkAll" @change="handleCheckAllChange">全选</a-checkbox>
+				<div>
+				<a-checkbox :checked="checkAll" @change="handleCheckAllChange"></a-checkbox>&nbsp;全选
+				</div>
 
 				<div class="total">
 					<div>总计：<span class="pe1">￥<span class="pe2">{{total}}</span></span></div>
@@ -77,7 +78,7 @@
 <script>
 	import Footer from '@/components/Footer'
 	// import GetBestCoupon from "../libs/coupon.js"
-	import { Checkbox } from 'ant-design-vue'
+	import { Checkbox, Modal } from 'ant-design-vue'
 	import {
 		mapGetters,
 		mapState,
@@ -89,19 +90,21 @@
 		components: {
 			Footer,
 			'a-checkbox': Checkbox,
-			'a-checkbox-group': Checkbox.Group
+			'a-checkbox-group': Checkbox.Group,
+			Modal
 		},
 		data() {
 			return {
 				carts: [],
+				cartids: [],
 				// total: '0.00', // 总价
 				cheap: '0.00', // 优惠
 				couponsList: [],
 				// couponx: {}, //  当前可用券
 				editmode: !1,
 				checkedCarts: [],
-				checkAll: false,
-				checkedNum: 0,
+				// checkAll: false,
+				// checkedNum: 0,
 				deleteids: ''
 			}
 		},
@@ -111,13 +114,14 @@
 			}),
 			...mapGetters({
 				total: 'cart/cartTotalPrice',
+				checkAll: 'cart/checkAll',
+				checkedNum: 'cart/checkedNum',
 				couponx: 'cart/getBestCoupon'
 			})
 		},
 		mounted() {
 			// this.setPageTitle({pageTitle:'购物车'})
 			this.user_id = 1;
-			
 			this.GetUserCart();
 		},
 		methods: {
@@ -130,35 +134,21 @@
 				setCouponsList: 'cart/setCouponsList'
 			}),
 			async GetUserCart() {
-				
 				this.$api.get('Cart/GetUserCart', {
 						user_id: this.user_id
 					})
 					.then(res => {
-						this.carts = ['Apple', 'Pear', 'Orange']
 						console.log("GetUserCart", res);
 						if (res.cartList.length > 0) {
 							const total = res.cartTotal;
-							let carts = res.cartList;
-							const checkAll = (carts.length && carts.filter(item => !item.checked).length) ? false : true;
-							let checkedNum = 0;
-							carts.filter(item => !!item.checked && checkedNum++);
+							let carts = res.cartList.filter(item => !!item.checked);
 							this.carts = carts;
-							// this.total = this.Tools.Decimal(total);
-							this.checkAll = checkAll;
-							this.checkedNum = checkedNum;
-							this.editmode = !1;
-							this.checkedCarts = this.Tools.pluck(this.carts.filter(item => item.checked), 'id');
+							this.cartids = this.Tools.pluck(carts, 'id').map(id=>id.toString());
+							this.checkedCarts = this.Tools.pluck(carts.filter(item => item.checked), 'id').map(id=>id.toString());
 							this.setCarts({
 								carts: carts,
 								checkedCarts: this.checkedCarts
 							});
-						} else {
-							this.carts = [];
-							// this.total = '0.00';
-							this.checkAll = !1;
-							this.checkedNum = 0;
-							this.editmode = !1;
 						}
 					})
 					await this.GetUseCouponList();
@@ -184,29 +174,23 @@
 			},
 			handleCheckAllChange(e) {
 				Object.assign(this, {
-					checkedCarts: e.target.checked ? this.Tools.pluck(this.carts, 'id') : [],
-					checkAll: e.target.checked
+					checkedCarts: e.target.checked ? this.Tools.pluck(this.carts, 'id').map(id=>id.toString()) : [],
+					// checkAll: e.target.checked
 				})
-				// this.checkedCarts = val ? this.Tools.pluck(this.carts, 'id') : [];
 				this.setCarts({
 					carts: this.carts,
 					checkedCarts: this.checkedCarts
 				});
 			},
 			handleCheckedCartsChange(checkedCarts) {
-				// checkedCarts
-				this.checkAll = checkedCarts.length === this.carts.length
-	  
-				// let checkedCount = value.length;
-				// this.checkAll = checkedCount === this.carts.length;
+				// this.checkAll = checkedCarts.length === this.carts.length;
 				this.setCarts({
 					carts: this.carts,
-					checkedCarts: [...checkedCarts]
+					checkedCarts: this.checkedCarts
 				});
 			},
 			editcart() {
 				this.editmode = !this.editmode;
-				this.checkAll = false;
 				this.checkedCarts = [];
 				this.setCarts({
 					carts: [],
@@ -238,7 +222,7 @@
 				if(!this.checkedCarts.length){
 					alert('请选择');
 				}else{
-					this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id));
+					this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id.toString()));
 					this.checkedCarts = [];
 					this.setCarts({
 						carts: this.carts,
@@ -247,33 +231,26 @@
 				}
 			},
 			clearCart() {
-				if(this.checkedCarts.length){
-				this.$confirm('此操作将清空购物车商品, 是否继续?', '提示', {
-						confirmButtonText: '确定',
-						cancelButtonText: '取消',
-						type: 'warning'
-					})
-					.then(() => {
-						this.carts = [];
-						this.checkedCarts = [];
-						this.setCarts({
-							carts: this.carts,
-							checkedCarts: this.checkedCarts
-						})
-						this.$message({
-							type: 'success',
-							message: '删除成功!'
-						});
-					})
-					.catch(() => {
-						this.$message({
-							type: 'info',
-							message: '已取消删除'
-						});
-					});
-				}else{
-					alert('请选择');
-				}
+				Modal.confirm({
+					title: '友情提示',
+					content: '此操作将清空购物车商品, 是否继续?',
+					okType: 'danger',
+					centered: true,
+					okText: '确认',
+					cancelText: '取消',
+					onOk() {
+						return new Promise((resolve, reject) => {
+							this.carts = [];
+							this.checkedCarts = [];
+							this.setCarts({
+								carts: this.carts,
+								checkedCarts: this.checkedCarts
+							})
+							console.log("删除成功");
+						}).catch(() => console.log("取消删除"));
+					},
+					onCancel() {},
+				});
 			},
 			goPay() {
 				if(!this.checkedCarts.length){

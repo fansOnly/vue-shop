@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div :style="{ borderBottom: '1px solid #E9E9E9' }">
+		<div :style="{ marginTop:'50px' }">
 			<a-checkbox @change="onCheckAllChange" :checked="checkAll">
 				Check all
 			</a-checkbox>
@@ -29,22 +29,32 @@
 			}
 		},
 		mounted() {
+			// this.plainOptions = ['Apple', 'Pear', 'Orange']
 			this.getData();
 		},
 		methods: {
 			onChange(checkedList) {
-				this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
-				this.checkAll = checkedList.length === plainOptions.length
+				// this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
+				this.checkAll = checkedList.length === this.plainOptions.length
 			},
 			onCheckAllChange(e) {
 				Object.assign(this, {
-					checkedList: e.target.checked ? plainOptions : [],
-					indeterminate: false,
+					checkedList: e.target.checked ? this.plainOptions : [],
+					// indeterminate: false,
 					checkAll: e.target.checked,
 				})
 			},
 			getData(){
-				this.plainOptions = ['Apple', 'Pear', 'Orange']
+				// this.plainOptions = ['Apple', 'Pear', 'Orange']
+				this.$api.get('Cart/GetUserCart', {
+						user_id: 1
+					})
+				// this.$api.get('category/index', {})
+					.then(res => {
+						console.log("getCategory", res);
+						this.plainOptions = ['Appl1e', 'Pear1', 'Orange1']
+					})
+				
 			}
 		},
 	}

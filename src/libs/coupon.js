@@ -11,22 +11,22 @@ function GetCommonIds(carts = [], coupons = []) {
     const cartIds = [].concat(carts.map(item => item.category_id));
     // console.log("cartIds", cartIds);
     coupons.forEach(ele => {
-        if (ele.isAll == 1) {
-            result.push(ele);
-        } else {
-            const couponsIds = ele.categories.split(',').map(item => Number(item));
-            // console.log("couponsIds", couponsIds);
-            const commonIds = couponsIds.filter(item => cartIds.includes(item));
-            // console.log("commonIds", commonIds);
-            const cartsChecked = carts.filter(item => commonIds.includes(item.category_id));
-            // console.log("cartsChecked", cartsChecked);
-            const sum = calcSum(cartsChecked);
-            if (commonIds.length && ele.man < sum) {
+            if (ele.isAll == 1) {
                 result.push(ele);
+            } else {
+                const couponsIds = ele.categories.split(',').map(item => Number(item));
+                // console.log("couponsIds", couponsIds);
+                const commonIds = couponsIds.filter(item => cartIds.includes(item));
+                // console.log("commonIds", commonIds);
+                const cartsChecked = carts.filter(item => commonIds.includes(item.category_id));
+                // console.log("cartsChecked", cartsChecked);
+                const sum = calcSum(cartsChecked);
+                if (commonIds.length && ele.man < sum) {
+                    result.push(ele);
+                }
             }
-        }
-    })
-    // console.log(result);
+        })
+        // console.log(result);
     return result;
 }
 
