@@ -8194,6 +8194,11 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vue-easy-toast@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/vue-easy-toast/-/vue-easy-toast-1.0.5.tgz#c2b5064b7b0e0b69500c9f38b0c63ff1a151e0b7"
+  integrity sha512-Tx7TNn19wAbaqvreJMrYrlTwMtHMyaEoG/ISfmFQ4ABWdyB4qphU+eialiOSpGbRFg5w61cBGBkVy3lyJroOPw==
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"

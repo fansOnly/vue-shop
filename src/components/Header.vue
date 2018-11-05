@@ -4,7 +4,7 @@
 			<div class="headerL">
 				<span v-show="!isIndex" class="iconfont icon-back" @click="goBack"></span>
 			</div>
-			<h3 class="header-t">{{pageTitle}}</h3>
+			<div class="header-t">{{pageTitle}}</div>
 			<div class="headerR">
 				<!-- <span v-show="!isIndex" class="iconfont icon-cart2" @click="goCart"></span> -->
 				<!-- <span v-show="!isIndex" class="iconfont icon-user" @click="goUser"></span> -->

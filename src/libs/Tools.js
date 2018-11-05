@@ -305,9 +305,9 @@ class Tools {
 	 * @return {Object}
 	 */
 	toJson(obj, pretty) {
-		if (this.isUndefined(obj)) return undefined
+		if (this.isUndefined(obj)) return undefined;
 		if (!this.isNumber(pretty)) {
-			pretty = pretty ? 2 : null
+			pretty = pretty ? 2 : null;
 		}
 		return JSON.stringify(obj, null, pretty)
 	}

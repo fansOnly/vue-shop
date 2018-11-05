@@ -18,10 +18,11 @@
         "@vue/cli-plugin-babel": "^3.0.5",
         "@vue/cli-plugin-eslint": "^3.0.5",
         "@vue/cli-service": "^3.0.5",
-        "babel-plugin-import": "^1.11.0",
         "axios": "^0.18.0",
+        "babel-plugin-import": "^1.11.0",
         "element-ui": "^2.4.9",
         "swiper": "^4.4.1",
+        "vue-easy-toast": "^1.0.5",
         "vue-router": "^3.0.1",
         "vue-template-compiler": "^2.5.17",
         "vuex": "^3.0.1"

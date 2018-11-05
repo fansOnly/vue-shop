@@ -1,4 +1,7 @@
 import axios from 'axios';
+import Toast from './toast';
+
+const toast = new Toast();
 
 let cancel, promiseArr = {};
 const CancelToken = axios.CancelToken;
@@ -18,14 +21,25 @@ instance.defaults.timeout = 5000;
 // 添加请求拦截器
 instance.interceptors.request.use(config => {
     //发起请求时，取消掉当前正在进行的相同请求
-    if (promiseArr[config.url]) {
-        promiseArr[config.url]('操作取消');
-        promiseArr[config.url] = cancel;
-    } else {
-        promiseArr[config.url] = cancel;
+    const params = config.params;
+    let param = '';
+    for(let key in params){
+        param +=  key + '=' + params[key] + (Object.keys(params).length > 1 ? '&' : '');
     }
+    const url = config.url + '?' + param;
+    if (promiseArr[url]) {
+        promiseArr[url]('操作取消');
+        promiseArr[url] = cancel;
+    } else {
+        promiseArr[url] = cancel;
+    }
+    // toast.show({
+    //     text: 'loading...',
+    //     duration: 50000
+    // });
     return config;
 }, error => {
+    toast.hide();
     return Promise.reject(error);
 });
 // 移除拦截器
@@ -33,8 +47,10 @@ instance.interceptors.request.use(config => {
 
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
+    toast.hide();
     return response;
 }, err => {
+    toast.hide();
     if (err && err.response) {
         switch (err.response.status) {
             case 400:
@@ -76,8 +92,6 @@ instance.interceptors.response.use(response => {
             default:
                 err.message = `连接错误${err.response.status}`
         }
-    } else {
-        err.message = "连接到服务器失败";
     }
     console.log(err.message);
     return Promise.resolve(err.response);

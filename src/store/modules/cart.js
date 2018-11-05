@@ -1,4 +1,5 @@
 import GetBestCouponByCart from "@/libs/coupon.js";
+import cart from '@/api/cart';
 
 // 状态树
 const state = {
@@ -13,6 +14,12 @@ const state = {
 
 // 派生状态，数据处理、筛选等
 const getters = {
+    GetUserCart: (state) => {
+        return cart.GetUserCart({user_id:1},
+            () => return res.cartList,
+            (err) => console.log(err)
+            )
+    },
     checkedProducts: (state) => {
         return state.checkedCarts.length ? state.checkedCarts.map((id) => {
             const product = state.carts.find(product => product.id === Number(id));
@@ -40,7 +47,13 @@ const getters = {
     },
     // 计算最佳优惠方案
     getBestCoupon: (state, getters) => {
-        return GetBestCouponByCart(getters.checkedProducts, state.couponsList);
+        const bestCoupon = GetBestCouponByCart(getters.checkedProducts, state.couponsList);
+        if(!Tools.isEmptyObject(bestCoupon)){
+            localStorage.setItem('bestCoupon', bestCoupon);
+        }else{
+            localStorage.setItem('bestCoupon', null);
+        }
+        return bestCoupon;
     },
 };
 
@@ -86,15 +99,34 @@ const mutations = {
 const actions = {
     setCarts: (context, payload) => {
         context.commit('setCarts', payload);
+        // payload.user_id = 1;
+        // payload.id = payload.checkedCarts.join(',');
+        // payload.isAll = payload.checkedCarts.length === payload.carts.length ? 1 : 0;
+        // cart.OperateUserCart(payload,
+        //     () => context.commit('setCarts', payload),
+        //     (err) => console.log('err', err)
+        // );
     },
     editQuantity: (context, payload) => {
-        context.commit('editQuantity', payload);
+        payload.user_id = 1;
+        cart.IncrementNum(payload,
+            () => context.commit('editQuantity', payload),
+            (err) => console.log('err', err)
+        );
     },
     incrementQuantity: (context, payload) => {
-        context.commit('incrementQuantity', payload);
+        payload.user_id = 1;
+        cart.IncrementNum(payload,
+            () => context.commit('incrementQuantity', payload),
+            (err) => console.log('err', err)
+        );
     },
     decrementQuantity: (context, payload) => {
-        context.commit('decrementQuantity', payload);
+        payload.user_id = 1;
+        cart.DecrementNum(payload,
+            () => context.commit('decrementQuantity', payload),
+            (err) => console.log('err', err)
+        );
     },
     setCouponsList: (context, payload) => {
         context.commit('setCouponsList', payload);

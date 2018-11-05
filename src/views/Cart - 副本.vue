@@ -51,8 +51,7 @@
 		</div>
 
 		<div v-if="editmode" class="editResult flex-box">
-			<a-checkbox v-if="!editmode" :checked="checkAll" @change="handleCheckAllChange"></a-checkbox>
-			<div></div>
+			<a-checkbox :checked="checkAll" @change="handleCheckAllChange"></a-checkbox>
 
 			<div class="flex-box">
 				<span class="editok" @click="clearCart">清空购物车</span>
@@ -96,7 +95,7 @@
 		},
 		data() {
 			return {
-				// carts: [],
+				carts: [],
 				cartids: [],
 				// total: '0.00', // 总价
 				cheap: '0.00', // 优惠
@@ -114,7 +113,6 @@
 				// carts: state => state.cart.carts
 			}),
 			...mapGetters({
-				carts: 'cart/GetUserCart',
 				total: 'cart/cartTotalPrice',
 				checkAll: 'cart/checkAll',
 				checkedNum: 'cart/checkedNum',
@@ -125,10 +123,6 @@
 			// this.setPageTitle({pageTitle:'购物车'})
 			this.user_id = 1;
 			this.GetUserCart();
-			// Toast.show({
-			// 	text: '购物车购物车购物车购物车购物车购物车购物车asdasdasd',
-			// 	duration: 30000
-			// });
 		},
 		methods: {
 			...mapActions({
@@ -147,11 +141,12 @@
 						console.log("GetUserCart", res);
 						if (res.cartList.length > 0) {
 							const total = res.cartTotal;
-							this.carts = res.cartList;
-							this.cartids = Tools.pluck(res.cartList, 'id').map(id=>id.toString());
-							this.checkedCarts = Tools.pluck(res.cartList.filter(item => item.checked), 'id').map(id=>id.toString());
+							let carts = res.cartList.filter(item => !!item.checked);
+							this.carts = carts;
+							this.cartids = this.Tools.pluck(carts, 'id').map(id=>id.toString());
+							this.checkedCarts = this.Tools.pluck(carts.filter(item => item.checked), 'id').map(id=>id.toString());
 							this.setCarts({
-								carts: this.carts,
+								carts: carts,
 								checkedCarts: this.checkedCarts
 							});
 						}
@@ -164,15 +159,22 @@
 					console.log("GetUseCouponList", res);
 					const couponsList = res.couponsList;
 					couponsList.length && couponsList.forEach(ele=>{
-						ele.use_start = Tools.formatTime(ele.use_start,'.',':');
-						ele.use_end = Tools.formatTime(ele.use_end,'.',':');
+						ele.use_start = this.Tools.formatTime(ele.use_start,'.',':');
+						ele.use_end = this.Tools.formatTime(ele.use_end,'.',':');
 					})
 					this.setCouponsList({couponsList: couponsList});
+					// const bestCoupon = GetBestCoupon(this.carts, couponsList);
+					// console.log(bestCoupon)
+					// wx.setStorageSync("couponx", couponx);
+					// this.setData({
+					// 	couponsList: couponsList,
+					// 	couponx: couponx
+					// })
 				})
 			},
 			handleCheckAllChange(e) {
 				Object.assign(this, {
-					checkedCarts: e.target.checked ? Tools.pluck(this.carts, 'id').map(id=>id.toString()) : [],
+					checkedCarts: e.target.checked ? this.Tools.pluck(this.carts, 'id').map(id=>id.toString()) : [],
 					// checkAll: e.target.checked
 				})
 				this.setCarts({
@@ -189,10 +191,11 @@
 			},
 			editcart() {
 				this.editmode = !this.editmode;
-				// this.setCarts({
-				// 	carts: this.carts,
-				// 	checkedCarts: this.checkedCarts
-				// });
+				this.checkedCarts = [];
+				this.setCarts({
+					carts: [],
+					checkedCarts: []
+				});
 			},
 			editNum(e) {
 				const index = e.target.dataset.index;
@@ -219,12 +222,12 @@
 				if(!this.checkedCarts.length){
 					alert('请选择');
 				}else{
-					// this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id.toString()));
-					// this.checkedCarts = [];
-					// this.setCarts({
-					// 	carts: this.carts,
-					// 	checkedCarts: this.checkedCarts
-					// })
+					this.carts = this.carts.filter(product => !this.checkedCarts.includes(product.id.toString()));
+					this.checkedCarts = [];
+					this.setCarts({
+						carts: this.carts,
+						checkedCarts: this.checkedCarts
+					})
 				}
 			},
 			clearCart() {
