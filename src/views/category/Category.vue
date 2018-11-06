@@ -10,14 +10,14 @@
 					<div v-if="cateIndex == second.parent_id" class="cateItem">
 						<div class="cateItem-t">{{second.name}}</div>
 						<div v-if="second.children.length" class="cate-ul flex-box">
-							<router-link v-for="(third, index2) in second.children" :key="index2" to="" class="cate-li flex-col">
+							<router-link v-for="(third, index2) in second.children" :key="index2" :to="{ name: 'prolist', params: { categoryId: third.id }}" class="cate-li flex-col">
 								<img v-if="third.more.thumbnail" :src="third.more.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{third.name}}</div>
 							</router-link>
 						</div>
 						<div v-else class="cate-ul flex-box">
-							<router-link class="cate-li flex-col" to="">
+							<router-link class="cate-li flex-col" :to="{name:'prolist',params:{categoryId:third.id}}">
 								<img v-if="second.thumbnail" :src="second.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{second.name}}</div>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Footer from '../components/Footer.vue'
+import Footer from '@/components/Footer.vue'
 	export default {
 		name: 'Category',
 		components: {
@@ -87,7 +87,7 @@ import Footer from '../components/Footer.vue'
 	.cateL {
 		width: 30%;
 		background: #f5f5f5;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	.cateMenu {
@@ -108,7 +108,7 @@ import Footer from '../components/Footer.vue'
 		width: 70%;
 		padding: 0 3%;
 		background: #fff;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	.cateItem {

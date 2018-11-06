@@ -96,7 +96,7 @@
 		},
 		data() {
 			return {
-				// carts: [],
+				carts: [],
 				cartids: [],
 				// total: '0.00', // 总价
 				cheap: '0.00', // 优惠
@@ -114,7 +114,7 @@
 				// carts: state => state.cart.carts
 			}),
 			...mapGetters({
-				carts: 'cart/GetUserCart',
+				// carts: 'cart/GetUserCart',
 				total: 'cart/cartTotalPrice',
 				checkAll: 'cart/checkAll',
 				checkedNum: 'cart/checkedNum',

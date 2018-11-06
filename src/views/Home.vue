@@ -2,8 +2,8 @@
 	<div class="page__bd">
 		<div class="topArea">
 			<!-- <div class="location"><span class="iconfont icon-location"></span>合肥市</div> -->
-			<router-link to="/search" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>
-			<router-link to="/search" class="iconfont icon-category"></router-link>
+			<router-link to="/searchIndex" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>
+			<router-link to="/category" class="iconfont icon-category"></router-link>
 		</div>
 		<Banner :bannerList="bannerList" />
 		<div class="tabs_special">

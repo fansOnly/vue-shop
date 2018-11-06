@@ -14,12 +14,6 @@ const state = {
 
 // 派生状态，数据处理、筛选等
 const getters = {
-    GetUserCart: (state) => {
-        return cart.GetUserCart({user_id:1},
-            () => return res.cartList,
-            (err) => console.log(err)
-            )
-    },
     checkedProducts: (state) => {
         return state.checkedCarts.length ? state.checkedCarts.map((id) => {
             const product = state.carts.find(product => product.id === Number(id));

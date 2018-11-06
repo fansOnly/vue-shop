@@ -1,16 +1,6 @@
 <template>
 	<div>
-		<form class="search-box">
-			<div class="search-wrap">
-				<div class="search-area" :style="{ width: width}" @click="showSearch">
-					<span class="iconfont icon-search"></span>
-					<span class="search-text" :style="{visibility: visibility}">Search</span>
-				</div>
-				<input type="text" :class="['search_input', { search_input_focus: autofocus }]" v-model="input" placeholder="Search" :autofocus="autofocus" @focus="inputFocus" @input="inputTyping" />
-				<span v-if="showClose" class="iconfont icon-iclose" @click="clearInput"></span>
-			</div>
-			<span class="btn-cancel" :style="{marginRight: marginRight}" @click="hideSearch">取消</span>
-		</form>
+		<Search></Search>
 		<div class="hotbox">
 			<div class="hots">热词搜索</div>
 			<div class="hotwords flex-box">
@@ -23,9 +13,11 @@
 
 
 <script>
+	import Search from '@/components/Search'
 	export default {
-		name: 'Search',
+		name: 'searchIndex',
 		components: {
+			Search
 		},
 		data() {
 			return {
@@ -37,10 +29,6 @@
 				visibility: 'visible',
 				showClose: false
 			}
-		},
-		computed:{
-		},
-		mounted(){
 		},
 		methods: {
 			showSearch: function () {

@@ -2,7 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+	{
 		path: '/',
 		name: 'home',
 		component: resolve => require(['@/views/Home.vue'], resolve),
@@ -15,33 +16,46 @@ const routes = [{
 		title: '测试'
 	},
 	{
-		path: '/search',
-		name: 'search',
-		component: resolve => require(['@/views/Search.vue'], resolve),
+		path: '/searchIndex',
+		name: 'searchIndex',
+		component: resolve => require(['@/views/search/SearchIndex.vue'], resolve),
 		title: '搜索'
 	},
 	{
 		path: '/category',
 		name: 'category',
-		component: resolve => require(['@/views/Category.vue'], resolve),
+		component: resolve => require(['@/views/category/Category.vue'], resolve),
 		title: '分类'
+	},
+	{
+		path: '/prolist/:categoryId',
+		name: 'prolist',
+		component: resolve => require(['@/views/product/ProList.vue'], resolve),
+		title: '产品列表'
+	},
+	{
+		path: '/product/:id',
+		name: 'product',
+		component: resolve => require(['@/views/product/Product.vue'], resolve),
+		title: '产品详情'
 	},
 	{
 		path: '/cart',
 		name: 'cart',
-		component: resolve => require(['@/views/Cart.vue'], resolve),
+		component: resolve => require(['@/views/cart/Cart.vue'], resolve),
 		title: '购物车'
 	},
 	{
 		path: '/user',
 		name: 'user',
-		component: resolve => require(['@/views/User.vue'], resolve),
+		component: resolve => require(['@/views/user/User.vue'], resolve),
 		title: '我的'
 	},
 ];
 
 const router = new VueRouter({
 	mode: 'history',
+	base: __dirname,
 	routes
 })
 

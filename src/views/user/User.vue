@@ -147,7 +147,7 @@
 </template>
 
 <script>
-	import Footer from '../components/Footer'
+	import Footer from '@/components/Footer'
 	export default {
 		name: 'User',
 		components: {
