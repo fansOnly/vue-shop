@@ -3,25 +3,14 @@
 		<div class="page__bd">
 			<div class="topBar">
 				<div class="topBar-ul flex-box">
-					<div :class="['topBar-li', {on: tabIndex == 1}]" data-id="1" @click="tabbar">商品描述</div>
-					<div :class="['topBar-li', {on: tabIndex == 2}]" data-id="2" @click="tabbar">规格参数</div>
-					<div :class="['topBar-li', {on: tabIndex == 3}]" data-id="3" @click="tabbar">包装售后</div>
-					<div :class="['topBar-li', {on: tabIndex == 4}]" data-id="4" @click="tabbar">全部评价</div>
+					<div :class="['topBar-li', {on: tabIndex == 1}]" data-index="1" @click="tabbar">商品描述</div>
+					<div :class="['topBar-li', {on: tabIndex == 2}]" data-index="2" @click="tabbar">规格参数</div>
+					<div :class="['topBar-li', {on: tabIndex == 3}]" data-index="3" @click="tabbar">包装售后</div>
+					<div :class="['topBar-li', {on: tabIndex == 4}]" data-index="4" @click="tabbar">全部评价</div>
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 1">
-				<div class="banner">
-					<!-- <swiper style="height:{{bannerHeight}}px;" indicator-dots="true" indicator-color="rgba(0,0,0,0.3)" indicator-active-color="#ff495f" autoplay="{{autoplay}}" interval="5000" duration="1000" bindchange="bannerSwiper">
-								<block v-for="{{product.photos}}" :key="">
-									<swiper-item  @click="showGalleryBanner" data-current="{{ index }}">
-										<img class="widthFix" src="{{item.url}}"  lazy-load="true" />
-									</swiper-item>
-								</block>
-							</swiper> -->
-					<div class="swiperPages">{{bannerIndex}}/{{product.photos.length}}</div>
-					<router-link v-if="product.video" to="" class="swiperVideo flex-box"><span
-						 class="iconfont icon-video"></span>视频</router-link>
-				</div>
+					<Photos :something="product"></Photos>
 				<div class="section section1 flex-box">
 					<div class="title1">
 						<div class="title">{{product.title}}</div>
@@ -32,7 +21,7 @@
 					<button class="share1" open-type="share"><span class="iconfont icon-share"></span>分享</button>
 				</div>
 				<div class="section section2 flex-box">
-					<div class="str2 c3"><span class="iconfont icon-05 icon-pro gray"></span>热度：{{product.divs}}</div>
+					<div class="str2 c3"><span class="iconfont icon-05 icon-pro gray"></span>热度：{{product.views}}</div>
 					<!-- <div class="str2 c3"><span class="iconfont icon-05 icon-pro gray"></span>收藏：{{product.favs}}</div> -->
 					<div class="str2 c3"><span class="iconfont icon-06 icon-pro gray"></span>月销：{{product.sales}}</div>
 					<div class="str2 c3"><span class="iconfont icon-07 icon-pro gray"></span>库存：{{product.lave}}</div>
@@ -44,11 +33,11 @@
 					<div class="str3 c3"><span class="iconfont icon-wepay2 icon-pro color"></span>微信支付</div>
 				</div>
 
+				<div class="section section5 flex-box" data-mask='coupon' @click="openAttr">
+						<div class="flex-box" style="align-items:center;">领取优惠券<span class="iconfont icon-coupon"></span></div>
+						<div class="arrowx"></div>
+					</div>
 
-				<div v-if="product.is_coupon && couponsList.length" class="section section4 flex-box" data-mask='coupon' @click="openAttr">
-					<div class="secLeft4 flex-box"><span>领取优惠券</span><span class="iconfont icon-coupon"></span></div>
-					<div class="arrowx"></div>
-				</div>
 
 				<div class="section section5 flex-box" data-mask='attr' @click="openAttr">
 					<div class="">选择产品参数</div>
@@ -57,29 +46,29 @@
 				<div class="section section6 flex-box">
 					<div class="">商品描述</div>
 				</div>
-				<div class="detailx detimg flex-col">
+				<div class="detailx detimg ">
 					<span v-html="product.content"></span>
 				</div>
 			</div>
 
 			<div class="pageItem" v-if="tabIndex == 2">
-				<div class="detailx detimg flex-col">
+				<div class="detailx detimg ">
 						<span v-html="product.content1"></span>
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 3">
-				<div class="detailx detimg flex-col">
+				<div class="detailx detimg ">
 						<span v-html="product.content2"></span>
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 4">
-				<div v-if="evaluateList.length" class="detailx flex-col">
+				<div v-if="evaluateList.length" class="detailx ">
 					<div class="eval-statics flex-box">
-						<div class="eval-count">好评率{{evaluateCountList.avg ? evaluateCountList.avg : '100%'}}</div>
-						<div class="eval-count">好评({{evaluateCountList.good ? evaluateCountList.good : 0}})</div>
-						<div class="eval-count">中评({{evaluateCountList.mid ? evaluateCountList.mid : 0}})</div>
-						<div class="eval-count">差评({{evaluateCountList.bad ? evaluateCountList.bad : 0}})</div>
-						<div class="eval-count">晒单({{evaluateCountList.pic ? evaluateCountList.pic :0}})</div>
+						<div class="eval-count">好评率<br />{{evaluateCountList.avg ? evaluateCountList.avg : '100%'}}</div>
+						<div class="eval-count">好评<br />{{evaluateCountList.good ? evaluateCountList.good : 0}}</div>
+						<div class="eval-count">中评<br />{{evaluateCountList.mid ? evaluateCountList.mid : 0}}</div>
+						<div class="eval-count">差评<br />{{evaluateCountList.bad ? evaluateCountList.bad : 0}}</div>
+						<div class="eval-count">晒单<br />{{evaluateCountList.pic ? evaluateCountList.pic :0}}</div>
 					</div>
 					<div v-for="(item, index) in evaluateList" :key="index" class="eval-ul">
 						<div class="eval-item1 flex-box">
@@ -100,11 +89,7 @@
 						</div>
 						<div class="eval-item2">{{item.content}}</div>
 						<div v-if="item.more.length" class="eval-item3">
-							<!-- <scroll-div class="eval-imgList flex-box" scroll-x>
-										<block v-for="{{item.more}}" :key="" v-for-item="img">
-											<img class="eval-img" :src="img.pic" @click="showGallery" data-current="{{ index }}">
-										</block>
-									</scroll-div> -->
+							<img v-for="(img, index2) in item.more" :key="index2" class="eval-img" :src="img.pic" @click="showGallery" :data-current="index2">
 						</div>
 						<div v-if="item.reply" class="eval-item4">
 							<div class="eval-item4-t flex-box">
@@ -116,7 +101,7 @@
 					</div>
 					<router-link to="" class="eval-link">查看更多</router-link>
 				</div>
-				<div v-else class="detailx flex-col">
+				<div v-else class="detailx ">
 					<div class="noData">
 						<img class="noData-img" src="@/assets/nodata.png">
 						<div class="noData-txt">该商品暂无评论...</div>
@@ -125,15 +110,15 @@
 			</div>
 
 			<div class="buttons flex-box">
-				<div class="ico-btn" @click="backIndex"><span class="iconfont icon-shop"></span>
+				<router-link to="/" class="ico-btn" ><span class="iconfont icon-shop"></span>
 					<div>首页</div>
-				</div>
+				</router-link>
 				<div class="ico-btn" @click="SetUserFav"><span :class="['iconfont', isfav ? 'icon-fav1' : 'icon-fav']"></span>
 					<div>收藏</div>
 				</div>
-				<div class="ico-btn" @click="goCart"><span class="iconfont icon-cart2"></span>
+				<router-link class="ico-btn" :to="{name:'cart'}"><span class="iconfont icon-cart2"></span>
 					<div>购物车</div><span class="cart-num">{{cartLength}}</span>
-				</div>
+				</router-link>
 				<div class="cart-btn cart-btn1" data-mask='attr' @click="openAttr">加入购物车</div>
 				<div class="buy-btn buy-btn1" data-mask='attr' @click="openAttr">立即购买</div>
 			</div>
@@ -143,8 +128,8 @@
 
 
 		<!-- 属性选择box -->
-		<div class="mask" @click="closeAttr" v-if="mask"></div>
-		<div class="attr-box" v-if="maskType == 'attr'">
+		<div :class="['mask', {maskon:mask}]" @click="closeAttr" v-if="mask"></div>
+		<div :class="['attr-box', {move: maskType == 'attr'}]" >
 			<div class="attr_bd">
 				<div class="attrx flex-box">
 					<span class="iconfont icon-08" @click="closeAttr"></span>
@@ -166,8 +151,7 @@
 					<div v-for="(item, index) in product.attrs" :key="index">
 						<div class="attr-name">{{item.attr_name}}</div>
 						<div class="attrs flex-box">
-							<span v-for="(value, index2) in item.values" :key="index2" :data-index="index2" :data-attrid="item.attr_id"
-							 :data-id="value" :class="['attr-value', attrIds[index] == value ? 'on' : '']" @click="selectValue">{{item.names[index2]}}</span>
+							<span v-for="(value, index2) in item.values" :key="index2" :data-index="index" :data-index2="index2" :data-attrid="item.attr_id" :data-id="value" :class="['attr-value', attrIds[index] == value ? 'on' : '']" @click="selectValue">{{item.names[index2]}}</span>
 						</div>
 					</div>
 				</div>
@@ -176,7 +160,7 @@
 					<div class="attr-num">
 						<span v-if="buyNum <= 1" class="minus disabled">-</span>
 						<span v-else class="minus" @click="minusNum">-</span>
-						<input class="num-input" type="number" name="buyNum" maxlength="4" v-model="buyNum" v-on:input="okNum" />
+						<input class="num-input" type="number" name="buyNum" maxlength="4" v-model="buyNum" v-on:input="okNum" disabled />
 						<span v-if="buyNum >= product.lave" class="plus disabled">+</span>
 						<span v-else class="plus" @click="plusNum">+</span>
 					</div>
@@ -190,12 +174,11 @@
 
 
 		<!-- 优惠券选择box -->
-		<div class="mask" @click="closeAttr" v-if="mask"></div>
-		<div class="coupon-box" v-if="maskType == 'coupon'">
+		<div :class="['coupon-box', {move: maskType == 'coupon'}]" >
 			<div class="coupon-t">当前可用优惠券</div>
 			<span class="iconfont icon-08 icon08x" @click="closeAttr"></span>
 			<div v-if="couponsList.length" class="coupon-height">
-				<div v-for="(item, index) in couponsList" :key="index" :class="['coupons sawtooth flex-box flex-col', item.status == 0 ? 'status0' : item.status == 1 ? 'status1' : 'statusx']"
+				<div v-for="(item, index) in couponsList" :key="index" :class="['coupons sawtooth flex-box ', item.status == 0 ? 'status0' : item.status == 1 ? 'status1' : 'statusx']"
 				 :data-index="index" :data-id="item.id" @click="getCoupon">
 					<div class="coupon-item">
 						<div class="coupon-item1 flex-box">
@@ -211,10 +194,10 @@
 							<div :class="['coupon-cr1', item.status == 0 ? 'status0' : item.status == 1 ? 'status1' : 'statusx']">{{item.use_end}}</div>
 						</div>
 					</div>
-					<div class="coupon-state flex-col">
+					<div class="coupon-state ">
 						<!-- <div v-if="{{item.status == 0}}" class="coupon-state1">待领取<div class="">剩余{{item.lave}}</div></div>
-								<div wx:elif="{{item.status == 1}}" class="coupon-state1">已领取</div>
-								<div v-else class="coupon-state1">已抢光</div> -->
+						<div wx:elif="{{item.status == 1}}" class="coupon-state1">已领取</div>
+						<div v-else class="coupon-state1">已抢光</div> -->
 						<span v-if="item.status == 0" class="iconfont icon-coupon05 couponIcon"></span>
 						<span v-else-if="item.status == 1" class="iconfont icon-coupon03 couponIcon"></span>
 						<span v-else class="iconfont icon-coupon04 couponIcon"></span>
@@ -226,8 +209,12 @@
 </template>
 
 <script>
+	import Photos from '@/views/product/Photos'
 	export default {
 		name: 'Product',
+		components: {
+			Photos
+		},
 		data() {
 			return {
 				bannerHeight: window.screen.width,
@@ -244,7 +231,7 @@
 				attrIds: [], //  选择的属性
 				buyNum: 1, // 购买数量
 				animationData: {},
-				mask: !1,
+				mask: false,
 				maskType: '', //  attr/coupon
 				showTop: !1,
 				isfav: !1,
@@ -261,56 +248,148 @@
 		mounted() {
 			this.goods_id = this.$route.params.id;
 			this.user_id = 1;
+			window.addEventListener('scroll', Tools.throttle(this.handleScroll));
 			this.GetGoodsDetail();
 		},
 		methods: {
-			GetGoodsDetail: function() {
-				this.$api.get('Goods/GetGoodsDetail', {id: this.goods_id, user_id:this.user_id})
-					.then(res => {
-						console.log("GetGoodsDetail", res);
-						let product = res.product;
-						product.content = product.content.replace(/&emsp;/gi, "");
-						product.content = product.content.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
-						product.content1 = product.content1.replace(/&emsp;/gi, "");
-						product.content1 = product.content1.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
-						product.content2 = product.content2.replace(/&emsp;/gi, "");
-						product.content2 = product.content2.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
+			async GetGoodsDetail() {
+				await this.$api.get('Goods/GetGoodsDetail', {id: this.goods_id, user_id:this.user_id})
+				.then(res => {
+					console.log("GetGoodsDetail", res);
+					let product = res.product;
+					// product.content = product.content.replace(/&emsp;/gi, "");
+					// product.content = product.content.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
+					// product.content1 = product.content1.replace(/&emsp;/gi, "");
+					// product.content1 = product.content1.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
+					// product.content2 = product.content2.replace(/&emsp;/gi, "");
+					// product.content2 = product.content2.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
 
-						// [product.content,product.content1,product.content2].map(function(item){
-						//     item = item.replace(/&emsp;/gi, "");
-						//     item = item.replace(/<img/gi, "<img style='max-width:100%;height:auto;' ");
-						//     return item;
-						// })
-						
-						let attrs = product.attrs;
-						let selectAttrNames = [];
-						attrs.forEach(ele => {
-							selectAttrNames.push(ele.attr_name);
-						})
-						this.product = product;
-						this.price = product.price;
-						this.mprice = product.mprice;
-						this.thumbnail = product.thumbnail;
-						this.isfav = product.isfav;
-						this.selectAttrNames = selectAttrNames;
-						// this.GetGoodsEvaluateList();
-						// this.GetAllCouponListByCategoryId(product.category_id);
+					let attrs = product.attrs;
+					let selectAttrNames = [];
+					attrs.forEach(ele => {
+						selectAttrNames.push(ele.attr_name);
 					})
+					this.product = product;
+					this.price = product.price;
+					this.mprice = product.mprice;
+					this.thumbnail = product.thumbnail;
+					this.isfav = product.isfav;
+					this.selectAttrNames = selectAttrNames;
+					this.attrIds = new Array(attrs.length);
+				})
+				await this.GetGoodsEvaluateList();
+				await this.GetAllCouponListByCategoryId();
 			},
-			tabbar(){},
-			openAttr(){},
-			backIndex(){},
-			SetUserFav(){},
-			closeAttr(){},
-			selectValue(){},
-			okNum(){},
-			minusNum(){},
-			plusNum(){},
+			GetGoodsEvaluateList: function() {
+				this.$api.get('Evaluate/GetGoodsEvaluateList', {goods_id: this.goods_id, num: 3})
+				.then(res => {
+					console.log("GetGoodsEvaluateList", res);
+					let evaluateList = res.evaluateList;
+					evaluateList.length && evaluateList.map(item => item.create_time = Tools.formatTime(item.create_time, '.', ':'));
+					evaluateList.map(item => item.reply_time = Tools.formatTime(item.reply_time, '.', ':'));
+					this.evaluateList = evaluateList;
+					this.evaluateCountList = res.evaluateCountList;
+				})
+			},
+			GetAllCouponListByCategoryId: function() {
+				this.$api.get('coupon/GetAllCouponListByCategoryId', {user_id: this.user_id, category_id:this.product.category_id})
+				.then(res => {
+					console.log("GetAllCouponListByCategoryId", res);
+					let couponsList = res.couponsList;
+					couponsList.length && couponsList.forEach(ele => {
+						ele.use_start = Tools.formatTime(ele.use_start, '.', ':');
+						ele.use_end = Tools.formatTime(ele.use_end - 1, '.', ':');
+					})
+					this.couponsList = couponsList;
+				})
+			},
+			SetUserFav(){
+				const state = this.data.isfav ? 0 : 1;
+				this.$api.post('user/SetUserFav',{ goods_id: this.goods_id, user_id: this.user_id, state: state })
+				.then(res => {
+					console.log("SetUserFav", res);
+					this.isfav = !this.isfav;
+					Toast(`${res.msg}`);
+				})
+			},
+			tabbar(e){
+				this.tabIndex = e.target.dataset.index;
+			},
+			openAttr(e){
+				this.maskType = e.target.dataset.mask;
+				this.mask = true;
+			},
+			closeAttr(){
+				this.maskType = '';
+				this.mask = false;
+			},
+			selectValue(e){
+				let selectAttrValues = this.selectAttrValues;
+				const attr_id = Number(e.target.dataset.attrid);
+				const index = Number(e.target.dataset.index);
+				const index2 = Number(e.target.dataset.index2);
+				const attrId = Number(e.target.dataset.id);
+				let attrs = this.product.attrs;
+				let attrIds = this.attrIds;
+				let price = Number(this.product.price), mprice = Number(this.product.mprice), thumbnail =  this.thumbnail;
+				let prices = this.prices;  // 属性价格记录数组
+				let pricesx = [];  // 属性价格记录数组
+				attrs.forEach((ele, i) => {
+					if (ele.attr_id == attr_id) {
+						// attrIds[index] = attrId;
+						selectAttrValues[index] = ele.names[index2];
+						pricesx = ele.prices.map(function(price){
+							const obj = {};
+							obj.attr_id = attr_id;
+							obj.price = price;
+							obj.checked = !1;
+							return obj;
+						});
+						pricesx[index2].checked = !0;
+						prices[index] = pricesx[index2].price;
+						thumbnail = ele.thumbnails[index2] ? ele.thumbnails[index2] : thumbnail;
+					}
+				})
+				// console.log("prices", prices);
+				price += prices.reduce((sum,price)=>sum+Number(price), 0);
+				mprice += prices.reduce((sum,price)=>sum+Number(price), 0);
+				for (var i = 0, lenI = selectAttrValues.length; i < lenI; i++) {
+					if (selectAttrValues[i] == null) {
+						selectAttrValues[i] = attrs[i].attr_name;
+					}
+				}
+				this.$set(this.attrIds,index,attrId);
+				this.selectAttrValues = selectAttrValues;
+				this.price = Tools.Decimal(price);
+				this.mprice = Tools.Decimal(mprice);
+				this.thumbnail = thumbnail;
+				this.prices = prices;
+			},
 			addCart(){},
-			goCart(){},
 			buyNow(){},
 			getCoupon(){},
-			backTop(){},
+			okNum(){},
+			minusNum(){
+				this.buyNum--;
+			},
+			plusNum(){
+				this.buyNum++;
+			},
+			handleScroll(){
+				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+				if(scrollTop >= 300){
+					this.showTop = true;
+				}else{
+					this.showTop = false;
+				}
+			},
+			backTop(){
+				window.scrollTo({
+					top: 0,
+					behavior: "smooth"
+				});
+			},
+			showGallery(){}
 		}
 	}
 </script>
@@ -318,49 +397,6 @@
 	.page__bd {
 		padding-top: 40px;
 		padding-bottom: 50px;
-	}
-
-	.banner {
-		position: relative;
-	}
-
-	.swiperPages {
-		position: absolute;
-		bottom: 15px;
-		right: 15px;
-		width: 50px;
-		height: 25px;
-		background: rgba(0, 0, 0, .5);
-		border-radius: 2em;
-		color: #fff;
-		font-size: 14px;
-		color: #fff;
-		z-index: 9;
-		text-align: center;
-		line-height: 25px;
-	}
-
-	.swiperVideo {
-		position: absolute;
-		bottom: 15px;
-		left: 15px;
-		width: 70px;
-		height: 25px;
-		background: rgba(0, 0, 0, .5);
-		border-radius: 2em;
-		color: #fff;
-		font-size: 14px;
-		color: #fff;
-		z-index: 9;
-		text-align: center;
-		line-height: 25px;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.icon-video:before {
-		font-size: 24px;
-		margin-right: 2px;
 	}
 
 	.section {
@@ -509,7 +545,8 @@
 	/*section6*/
 
 	.section6 {
-		margin-bottom: 1px;
+		margin-bottom: 0;
+		border-bottom: 1px solid #f2f2f2;
 	}
 
 
@@ -521,9 +558,11 @@
 		right: 0;
 		bottom: -100%;
 		background: #fff;
-		z-index: 99;
+		z-index: 1001;
 		opacity: 0;
+		transition: all ease .5s;
 	}
+
 
 	.attr_bd {
 		padding: 0 10px 10px;
@@ -546,9 +585,12 @@
 
 	.attr-val {
 		max-height: 180px;
-		overflow-y: scroll;
+		overflow-y: auto;
 		border-bottom: 1px solid #eee;
 	}
+	/* .attr-val::-webkit-scrollbar {
+		display: none;
+	} */
 
 	.attr-val:after {
 		display: none;
@@ -636,12 +678,13 @@
 	.num-input {
 		display: inline-block;
 		width: 50px;
-		height: 28px;
+		height: 30px;
 		border: 1px solid #eee;
-		min-height: 28px;
+		min-height: 30px;
 		line-height: 28px;
 		text-align: center;
 		vertical-align: top;
+		background: #fff;
 	}
 
 	.minus.disabled,
@@ -679,6 +722,7 @@
 		background: #fff;
 		box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
 		z-index: 97;
+		overflow: hidden;
 	}
 
 	.ico-btn {
@@ -723,19 +767,6 @@
 		overflow: hidden;
 	}
 
-
-	/*detail*/
-
-
-	/*.detail { background: #fff; }
-.dtitle { position: relative; justify-content: space-around; }
-.dtitle:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0; border-bottom: 1px solid #eee; }
-.dtitle1 { position: relative; width: 27%; padding: 10px 0; color: #333; text-align: center; }
-.dtitle1.on { color: #ff495f; }
-.dtitle1.on:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0; border-bottom: 4px solid #ff495f; }
-
-.detailSwiper { min-height: 300px; background: #fff; }*/
-
 	.detailx {
 		position: relative;
 		/*height: 350px;*/
@@ -743,19 +774,18 @@
 		padding: 10px;
 		text-align: justify;
 	}
-
-
-	/*coupon*/
-
-	.mask {
-		position: fixed;
+	/* .detailx::before { 
+		content: "";
+		position: absolute;
 		left: 0;
 		right: 0;
 		top: 0;
-		bottom: 0;
-		background: rgba(0, 0, 0, .5);
-		z-index: 98;
-	}
+		height: 0;
+		border-top: 1px solid #f2f2f2;
+	} */
+
+
+	/*coupon*/
 
 	.icon-08 {
 		position: absolute;
@@ -773,13 +803,14 @@
 		bottom: -100%;
 		padding-bottom: 10px;
 		background: #fff;
-		z-index: 99;
+		z-index: 1001;
 		opacity: 0;
+		transition: all ease .5s;
 	}
 
 	.coupon-height {
 		height: 260px;
-		overflow-y: scroll;
+		overflow-y: auto;
 	}
 
 	.coupon-t {
@@ -942,7 +973,7 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: 0;
+		top: 48px;
 		height: 40px;
 		background: #fff;
 		box-shadow: 0 0 15px rgba(0, 0, 0, .1);
@@ -995,17 +1026,18 @@
 	}
 
 	.eval-statics {
-		padding: 5px 0 15px;
-		text-align: center;
+		padding-bottom:  15px;
+		justify-content: space-between;
 	}
 
 	.eval-count {
-		margin-right: 5px;
-		padding: 0 5px;
+		width: 19%;
+		padding: 5px;
 		background: #fbe6e4;
 		color: #999;
 		font-size: 10px;
-		line-height: 2;
+		text-align: center;
+		line-height: 1.2;
 	}
 
 	.eval-item1 {
@@ -1043,10 +1075,11 @@
 
 	.eval-item3 {
 		margin-top: 10px;
-	}
-
-	.eval-imgList {
 		white-space: nowrap;
+		overflow-x: auto;
+	}
+	.eval-item3::-webkit-scrollbar {
+		display: none;
 	}
 
 	.eval-img {
@@ -1099,4 +1132,6 @@
 		color: #999;
 		font-size: 12px;
 	}
+
+	.move { bottom: 0; opacity: 1; }
 </style>

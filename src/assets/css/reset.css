@@ -20,7 +20,12 @@ input[type=radio] {
     margin-right: 10rpx;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 img {
+    width: 100%;
     max-width: 100%;
     height: auto;
     vertical-align: top;
@@ -124,12 +129,6 @@ textarea:-ms-input-placeholder {
 .flex-box {
     display: -webkit-flex;
     display: flex;
-}
-
-.flex-col {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
 }
 
 .img50 {
@@ -437,7 +436,6 @@ textarea:-ms-input-placeholder {
     transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 }
 
-
 /*red dots*/
 
 .dots {
@@ -492,6 +490,24 @@ textarea:-ms-input-placeholder {
 
 .loadmore { display: block; width: 40%; height: 35px; margin: 10px auto; text-align: center; border: 1px solid #e5e5e5; border-radius: 3px; background: #f5f5f5; line-height: 35px; }
 .loading { width: 15px; height: 15px; vertical-align: middle; }
+
+
+.mask{ 
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 1000;
+    transition: all ease .5s;
+    opacity: 0;
+    z-index: -1;
+}
+.maskon {
+    z-index: 1000;
+    opacity: 1;
+}
 
 
 /* ****************************************************************************************

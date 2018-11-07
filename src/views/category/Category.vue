@@ -10,14 +10,14 @@
 					<div v-if="cateIndex == second.parent_id" class="cateItem">
 						<div class="cateItem-t">{{second.name}}</div>
 						<div v-if="second.children.length" class="cate-ul flex-box">
-							<router-link v-for="(third, index2) in second.children" :key="index2" :to="{ name: 'prolist', params: { categoryId: third.id }}" class="cate-li flex-col">
+							<router-link v-for="(third, index2) in second.children" :key="index2" :to="{ name: 'prolist', params: { categoryId: third.id }}" class="cate-li ">
 								<img v-if="third.more.thumbnail" :src="third.more.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{third.name}}</div>
 							</router-link>
 						</div>
 						<div v-else class="cate-ul flex-box">
-							<router-link class="cate-li flex-col" :to="{name:'prolist',params:{categoryId:third.id}}">
+							<router-link class="cate-li " :to="{name:'prolist',params:{categoryId:third.id}}">
 								<img v-if="second.thumbnail" :src="second.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{second.name}}</div>
@@ -53,16 +53,16 @@ import Footer from '@/components/Footer.vue'
 			this.getCategory();
 		},
 		methods: {
-			getCategory: function () {
-				this.$api.get('category/index', {})
+			async getCategory() {
+				await this.$api.get('category/index', {})
 					.then(res => {
 						console.log("getCategory", res);
 						if (res.categories.length > 0) {
 							this.categories = res.categories;
 							this.cateIndex = res.categories[0].id;
-							return this.getCategoryById(this.cateIndex);
 						}
 					})
+					await this.getCategoryById(this.cateIndex);
 			},
 			getCategoryById: function (id) {
 				this.$api.get('category/getCategoryById', {

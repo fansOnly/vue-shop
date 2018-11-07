@@ -896,6 +896,21 @@ class Tools {
 		}
 		return result;
 	}
+
+	/**
+	 * 平滑滚动
+	 */
+	throttle(action){
+		let isRunning = false;
+		return function(){
+			if (isRunning) return;
+			isRunning = true;
+			window.requestAnimationFrame(()=>{
+				action();
+				isRunning = false;
+			})
+		}
+	}
 }
 
 export default Tools

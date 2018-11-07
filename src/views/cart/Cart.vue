@@ -140,7 +140,7 @@
 				setCouponsList: 'cart/setCouponsList'
 			}),
 			async GetUserCart() {
-				this.$api.get('Cart/GetUserCart', {
+				await this.$api.get('Cart/GetUserCart', {
 						user_id: this.user_id
 					})
 					.then(res => {

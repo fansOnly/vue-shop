@@ -13,6 +13,11 @@ axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8"',
     'X-Requested-With': 'XMLHttpRequest'
 };
+const userId = localStorage.getItem("user").id;
+// if(userId){
+//     axios.defaults.headers['xcode'] = 
+// }
+
 
 let instance = axios.create();
 // 请求超时

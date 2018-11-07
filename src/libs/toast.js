@@ -25,13 +25,15 @@ class Toast{
 
 
     show(option){
-        this.config.show = true
-        this.config.text = option.text
-        setTimeout(() => {this.config.show = false},  option.duration);
+        this.config.show = true;
+        this.config.text = option.text;
+        if(option.duration){
+            setTimeout(() => {this.config.show = false},  option.duration);
+        }
     }
 
     hide(){
-        this.config.show = false
+        this.config.show = false;
     }
 }
 

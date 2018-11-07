@@ -5,7 +5,7 @@
             <div>分享到微博</div>
             <div>分享到朋友圈</div>
         </div>
-        <div :class="['mask', { show: isshare }]" @click="$emit('close')"></div>
+        <div :class="['mask', { maskon: isshare }]" @click="$emit('close')"></div>
     </div>
 </template>
 
@@ -28,9 +28,5 @@
 }
 .move{
     bottom: 0;
-}
-.show {
-    z-index: 1000;
-    opacity: 1;
 }
 </style>
