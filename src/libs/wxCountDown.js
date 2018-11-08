@@ -10,7 +10,7 @@ function countDown(that, timeArr, type, cb) {
                     countDownNum--;
                     wxTimer[index].countDownNum = countDownNum;
                     wxTimer[index].countDown = transfor(countDownNum);
-                    that.setData({ wxTimer: wxTimer })
+                    this.wxTimer = wxTimer;
                 } else {
                     wxTimer[index].countDown = '';
                     clearInterval(timer);
@@ -26,7 +26,7 @@ function countDown(that, timeArr, type, cb) {
                 countDownNum--;
                 wxTimer[0].countDownNum = countDownNum;
                 wxTimer[0].countDown = transfor(countDownNum);
-                that.setData({ wxTimer: wxTimer })
+                this.wxTimer = wxTimer;
             } else {
                 wxTimer[0].countDown = '';
                 clearInterval(timer);

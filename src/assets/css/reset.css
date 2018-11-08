@@ -496,10 +496,9 @@ textarea:-ms-input-placeholder {
     position: fixed;
     left: 0;
     right: 0;
-    top: 0;
+    top: 48px;
     bottom: 0;
     background: rgba(0,0,0,.4);
-    z-index: 1000;
     transition: all ease .5s;
     opacity: 0;
     z-index: -1;

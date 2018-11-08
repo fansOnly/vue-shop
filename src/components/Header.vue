@@ -11,7 +11,7 @@
 				<span class="iconfont icon-ellipsis" @click="share"></span>
 			</div>
 		</div>
-		<Share :isshare="isshare" v-on:close="isshare = !isshare"></Share>
+		<Share :isshare="isshare" v-on:close="isshare = false"></Share>
 	</div>
 </template>
 
@@ -25,32 +25,38 @@
 		},
 		data() {
 			return {
+				pageTitle: '',
 				isIndex: true,
 				isshare: false
 			}
 		},
 		created() {},
 		computed: {
-			pageTitle() {
-				const routes = this.$router.options.routes;
-				let title = null;
-				routes.forEach(element => {
-					if (element.name == this.$route.name) {
-						title = element.title
-					}
-				});
-				return title;
-			}
+			// pageTitle() {
+			// 	const routes = this.$router.options.routes;
+			// 	let title = null;
+			// 	routes.forEach(element => {
+			// 		if (element.name == this.$route.name) {
+			// 			title = element.meta.title
+			// 		}
+			// 	});
+			// 	return title;
+			// }
 			// ...mapState({
 			// 	pageTitle: state => state.title.pageTitle
 			// })
 		},
 		watch: {
-			$route(now, old) {
-				this.isIndex = now.path === '/' ? true : false;
+			'$route'(to, from) {
+				this.isIndex = to.path === '/' ? true : false;
+				if(to.matched.some(record => record.meta.title)){
+					this.pageTitle = to.meta.title;
+				}
 			}
 		},
-		mounted() {},
+		mounted() {
+			// console.log(this.$route)
+		},
 		methods: {
 			goBack: function () {
 				window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');

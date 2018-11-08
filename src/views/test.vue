@@ -1,12 +1,14 @@
 <template>
 	<div>
-		<div :style="{ marginTop:'50px' }">
-			<a-checkbox @change="onCheckAllChange" :checked="checkAll">
-				Check all
-			</a-checkbox>
-		</div>
-		<br />
-		<a-checkbox-group :options="plainOptions" v-model="checkedList" @change="onChange" />
+		<div><router-link to="/test/1">go1</router-link></div>
+		<div><router-link to="/test/2">go2</router-link></div>
+		<div><router-link to="/test/3">go3</router-link></div>
+		<div><router-link to="/test/4">go4</router-link></div>
+	
+		<div v-if="id == 1">111111111111111111111111111111111</div>
+		<div v-if="id == 2">222222222222222222</div>
+		<div v-if="id == 3">333333333333333333333</div>
+		<div v-if="id == 4">44444444444444</div>
 	</div>
 </template>
 <script>
@@ -22,40 +24,20 @@
 		},
 		data() {
 			return {
-				checkedList: [],
-				indeterminate: true,
-				checkAll: false,
-				plainOptions: [],
+				id: 0
+			}
+		},
+		watch:{
+			'$route'(to, from){
+				console.log(to)
+				console.log(from)
+				// this.id = e.params.id;
 			}
 		},
 		mounted() {
-			// this.plainOptions = ['Apple', 'Pear', 'Orange']
-			this.getData();
+			
 		},
 		methods: {
-			onChange(checkedList) {
-				// this.indeterminate = !!checkedList.length && (checkedList.length < plainOptions.length)
-				this.checkAll = checkedList.length === this.plainOptions.length
-			},
-			onCheckAllChange(e) {
-				Object.assign(this, {
-					checkedList: e.target.checked ? this.plainOptions : [],
-					// indeterminate: false,
-					checkAll: e.target.checked,
-				})
-			},
-			getData(){
-				// this.plainOptions = ['Apple', 'Pear', 'Orange']
-				this.$api.get('Cart/GetUserCart', {
-						user_id: 1
-					})
-				// this.$api.get('category/index', {})
-					.then(res => {
-						console.log("getCategory", res);
-						this.plainOptions = ['Appl1e', 'Pear1', 'Orange1']
-					})
-				
-			}
 		},
 	}
 </script>

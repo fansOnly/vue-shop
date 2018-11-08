@@ -13,11 +13,6 @@ axios.defaults.headers = {
     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8"',
     'X-Requested-With': 'XMLHttpRequest'
 };
-const userId = localStorage.getItem("user").id;
-// if(userId){
-//     axios.defaults.headers['xcode'] = 
-// }
-
 
 let instance = axios.create();
 // 请求超时
@@ -38,13 +33,17 @@ instance.interceptors.request.use(config => {
     } else {
         promiseArr[url] = cancel;
     }
+    // if(user && user.id){
+    if(localStorage.getItem("token")){
+        config.headers.token = localStorage.getItem("token");
+    }
     // toast.show({
     //     text: 'loading...',
     //     duration: 50000
     // });
     return config;
 }, error => {
-    toast.hide();
+    // toast.hide();
     return Promise.reject(error);
 });
 // 移除拦截器
@@ -52,10 +51,10 @@ instance.interceptors.request.use(config => {
 
 // 添加响应拦截器
 instance.interceptors.response.use(response => {
-    toast.hide();
+    // toast.hide();
     return response;
 }, err => {
-    toast.hide();
+    // toast.hide();
     if (err && err.response) {
         switch (err.response.status) {
             case 400:
@@ -63,6 +62,11 @@ instance.interceptors.response.use(response => {
                 break;
             case 401:
                 err.message = '未授权，请重新登录';
+                localStorage.removeItem("token");
+                this.$router.push({
+                    path: '/login',
+                    query: { redirect: this.$route.fullPath }
+                });
                 break;
             case 403:
                 err.message = '拒绝访问';

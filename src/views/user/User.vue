@@ -24,45 +24,45 @@
 
 		<div v-if="iswxLogin">
 			<div class="user-box order-box flex-box">
-				<router-link to="/pages/order/index?state=1" class="order" hover-class="none"><span v-if="count.unpay" class="count">{{count.unpay}}</span><span class="iconfont icon-order1 icon-order"></span>
+				<router-link :to="{ name: 'order', params: { type: 'unpay' } }" class="order"><span v-if="count.unpay" class="count">{{count.unpay}}</span><span class="iconfont icon-order1 icon-order"></span>
 					<div>待支付</div>
 				</router-link>
-				<router-link to="/pages/order/index?state=2" class="order" hover-class="none"><span v-if="count.unreceive" class="count">{{count.unreceive}}</span><span class="iconfont icon-order5 icon-order"></span>
+				<router-link :to="{ name: 'order', params: { type: 'unreceive' } }" class="order"><span v-if="count.unreceive" class="count">{{count.unreceive}}</span><span class="iconfont icon-order5 icon-order"></span>
 					<div>待收货</div>
 				</router-link>
-				<router-link to="/pages/order/index?state=3" class="order" hover-class="none"><span v-if="count.unevaluate" class="count">{{count.unevaluate}}</span><span class="iconfont icon-order3 icon-order"></span>
+				<router-link :to="{ name: 'order', params: { type: 'unevaluate' } }" class="order"><span v-if="count.unevaluate" class="count">{{count.unevaluate}}</span><span class="iconfont icon-order3 icon-order"></span>
 					<div>待评价</div>
 				</router-link>
-				<router-link to="/pages/order/index?state=0" class="order" hover-class="none"><span class="iconfont icon-order0 icon-order"></span>
+				<router-link :to="{ name: 'order', params: { type: 'all' } }" class="order"><span class="iconfont icon-order0 icon-order"></span>
 					<div>全部订单</div>
 				</router-link>
 			</div>
 
 			<div class="user-box quan-box flex-box">
-				<router-link to="charge/index" class="quan" hover-class="none">
+				<router-link to="charge/index" class="quan">
 					<div class="pe1">{{count.wallet}}</div>钱包
 				</router-link>
-				<router-link to="score/index" class="quan" hover-class="none">
+				<router-link to="score/index" class="quan">
 					<div class="pe1">{{count.score}}</div>积分
 				</router-link>
-				<router-link to="coupon/index" class="quan" hover-class="none">
+				<router-link to="coupon/index" class="quan">
 					<div class="pe1">{{count.coupon}}</div>优惠券
 				</router-link>
-				<router-link to="fav/index" class="quan" hover-class="none">
+				<router-link to="fav/index" class="quan">
 					<div class="pe1">{{count.fav}}</div>收藏
 				</router-link>
 			</div>
 
 			<div class="user-box acts-box">
-				<router-link to="userInfo/index" class="acts" hover-class="none">
+				<router-link :to="{name:'userinfo', params: {userId: user_id }}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-user icon-acts"></span><span class="acts-t">个人信息</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
-				<router-link to="address/index" class="acts" hover-class="none">
+				<router-link :to="{name:'address', params: {userId: user_id}}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-address2 icon-acts"></span><span class="acts-t">地址管理</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
-				<router-link to="charge/index" class="acts" hover-class="none">
+				<router-link to="charge/index" class="acts">
 					<div class="acts-item"><span class="iconfont icon-charge icon-acts"></span><span class="acts-t">充值中心</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
@@ -124,11 +124,11 @@
 				<div class="acts-item"><span class="iconfont icon-setting icon-acts"></span><span class="acts-t">授权设置</span></div>
 				<div class="acts-item"><span class="arrow"></span></div>
 			</router-link>
-			<router-link to="feedback/index" class="acts" hover-class="none">
+			<router-link to="feedback/index" class="acts">
 				<div class="acts-item"><span class="iconfont icon-feedback icon-acts"></span><span class="acts-t">意见反馈</span></div>
 				<div class="acts-item"><span class="arrow"></span></div>
 			</router-link>
-			<router-link to="help/index" class="acts" hover-class="none">
+			<router-link to="help/index" class="acts">
 				<div class="acts-item"><span class="iconfont icon-help icon-acts"></span><span class="acts-t">帮助文档</span></div>
 				<div class="acts-item"><span class="arrow"></span></div>
 			</router-link>
@@ -157,6 +157,7 @@
 			return {
 				iswxLogin: true,
 				canIUse: true,
+				user_id: 0,
 				user: {},
 				count: {},
 				phone: null,
@@ -173,6 +174,7 @@
 				this.$api.get('User/GetUserInfo', {user_id: this.user_id})
 				.then(res=>{
 					console.log("GetUserInfo", res);
+					localStorage.setItem("user", res.user);
 					this.user = res.user;
 				})
 				await this.GetNumList();

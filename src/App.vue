@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<Header></Header>
-		<transition :name="transitionName" mode="out-in">
+		<transition :name="transitionName">
 			<router-view></router-view>
 		</transition>
 	</div>
@@ -14,16 +14,16 @@
 		components: {
 			Header
 		},
-		data(){
+		data() {
 			return {
 				transitionName: 'slide-left'
 			}
 		},
-		watch:{
-			'$route' (to, from) {
-    			const toDepth = to.path.split('/').length
+		watch: {
+			'$route'(to, from) {
+				const toDepth = to.path.split('/').length
 				const fromDepth = from.path.split('/').length
-				this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+				this.transitionName = toDepth > fromDepth ? 'slide-right' : 'slide-left'
 			}
 		}
 	}
@@ -41,8 +41,26 @@
 		line-height: 1.5;
 		overflow: hidden;
 	}
-	
 
+	/* .slide-left-enter-active, .slide-right-enter-active, .slide-left-leave-active, .slide-right-leave-active {
+		transition: all .3s ease;
+	}
+
+	.slide-left-enter, .slide-left-leave-to {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+
+	.slide-right-enter, .slide-right-leave-to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	.slide-left-enter-to, .slide-left-leave, .slide-right-enter-to, .slide-right-leave {
+		opacity: 1;
+		transform: translateX(0);
+	} */
+	
 	@import '//at.alicdn.com/t/font_667160_k1loj6k2ef.css';
 	/* @import '~@/assets/iconfont/iconfont.css'; */
 </style>

@@ -24,16 +24,22 @@ class Toast{
     }
 
 
-    show(option){
+    show(option, cb){
         this.config.show = true;
         this.config.text = option.text;
-        if(option.duration){
-            setTimeout(() => {this.config.show = false},  option.duration);
-        }
+        setTimeout(() => {
+            this.config.show = false;
+            if(typeof(cb) === "function"){
+                cb();
+            }
+        },  option.duration ? option.duration : this.config.duration);
     }
 
-    hide(){
+    hide(cb){
         this.config.show = false;
+        if(typeof(cb) === "function"){
+            cb();
+        }
     }
 }
 
