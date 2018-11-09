@@ -1,19 +1,19 @@
 <template>
 	<div style="background:#f7f7f7;">
-		<div class="order-box flex-box">
+		<!-- <div class="order-box flex-box">
 			<div :class="['order', state == 0 ? 'on' : '' ]" data-type="all" @click="tabOrder">全部订单</div>
 			<div :class="['order', state == 1 ? 'on' : '' ]" data-type="unpay" @click="tabOrder">待支付</div>
 			<div :class="['order', state == 2 ? 'on' : '' ]" data-type="unreceive" @click="tabOrder">待收货</div>
 			<div :class="['order', state == 3 ? 'on' : '' ]" data-type="unevaluate" @click="tabOrder">待评价</div>
 			<div :class="['order', state == 11 ? 'on' : '']" data-type="unreturn" @click="tabOrder">退换货</div>
-		</div>
-		<!-- <div class="order-box flex-box">
-			<router-link to="/order/all" :class="['order', state == 0 ? 'on' : '' ]" >全部订单</router-link>
-			<router-link to="/order/unpay" :class="['order', state == 1 ? 'on' : '' ]" >待支付</router-link>
-			<router-link to="/order/unreceive" :class="['order', state == 2 ? 'on' : '' ]" >待收货</router-link>
-			<router-link to="/order/unevaluate" :class="['order', state == 3 ? 'on' : '' ]" >待评价</router-link>
-			<router-link to="/order/unreturn" :class="['order', state == 11 ? 'on' : '']" >退换货</router-link>
 		</div> -->
+		<div class="order-box flex-box">
+			<router-link :to="{name:'order', params:{type:'all'}}" :class="['order', state == 0 ? 'on' : '' ]" >全部订单</router-link>
+			<router-link :to="{name:'order', params:{type:'unpay'}}" :class="['order', state == 1 ? 'on' : '' ]" >待支付</router-link>
+			<router-link :to="{name:'order', params:{type:'unreceive'}}" :class="['order', state == 2 ? 'on' : '' ]" >待收货</router-link>
+			<router-link :to="{name:'order', params:{type:'unevaluate'}}" :class="['order', state == 3 ? 'on' : '' ]" >待评价</router-link>
+			<router-link :to="{name:'order', params:{type:'unreturn'}}" :class="['order', state == 11 ? 'on' : '']" >退换货</router-link>
+		</div>
 		
 		<!-- 全部订单 -->
 		<div v-if="state == 0 && orderList.length">
@@ -142,19 +142,16 @@
 		<!-- 待收货订单 -->
 		<!-- 待评价订单 -->
 		<!-- 退换货订单 -->
-		<div v-else>
-			<div class="noData">
-				<img class="noData-img" src="@/assets/nodata.png" mode="widthFix">
-				<div class="noData-txt">您的订单列表是空的...</div>
-			</div>
-		</div>
+		<NoData v-else title="订单列表"></NoData>
 	</div>
 </template>
 
 <script>
-	import countDown from "@/libs/wxCountDown.js";
+	import countDown from "@/libs/wxCountDown.js"
+	import NoData from '@/components/NoData'
 	export default {
 		name: 'order',
+		components: {NoData},
 		data(){
 			return {
 				orderList: [],
@@ -227,7 +224,7 @@
 				// this.cancelOrder(index);
 			},
 			tabOrder(e){
-				this.$router.push(e.target.dataset.type);
+				// this.$router.push(e.target.dataset.type);
 			},
 			cancelOrder2(){},
 			shipperInfo(){},

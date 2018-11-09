@@ -77,7 +77,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/user/userinfo/:userId',
+		path: '/user/userinfo',
 		name: 'userinfo',
 		component: resolve => require(['@/views/user/UserInfo.vue'], resolve),
 		meta: {
@@ -85,20 +85,60 @@ const routes = [
 		}
 	},
 	{
-		path: '/address/:userId',
-		name: 'address',
-		component: resolve => require(['@/views/user/Address.vue'], resolve),
+		path: '/address',
+		name: 'addressx',
+		component: resolve => require(['@/views/user/address/Address.vue'], resolve),
 		meta: {
 			title: '地址管理'
 		}
 	},
 	{
+		path: '/address/edit/:id',
+		name: 'editaddress',
+		component: resolve => require(['@/views/user/address/AddressEdit.vue'], resolve),
+		meta: {
+			title: '编辑地址'
+		}
+	},
+	{
+		path: '/address/add',
+		name: 'addaddress',
+		component: resolve => require(['@/views/user/address/AddressAdd.vue'], resolve),
+		meta: {
+			title: '新增地址'
+		}
+	},
+	{
 		path: '/order/:type',
 		name: 'order',
-		component: resolve => require(['@/views/order/Index.vue'], resolve),
+		component: resolve => require(['@/views/order/Order.vue'], resolve),
 		meta: {
 			title: '我的订单',
 			requireAuth: true
+		}
+	},
+	{
+		path: '/coupon/index',
+		name: 'coupon',
+		component: resolve => require(['@/views/coupon/Coupon.vue'], resolve),
+		meta: {
+			title: '领取优惠券'
+		}
+	},
+	{
+		path: '/score/index',
+		name: 'score',
+		component: resolve => require(['@/views/score/Score.vue'], resolve),
+		meta: {
+			title: '积分商城'
+		}
+	},
+	{
+		path: '/score/detail/:id',
+		name: 'scoredetail',
+		component: resolve => require(['@/views/score/ScoreDetail.vue'], resolve),
+		meta: {
+			title: '积分商城详情'
 		}
 	},
 ];
@@ -111,7 +151,7 @@ const scrollBehavior = (to, from, savedPosition) => {
 		if(to.hash){
 			position.selector = to.hash;
 		}else{
-			if(to.matched.some(im=>im.meta.scrollTop)){
+			if(to.matched.some(record=>record.meta.scrollTop)){
 				position.x = 0;
 				position.y = 0;
 			}

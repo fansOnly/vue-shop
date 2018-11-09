@@ -24,10 +24,7 @@
 				<span v-else>加载更多</span>
 			</div>
 		</div>
-		<div v-else class="noData">
-			<img class="noData-img" src="@/assets/nodata.png" mode="widthFix">
-			<div class="noData-txt">抱歉，商品列表是空的...</div>
-		</div>
+		<NoData v-else title="商城列表"></NoData>
 	</div>
 </template>
 
@@ -35,12 +32,14 @@
 	import Search from '@/components/Search'
 	import List1 from '@/views/product/List1'
 	import List2 from '@/views/product/List2'
+	import NoData from '@/components/NoData'
 	export default {
 		name: 'ProList',
 		components: {
 			Search,
 			List1,
-			List2
+			List2,
+			NoData
 		},
 		data() {
 			return {
@@ -63,22 +62,6 @@
 			this.GetGoodsList(this.page);
 		},
 		methods: {
-			loadmore() {
-				const total = this.total;
-				const page = this.page;
-				const pageSize = this.pageSize;
-				// const keyword = this.keyword;
-				if (total > page * pageSize) {
-					// if(keyword){
-					// 	this.searchx(this.categoryId, page + 1, this.sortId, this.up);
-					// }else{
-					this.loading = true;
-					this.GetGoodsList(page + 1);
-					// }
-				} else {
-					console.log("nodata")
-				}
-			},
 			GetGoodsList: function (page) {
 				this.$api.get('Goods/GetGoodsList', {
 						categoryId: this.categoryId,
@@ -132,6 +115,22 @@
 			showChange: function () {
 				this.dismode = !this.dismode;
 				localStorage.setItem("dismode", this.dismode);
+			},
+			loadmore() {
+				const total = this.total;
+				const page = this.page;
+				const pageSize = this.pageSize;
+				// const keyword = this.keyword;
+				if (total > page * pageSize) {
+					// if(keyword){
+					// 	this.searchx(this.categoryId, page + 1, this.sortId, this.up);
+					// }else{
+					this.loading = true;
+					this.GetGoodsList(page + 1);
+					// }
+				} else {
+					console.log("nodata")
+				}
 			},
 		}
 	}

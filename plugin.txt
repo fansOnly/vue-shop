@@ -1,0 +1,35 @@
+Animate.css
+Auto Import
+Beautify
+Bookmarks
+Chinese Language
+Class autocomplete for 
+Code Runner
+Color Info
+Css Peek
+ESLint
+Git History
+GitLens - Git superchar..
+HTML CSS Support
+HTML Snippets
+HTMLHint
+Import Cost
+jshint
+minapp
+Mithril Emment
+open in browser
+Path autocomplete
+Pth Intellisense
+PHP Debug
+PHP Intellisense
+Quokka.js
+REST Client
+SQL Server
+Templex
+TODO Highlight
+vscode wxml
+vscode-caniuse
+vscode-faker
+vscode-icons
+vue
+Vue 2 Snippets

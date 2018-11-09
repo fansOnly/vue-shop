@@ -58,7 +58,7 @@
 					<div class="acts-item"><span class="iconfont icon-user icon-acts"></span><span class="acts-t">个人信息</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
-				<router-link :to="{name:'address', params: {userId: user_id}}" class="acts">
+				<router-link :to="{name:'addressx', params: {userId: user_id}}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-address2 icon-acts"></span><span class="acts-t">地址管理</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
@@ -132,10 +132,10 @@
 				<div class="acts-item"><span class="iconfont icon-help icon-acts"></span><span class="acts-t">帮助文档</span></div>
 				<div class="acts-item"><span class="arrow"></span></div>
 			</router-link>
-			<div class="acts" @click="makePhoneCall">
+			<a class="acts" href="tel://400-400-8888">
 				<div class="acts-item"><span class="iconfont icon-tel icon-acts"></span><span class="acts-t">联系我们</span></div>
 				<div class="acts-item"><span class="phone">{{phone}}</span><span class="arrowx"></span></div>
-			</div>
+			</a>
 			<div class="acts" @click="checkUpdate">
 				<div class="acts-item"><span class="iconfont icon-version icon-acts"></span><span class="acts-t">版本更新</span></div>
 				<div class="acts-item"><span v-if="newVersion" class="dots"></span></div>

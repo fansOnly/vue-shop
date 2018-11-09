@@ -1,36 +1,91 @@
 <template>
 	<div class="address-box">
 		<a-form @submit="handleSubmit" :autoFormCreate="(form)=>{this.form = form}">
-			<a-form-item label='Note' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="note"
+			<a-form-item label='姓名' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="name"
 			 :fieldDecoratorOptions="{rules: [{ required: true, message: 'Please input your note!' }]}">
 				<a-input />
 			</a-form-item>
+			<a-form-item label='电话' :labelCol="{ span: 5 }" :wrapperCol="{ span: 12 }" fieldDecoratorId="phone"
+			 :fieldDecoratorOptions="{rules: [{ required: true, len: 11, message: '' }]}">
+				<a-input />
+			</a-form-item>
+			<a-form-item label='国家' :labelCol="{ span: 5 }" :wrapperCol="{ span: 15 }" fieldDecoratorId="nation" :fieldDecoratorOptions="{rules: [{ required: true, message: '' }]}">
+				<a-select  @change="handleChange" allowClear>
+					<a-select-option value='china'>China</a-select-option>
+					<a-select-option value='use'>U.S.A</a-select-option>
+				</a-select>
+			</a-form-item>
+			<a-form-item label='多选' :labelCol="{ span: 5 }" :wrapperCol="{ span: 15 }" fieldDecoratorId="multi" :fieldDecoratorOptions="{rules: [{ required: true, message: '' }]}">
+				<a-select mode="multiple"  @change="handleChange" >
+					<a-select-option value='china'>China</a-select-option>
+					<a-select-option value='use'>U.S.A</a-select-option>
+				</a-select>
+			</a-form-item>
+			<a-form-item label='radio' :labelCol="{ span: 5 }" :wrapperCol="{ span: 15 }" fieldDecoratorId="radio" :fieldDecoratorOptions="{rules: [{ required: true, message: '' }]}">
+				<a-radio-group @change="onChange" >
+					<a-radio value="a">Hangzhou</a-radio>
+					<a-radio value="b">Shanghai</a-radio>
+					<a-radio-button value="c">Beijing</a-radio-button>
+					<a-radio-button value="d">Chengdu</a-radio-button>
+				  </a-radio-group>
+			</a-form-item>
+			<a-rate allowHalf v-model='rate' @change="rateChange" />
+			<a-button type='primary' htmlType='submit'>提交</a-button>
 		</a-form>
 	</div>
 </template>
 
 <script>
 	import {
-		Form
+		Form,
+		Input,
+		Button,
+		Select,
+		Radio,
+		Rate
 	} from 'ant-design-vue'
 
 	export default {
 		name: 'userinfo',
 		components: {
-			'a-form': Form
+			'a-form': Form,
+			'a-form-item': Form.Item,
+			'a-input': Input,
+			'a-button': Button,
+			'a-select': Select,
+			'a-select-option': Select.Option,
+			'a-radio': Radio,
+			'a-radio-group': Radio.Group,
+			'a-radio-button': Radio.Button,
+			'a-rate': Rate
 		},
 		data() {
 			return {
-				avatar: '',
-				name: '',
-				phone: ''
+				formLayout: 'horizontal',
+				rate: 3
 			}
 		},
 		mounted() {
-			console.log(this.$route)
+			this.user_id = 1;
 		},
 		methods: {
-			handleSubmit() {},
+			handleSubmit(e) {
+				e.preventDefault()
+				this.form.validateFields((err, values) => {
+					if (!err) {
+						console.log('Received values of form: ', values)
+					}
+				})
+			},
+			handleChange(value) {
+				console.log(`selected ${value}`);
+			},
+			onChange (e) {
+				console.log(`checked = ${e.target.value}`)
+			},
+			rateChange(value){
+				console.log(`rate ${value}`);
+			}
 		}
 	}
 </script>

@@ -3,8 +3,8 @@
 		<router-link v-for="(item, index) in products" :key="index" :to="{ name: 'product', params: { id: item.id } }"
 			class="picList-li">
 			<div class="picList-imgBox">
-				<img v-if="item.thumbnail" :src="item.thumbnail" mode="widthFix">
-				<img v-else src="@/assets/imgicon.png" mode="widthFix">
+				<img v-if="item.thumbnail" :src="item.thumbnail">
+				<img v-else src="@/assets/imgicon.png">
 				<span v-if="item.state == 3" class="product-tag tag-new">新品</span>
 				<span v-if="item.state == 2" class="product-tag tag-hot">热销</span>
 			</div>

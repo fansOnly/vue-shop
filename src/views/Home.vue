@@ -7,22 +7,22 @@
 		</div>
 		<Banner :bannerList="bannerList" />
 		<div class="tabs_special">
-			<a href="" class="tabs_item">
+			<router-link :to="{name:'coupon'}" class="tabs_item">
 				<img class="img" src="../assets/images/ico_01.png" />
 				<span class="tabs_title">领劵中心</span>
-			</a>
-			<a href="" class="tabs_item">
+			</router-link>
+			<router-link to="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_02.png" />
 				<span class="tabs_title">热卖产品</span>
-			</a>
-			<a href="" class="tabs_item">
+			</router-link>
+			<router-link :to="{name:'score'}" class="tabs_item">
 				<img class="img" src="../assets/images/ico_03.png" />
 				<span class="tabs_title">积分兑换</span>
-			</a>
-			<a href="" class="tabs_item">
+			</router-link>
+			<router-link to="" class="tabs_item">
 				<img class="img" src="../assets/images/ico_04.png" />
 				<span class="tabs_title">天天特价</span>
-			</a>
+			</router-link>
 		</div>
 
 		<div class="discount-area flex-box" style="margin-bottom: 10px;">

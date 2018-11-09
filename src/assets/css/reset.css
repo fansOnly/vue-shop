@@ -46,7 +46,7 @@ form {
 
 input {
     height: 2.58823529em;
-    min-height: 2.58823529em;
+    /* min-height: 2.58823529em; */
     line-height: 2.58823529em;
 }
 
@@ -357,22 +357,7 @@ textarea:-ms-input-placeholder {
 }
 
 
-/*noData*/
 
-.noData {
-    margin-top: 40%;
-    transform: translateY(-50%);
-    text-align: center;
-}
-
-.noData-img {
-    width: 126px;
-}
-
-.noData-txt {
-    color: #ccc;
-    font-size: 14px;
-}
 
 .nomore {
     position: relative;
@@ -488,7 +473,7 @@ textarea:-ms-input-placeholder {
 
 
 
-.loadmore { display: block; width: 40%; height: 35px; margin: 10px auto; text-align: center; border: 1px solid #e5e5e5; border-radius: 3px; background: #f5f5f5; line-height: 35px; }
+.loadmore { display: block; width: 40%; height: 35px; margin: 25px auto; text-align: center; border: 1px solid #e5e5e5; border-radius: 3px; background: #f5f5f5; line-height: 35px; }
 .loading { width: 15px; height: 15px; vertical-align: middle; }
 
 
