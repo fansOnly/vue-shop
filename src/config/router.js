@@ -28,7 +28,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/searchIndex',
+		path: '/search',
 		name: 'searchIndex',
 		component: resolve => require(['@/views/search/Index.vue'], resolve),
 		meta: {
@@ -109,6 +109,14 @@ const routes = [
 		}
 	},
 	{
+		path: '/address/select',
+		name: 'selectaddress',
+		component: resolve => require(['@/views/user/address/AddressSelect.vue'], resolve),
+		meta: {
+			title: '选择地址'
+		}
+	},
+	{
 		path: '/order/:type',
 		name: 'order',
 		component: resolve => require(['@/views/order/Order.vue'], resolve),
@@ -118,7 +126,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/coupon/index',
+		path: '/coupon',
 		name: 'coupon',
 		component: resolve => require(['@/views/coupon/Coupon.vue'], resolve),
 		meta: {
@@ -126,7 +134,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/score/index',
+		path: '/score',
 		name: 'score',
 		component: resolve => require(['@/views/score/Score.vue'], resolve),
 		meta: {
@@ -139,6 +147,22 @@ const routes = [
 		component: resolve => require(['@/views/score/ScoreDetail.vue'], resolve),
 		meta: {
 			title: '积分商城详情'
+		}
+	},
+	{
+		path: '/charge',
+		name: 'charge',
+		component: resolve => require(['@/views/charge/Charge.vue'], resolve),
+		meta: {
+			title: '充值中心'
+		}
+	},
+	{
+		path: '/charge/log',
+		name: 'chargelog',
+		component: resolve => require(['@/views/charge/ChargeLog.vue'], resolve),
+		meta: {
+			title: '充值记录'
 		}
 	},
 ];

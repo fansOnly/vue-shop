@@ -24,6 +24,7 @@
     transform: translate(-50%,-50%);
     color:#fff;
     word-wrap:break-word;
+    z-index: 99999;
 }
 .fadein {
     animation: animate_in 0.25s;

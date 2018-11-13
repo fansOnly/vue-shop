@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 1">
-					<Photos :something="product"></Photos>
+				<Photos :something="product"></Photos>
 				<div class="section section1 flex-box">
 					<div class="title1">
 						<div class="title">{{product.title}}</div>
@@ -33,13 +33,13 @@
 					<div class="str3 c3"><span class="iconfont icon-wepay2 icon-pro color"></span>微信支付</div>
 				</div>
 
-				<div class="section section5 flex-box" data-mask='coupon' @click="openAttr">
+				<div class="section section5 flex-box" @click="openAttr('coupon')">
 						<div class="flex-box" style="align-items:center;">领取优惠券<span class="iconfont icon-coupon"></span></div>
 						<div class="arrowx"></div>
 					</div>
 
 
-				<div class="section section5 flex-box" data-mask='attr' @click="openAttr">
+				<div class="section section5 flex-box" @click="openAttr('attr')">
 					<div class="">选择产品参数</div>
 					<div class="arrowx"></div>
 				</div>
@@ -47,18 +47,18 @@
 					<div class="">商品描述</div>
 				</div>
 				<div class="detailx detimg ">
-					<span v-html="product.content"></span>
+					<div v-html="product.content"></div>
 				</div>
 			</div>
 
 			<div class="pageItem" v-if="tabIndex == 2">
 				<div class="detailx detimg ">
-						<span v-html="product.content1"></span>
+						<div v-html="product.content1"></div>
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 3">
 				<div class="detailx detimg ">
-						<span v-html="product.content2"></span>
+						<div v-html="product.content2"></div>
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 4">
@@ -101,12 +101,7 @@
 					</div>
 					<router-link to="" class="eval-link">查看更多</router-link>
 				</div>
-				<div v-else class="detailx ">
-					<div class="noData">
-						<img class="noData-img" src="@/assets/nodata.png">
-						<div class="noData-txt">该商品暂无评论...</div>
-					</div>
-				</div>
+				<NoData v-else title="评价列表"></NoData>
 			</div>
 
 			<div class="buttons flex-box">
@@ -119,8 +114,8 @@
 				<router-link class="ico-btn" :to="{name:'cart'}"><span class="iconfont icon-cart2"></span>
 					<div>购物车</div><span class="cart-num">{{cartLength}}</span>
 				</router-link>
-				<div class="cart-btn cart-btn1" data-mask='attr' @click="openAttr">加入购物车</div>
-				<div class="buy-btn buy-btn1" data-mask='attr' @click="openAttr">立即购买</div>
+				<div class="cart-btn cart-btn1" @click="openAttr('attr')">加入购物车</div>
+				<div class="buy-btn buy-btn1" @click="openAttr('attr')">立即购买</div>
 			</div>
 
 			<span v-if="showTop" class="iconfont icon-top" @click="backTop"></span>
@@ -147,7 +142,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="attrx attr-val">
+				<div v-if="product.attrs.length" class="attrx attr-val">
 					<div v-for="(item, index) in product.attrs" :key="index">
 						<div class="attr-name">{{item.attr_name}}</div>
 						<div class="attrs flex-box">
@@ -171,7 +166,6 @@
 				<div class="buy-btn" @click="buyNow">立即购买</div>
 			</div>
 		</div>
-
 
 		<!-- 优惠券选择box -->
 		<div :class="['coupon-box', {move: maskType == 'coupon'}]" >
@@ -210,10 +204,12 @@
 
 <script>
 	import Photos from '@/views/product/Photos'
+	import NoData from '@/components/NoData'
 	export default {
 		name: 'Product',
 		components: {
-			Photos
+			Photos,
+			NoData
 		},
 		data() {
 			return {
@@ -221,7 +217,9 @@
 				autoplay: false,
 				bannerIndex: 1,
 				id: null,
-				product: {},
+				product: {
+					attrs: []
+				},
 				price: null,
 				mprice: null,
 				prices: [],
@@ -304,7 +302,7 @@
 				})
 			},
 			SetUserFav(){
-				const state = this.data.isfav ? 0 : 1;
+				const state = this.isfav ? 0 : 1;
 				this.$api.post('user/SetUserFav',{ goods_id: this.goods_id, user_id: this.user_id, state: state })
 				.then(res => {
 					console.log("SetUserFav", res);
@@ -315,8 +313,8 @@
 			tabbar(e){
 				this.tabIndex = e.target.dataset.index;
 			},
-			openAttr(e){
-				this.maskType = e.target.dataset.mask;
+			openAttr(mask){
+				this.maskType = mask;
 				this.mask = true;
 			},
 			closeAttr(){
@@ -498,42 +496,6 @@
 		line-height: 25px;
 	}
 
-
-	/*section4*/
-
-	.section4 {
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	.icon-coupon {
-		margin-left: 3px;
-		line-height: 1;
-		/*vertical-align: middle;*/
-	}
-
-	.icon-coupon:before {
-		color: #999;
-		font-size: 25px;
-	}
-
-	.secLeft4 {
-		width: 100%;
-	}
-
-	.arrowx:after {
-		content: "";
-		display: inline-block;
-		height: 10px;
-		width: 10px;
-		border-width: 1px 1px 0 0;
-		border-color: #C8C8CD;
-		border-style: solid;
-		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-	}
-
-
 	/*section5*/
 
 	.section5 {
@@ -601,7 +563,7 @@
 		margin-top: -25px;
 		width: 80px;
 		height: 80px;
-		border: 2px solid #ccc;
+		border: 2px solid #eee;
 		/* box-shadow: 0 0 5px rgba(0, 0, 0, .05); */
 	}
 
@@ -617,6 +579,7 @@
 	.attr-A-t1 {
 		color: #f00;
 		font-size: 12px;
+		line-height: 1;
 	}
 
 	.attr-A-t3 {
@@ -625,6 +588,7 @@
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 1;
+		font-size: 12px;
 	}
 
 	.attr-A-t4 {
@@ -789,8 +753,8 @@
 
 	.icon-08 {
 		position: absolute;
-		right: 0;
-		top: 10px;
+		right: -5px;
+		top: 5px;
 		font-size: 30px;
 		color: #bbb;
 		line-height: 1;

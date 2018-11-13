@@ -24,7 +24,7 @@
 				<span v-else>加载更多</span>
 			</div>
 		</div>
-		<NoData v-else title="商城列表"></NoData>
+		<NoData v-else title="产品列表"></NoData>
 	</div>
 </template>
 
@@ -120,16 +120,11 @@
 				const total = this.total;
 				const page = this.page;
 				const pageSize = this.pageSize;
-				// const keyword = this.keyword;
 				if (total > page * pageSize) {
-					// if(keyword){
-					// 	this.searchx(this.categoryId, page + 1, this.sortId, this.up);
-					// }else{
 					this.loading = true;
 					this.GetGoodsList(page + 1);
-					// }
 				} else {
-					console.log("nodata")
+					console.log("nodata");
 				}
 			},
 		}

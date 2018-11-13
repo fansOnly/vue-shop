@@ -1,18 +1,11 @@
 <template>
 	<div style="background:#f7f7f7;">
-		<!-- <div class="order-box flex-box">
-			<div :class="['order', state == 0 ? 'on' : '' ]" data-type="all" @click="tabOrder">全部订单</div>
-			<div :class="['order', state == 1 ? 'on' : '' ]" data-type="unpay" @click="tabOrder">待支付</div>
-			<div :class="['order', state == 2 ? 'on' : '' ]" data-type="unreceive" @click="tabOrder">待收货</div>
-			<div :class="['order', state == 3 ? 'on' : '' ]" data-type="unevaluate" @click="tabOrder">待评价</div>
-			<div :class="['order', state == 11 ? 'on' : '']" data-type="unreturn" @click="tabOrder">退换货</div>
-		</div> -->
 		<div class="order-box flex-box">
-			<router-link :to="{name:'order', params:{type:'all'}}" :class="['order', state == 0 ? 'on' : '' ]" >全部订单</router-link>
-			<router-link :to="{name:'order', params:{type:'unpay'}}" :class="['order', state == 1 ? 'on' : '' ]" >待支付</router-link>
-			<router-link :to="{name:'order', params:{type:'unreceive'}}" :class="['order', state == 2 ? 'on' : '' ]" >待收货</router-link>
-			<router-link :to="{name:'order', params:{type:'unevaluate'}}" :class="['order', state == 3 ? 'on' : '' ]" >待评价</router-link>
-			<router-link :to="{name:'order', params:{type:'unreturn'}}" :class="['order', state == 11 ? 'on' : '']" >退换货</router-link>
+			<router-link :to="{name:'order', params:{type:'all'}}" :class="['order', {on:state == 0} ]" >全部订单</router-link>
+			<router-link :to="{name:'order', params:{type:'unpay'}}" :class="['order', {on:state == 1}]" >待支付</router-link>
+			<router-link :to="{name:'order', params:{type:'unreceive'}}" :class="['order', {on:state == 2}]" >待收货</router-link>
+			<router-link :to="{name:'order', params:{type:'unevaluate'}}" :class="['order', {on:state == 3}]" >待评价</router-link>
+			<router-link :to="{name:'order', params:{type:'unreturn'}}" :class="['order', {on:state == 11}]" >退换货</router-link>
 		</div>
 		
 		<!-- 全部订单 -->
@@ -21,7 +14,7 @@
 				<div class="item item1 flex-box">
 					<div class="item-t1"><span class="c9">订单编号：</span>{{item.order_sn}}</div>
 					<!-- <span v-if="item.state == 1" class="iconfont icon-time1">{{wxTimer[index].countDown}}</span> -->
-					<span v-if="item.state == 4 || item.state == 77 || item.state == 78 || item.state == 13" :data-index="index" :data-id="item.id" class="iconfont icon-delete" @click="delOrder"></span>
+					<span v-if="item.state == 4 || item.state == 77 || item.state == 78 || item.state == 13" class="iconfont icon-delete" @click="delOrder(index, id)"></span>
 				</div>
 				<div class="item item1 flex-box">
 					<div class="item-t1"><span class="c9">下单时间：</span>{{item.create_time}}</div>
@@ -46,45 +39,45 @@
 							<span v-else-if="item.state == 78" class="state5">用户取消</span>
 						</div>
 						<div v-if="item.goods_id"><span class="c9">总价：</span>￥{{item.total_fee}}</div>
-						<div v-if="item.score_id"><span class="c9">总价：</span>{{item.score}}积分</div>
+						<div v-if="item.score_id"><span class="c9">总价：</span>{{item.total_fee}}积分</div>
 					</div>
 					<div v-if="item.state == 1" class="flex-box">
-						<div :data-id="item.id" :data-index="index" class="item-pay" @click="cancelOrder2">取消订单</div>
-						<router-link to="detail?order_id=item.id" class="item-pay">去支付</router-link>
+						<div class="item-pay" @click="cancelOrder2(index, id)">取消订单</div>
+						<router-link to="" class="item-pay">去支付</router-link>
 					</div>
 					<div v-if="item.state == 2" class="flex-box">
-						<div class="item-pay" :data-index="index" :data-id="item.id" @click="shipperInfo">物流详情</div>
-						<div v-if="item.goods_id" class="item-pay" :data-index="index" :data-id="item.id" @click="tuihuo">申请退货</div>
-						<div v-if="item.goods_id" class="item-pay" :data-index="index" :data-id="item.id" @click="okReceive">确认收货</div>
-						<div v-if="item.score_id" class="item-pay" :data-index="index" :data-id="item.id" @click="okReceive2">确认收货</div>
+						<div class="item-pay" @click="shipperInfo(index, id)">物流详情</div>
+						<div v-if="item.goods_id" class="item-pay" @click="tuihuo(index, id)">申请退货</div>
+						<div v-if="item.goods_id" class="item-pay" @click="okReceive(index, id)">确认收货</div>
+						<div v-if="item.score_id" class="item-pay" @click="okReceive2(index, id)">确认收货</div>
 					</div>
 					<div v-if="item.state == 4"  class="flex-box">
-						<div class="item-pay" :data-index="index" :data-id="item.id" @click="shipperInfo">物流详情</div>
-						<router-link to="evaluate/evaluation?order_id=item.id" class="item-pay">查看评价</router-link>
-						<router-link v-if="item.goods_id" to="/pages/product/detail?id=item.goods[0].id" class="item-pay">再次购买</router-link>
-						<router-link v-if="item.score_id" to="/pages/user/pointdetail/index?id=item.goods[0].id" class="item-pay">再次购买</router-link>
+						<div class="item-pay" @click="shipperInfo(index, id)">物流详情</div>
+						<router-link to="" class="item-pay">查看评价</router-link>
+						<router-link v-if="item.goods_id" to="" class="item-pay">再次购买</router-link>
+						<router-link v-if="item.score_id" to="" class="item-pay">再次购买</router-link>
 					</div>
-					<router-link v-if="item.state == 11" to="tui/detail?order_id=item.id" class="item-pay" :data-index="index" :data-id="item.id">待退货</router-link>
+					<router-link v-if="item.state == 11" to="" class="item-pay">待退货</router-link>
 					<div v-if="item.state == 12" class="flex-box">
-						<router-link to="tui/delivery?order_id=item.id" class="item-pay" :data-index="index" :data-id="item.id">物流信息</router-link>
-						<router-link to="tui/detail?order_id=item.id" class="item-pay" :data-index="index" :data-id="item.id">退货中</router-link>
+						<router-link to="" class="item-pay" >物流信息</router-link>
+						<router-link to="" class="item-pay" >退货中</router-link>
 					</div>
-					<router-link v-if="item.state == 13" to="tui/detail?order_id=item.id" class="item-pay" :data-index="index" :data-id="item.id">已退款</router-link>
+					<router-link v-if="item.state == 13" to="" class="item-pay" >已退款</router-link>
 					<div v-if="item.state == 3"  class="flex-box">
-						<div class="item-pay" :data-index="index" :data-id="item.id" @click="shipperInfo">物流详情</div>
-						<router-link to="evaluate/evaluate?order_id=item.id" class="item-pay">去评价</router-link>
+						<div class="item-pay" @click="shipperInfo(index, id)">物流详情</div>
+						<router-link to="" class="item-pay">去评价</router-link>
 					</div>
-					<router-link v-if="item.goods_id && (item.state == 77 || item.state == 78)" to="/pages/product/detail?id=item.goods[0].id" class="item-pay">再次购买</router-link>
-					<router-link v-if="item.score_id && (item.state == 77 || item.state == 78)" to="/pages/user/pointdetail/index?id=item.goods[0].id" class="item-pay">再次购买</router-link>
+					<router-link v-if="item.goods_id && (item.state == 77 || item.state == 78)" to="" class="item-pay">再次购买</router-link>
+					<router-link v-if="item.score_id && (item.state == 77 || item.state == 78)" to="" class="item-pay">再次购买</router-link>
 				</div>
 				<div class="item last">
 					<!-- <div class="shop">官方旗舰店</div> -->
 					<div v-for="(goods, index2) in item.goods" :key="index2" class="goods flex-box">
-						<router-link to="/pages/product/detail?id=goods.id" class="goods-img">
-							<img v-if="goods.thumbnail" :src="goods.thumbnail" mode="widthFix">
-							<img v-else src="@/assets/imgicon.png" mode="widthFix">
+						<router-link to="" class="goods-img">
+							<img v-if="goods.thumbnail" :src="goods.thumbnail" >
+							<img v-else src="@/assets/imgicon.png" >
 						</router-link>
-						<router-link to="detail?order_id=item.id" class="goods-txt">
+						<router-link to="" class="goods-txt">
 							<div class="goods-t">{{goods.title}}</div>
 							<div class="goods-attr">
 								<span v-for="(attr, index3) in goods.attrs" :key="index3" class="goods-attrv">{{attr.value}}</span>
@@ -124,8 +117,8 @@
 					<!-- <div class="shop">官方旗舰店</div> -->
 					<div v-for="(goods, index2) in item.goods" :key="index2" class="goods flex-box">
 						<router-link to="/pages/product/detail?id=goods.id" class="goods-img">
-							<img v-if="goods.thumbnail" :src="goods.thumbnail" mode="widthFix">
-							<img v-else src="@/assets/imgicon.png" mode="widthFix">
+							<img v-if="goods.thumbnail" :src="goods.thumbnail" >
+							<img v-else src="@/assets/imgicon.png" >
 						</router-link>
 						<router-link to="detail?order_id=item.id" class="goods-txt">
 							<div class="goods-t">{{goods.title}}</div>
@@ -223,21 +216,16 @@
 				// this.$set(this.orderList,index,attrId);
 				// this.cancelOrder(index);
 			},
-			tabOrder(e){
-				// this.$router.push(e.target.dataset.type);
-			},
 			cancelOrder2(){},
 			shipperInfo(){},
 			delOrder(){},
 			okReceive(){},
+			okReceive2(){},
 			tuihuo(){},
 		}
 	}
 </script>
 <style scoped>
-
-
-
 .order-box { position: relative; height: 40px; background: #fff; line-height: 40px; /*justify-content: space-around;*/ }
 .order-box:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0; border-bottom: 1px solid #f3f3f3; }
 .order { position: relative; width: 20%; font-size: 13px; color: #666; text-align: center; }

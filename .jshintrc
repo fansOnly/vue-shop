@@ -1,0 +1,19 @@
+{
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "noarg": true,
+    "noempty": true,
+    "quotmark": "single",
+    "undef": true,
+    "unused": true,
+    "node": true,
+    "indent": true,
+    "newcap": true,
+    "nonew": true,
+    "trailing": true,
+    "maxparams": 4,
+    "browser": true,
+    "devel": true,
+    "jquery": true
+}

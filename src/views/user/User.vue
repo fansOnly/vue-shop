@@ -39,7 +39,7 @@
 			</div>
 
 			<div class="user-box quan-box flex-box">
-				<router-link to="charge/index" class="quan">
+				<router-link :to="{name:'charge'}" class="quan">
 					<div class="pe1">{{count.wallet}}</div>钱包
 				</router-link>
 				<router-link to="score/index" class="quan">

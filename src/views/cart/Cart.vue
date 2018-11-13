@@ -23,7 +23,7 @@
 								<span v-for="(attr, index2) in item.goods_attrs" :key="index2" class="tags" :data-id="attr.valueId">{{attr.value}}</span>
 							</div>
 							<div class="cart-dis-p flex-box">
-								<div class="cart-dis-p1">
+								<div class="cart-dis-p1 flex-box">
 									<div class="cart-dis-p2">￥<span class="pe1">{{item.mprice > 0 ? item.mprice : item.price}}</span></div>
 									<div v-if="item.mprice > 0" class="cart-dis-p3">￥{{item.price}}</div>
 								</div>
@@ -40,13 +40,10 @@
 				</div>
 			</div>
 		</div>
-		<div v-else class="noData">
-			<img class="noData-img" src="~@/assets/nodata.png" mode="widthFix">
-			<div class="noData-txt">您的购物车是空的...</div>
-		</div>
+		<NoData v-else title="购物车"></NoData>
 
 		<!-- 优惠券 -->
-		<div v-if="couponx.id && !editmode" class="cart-coupon">
+		<div v-if="carts.length && couponx.id && !editmode" class="cart-coupon">
 			<div class="cart-coupon_p flex-box"><span class="iconfont icon-coupon06"><span class="cart-coupon-t1">满{{couponx.man}}减{{couponx.jian}}</span></span>用券立减{{couponx.jian}}元</div>
 		</div>
 
@@ -62,7 +59,7 @@
 		<div v-else class="editResult flex-box">
 			<div class="flex-box checkLeft">
 				<div>
-				<a-checkbox :checked="checkAll" @change="handleCheckAllChange"></a-checkbox>&nbsp;全选
+				<a-checkbox :checked="carts.length > 0 && checkAll" @change="handleCheckAllChange"></a-checkbox>&nbsp;全选
 				</div>
 
 				<div class="total">
@@ -78,6 +75,7 @@
 
 <script>
 	import Footer from '@/components/Footer'
+	import NoData from '@/components/NoData'
 	// import GetBestCoupon from "../libs/coupon.js"
 	import { Checkbox, Modal } from 'ant-design-vue'
 	import {
@@ -90,6 +88,7 @@
 		name: 'Cart',
 		components: {
 			Footer,
+			NoData,
 			'a-checkbox': Checkbox,
 			'a-checkbox-group': Checkbox.Group,
 			Modal
@@ -125,10 +124,6 @@
 			// this.setPageTitle({pageTitle:'购物车'})
 			this.user_id = 1;
 			this.GetUserCart();
-			// Toast.show({
-			// 	text: '购物车购物车购物车购物车购物车购物车购物车asdasdasd',
-			// 	duration: 30000
-			// });
 		},
 		methods: {
 			...mapActions({
@@ -228,6 +223,7 @@
 				}
 			},
 			clearCart() {
+				const that = this;
 				Modal.confirm({
 					title: '友情提示',
 					content: '此操作将清空购物车商品, 是否继续?',
@@ -237,11 +233,9 @@
 					cancelText: '取消',
 					onOk() {
 						return new Promise((resolve, reject) => {
-							this.carts = [];
-							this.checkedCarts = [];
-							this.setCarts({
-								carts: this.carts,
-								checkedCarts: this.checkedCarts
+							that.setCarts({
+								carts: [],
+								checkedCarts: []
 							})
 							console.log("删除成功");
 						}).catch(() => console.log("取消删除"));
@@ -349,8 +343,14 @@
 	}
 
 	.cart-img {
-		width: 80px;
+		width: 115px;
 		height: 80px;
+		overflow: hidden;
+	}
+
+	.cart-imgx {
+		width: 100%;
+		height: 100%;
 	}
 
 	.cart-dis {
@@ -400,9 +400,11 @@
 		color: #FF0036;
 		font-size: 12px;
 		line-height: 1;
+		align-items: center;
 	}
 
 	.cart-dis-p3 {
+		padding-left: 5px;
 		color: #ccc;
 		font-size: 11px;
 		text-decoration: line-through;
