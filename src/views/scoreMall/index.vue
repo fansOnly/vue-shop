@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import List from '@/views/score/List'
+    import List from '@/views/scoreMall/components/List'
     import NoData from '@/components/NoData'
     export default {
         name: 'score',

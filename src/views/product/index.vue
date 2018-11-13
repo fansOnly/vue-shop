@@ -30,11 +30,11 @@
 
 <script>
 	import Search from '@/components/Search'
-	import List1 from '@/views/product/List1'
-	import List2 from '@/views/product/List2'
+	import List1 from '@/views/product/components/List1'
+	import List2 from '@/views/product/components/List2'
 	import NoData from '@/components/NoData'
 	export default {
-		name: 'ProList',
+		name: 'proIndex',
 		components: {
 			Search,
 			List1,

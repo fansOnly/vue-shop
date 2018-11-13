@@ -80,7 +80,7 @@
 </template>
 
 <script>
-	import Photos from '@/views/product/Photos'
+	import Photos from '@/views/scoreMall/components/Photos'
 	export default {
 		name: 'scoredetail',
 		components: {

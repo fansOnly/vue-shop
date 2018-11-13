@@ -42,7 +42,7 @@
 				<router-link :to="{name:'charge'}" class="quan">
 					<div class="pe1">{{count.wallet}}</div>钱包
 				</router-link>
-				<router-link to="score/index" class="quan">
+				<router-link :to="{name:'scorelog'}" class="quan">
 					<div class="pe1">{{count.score}}</div>积分
 				</router-link>
 				<router-link to="coupon/index" class="quan">

@@ -30,7 +30,7 @@ const routes = [
 	{
 		path: '/search',
 		name: 'searchIndex',
-		component: resolve => require(['@/views/search/Index.vue'], resolve),
+		component: resolve => require(['@/views/search/index.vue'], resolve),
 		meta: {
 			title: '搜索'
 		}
@@ -38,23 +38,23 @@ const routes = [
 	{
 		path: '/category',
 		name: 'category',
-		component: resolve => require(['@/views/category/Category.vue'], resolve),
+		component: resolve => require(['@/views/category/index.vue'], resolve),
 		meta: {
 			title: '分类'
 		}
 	},
 	{
-		path: '/prolist/:categoryId',
-		name: 'prolist',
-		component: resolve => require(['@/views/product/ProList.vue'], resolve),
+		path: '/product/index/:categoryId',
+		name: 'proIndex',
+		component: resolve => require(['@/views/product/index.vue'], resolve),
 		meta: {
 			title: '产品列表'
 		}
 	},
 	{
-		path: '/product/:id',
-		name: 'product',
-		component: resolve => require(['@/views/product/Product.vue'], resolve),
+		path: '/product/detail/:id',
+		name: 'proDetail',
+		component: resolve => require(['@/views/product/detail.vue'], resolve),
 		meta: {
 			title: '产品详情'
 		}
@@ -62,7 +62,7 @@ const routes = [
 	{
 		path: '/cart',
 		name: 'cart',
-		component: resolve => require(['@/views/cart/Cart.vue'], resolve),
+		component: resolve => require(['@/views/cart/index.vue'], resolve),
 		meta: {
 			title: '购物车'
 		}
@@ -79,15 +79,23 @@ const routes = [
 	{
 		path: '/user/userinfo',
 		name: 'userinfo',
-		component: resolve => require(['@/views/user/UserInfo.vue'], resolve),
+		component: resolve => require(['@/views/user/userInfo/index.vue'], resolve),
 		meta: {
 			title: '我的信息'
 		}
 	},
 	{
+		path: '/user/scorelog',
+		name: 'scorelog',
+		component: resolve => require(['@/views/user/scoreLog/index.vue'], resolve),
+		meta: {
+			title: '积分记录'
+		}
+	},
+	{
 		path: '/address',
 		name: 'addressx',
-		component: resolve => require(['@/views/user/address/Address.vue'], resolve),
+		component: resolve => require(['@/views/user/address/index.vue'], resolve),
 		meta: {
 			title: '地址管理'
 		}
@@ -95,7 +103,7 @@ const routes = [
 	{
 		path: '/address/edit/:id',
 		name: 'editaddress',
-		component: resolve => require(['@/views/user/address/AddressEdit.vue'], resolve),
+		component: resolve => require(['@/views/user/address/edit.vue'], resolve),
 		meta: {
 			title: '编辑地址'
 		}
@@ -103,7 +111,7 @@ const routes = [
 	{
 		path: '/address/add',
 		name: 'addaddress',
-		component: resolve => require(['@/views/user/address/AddressAdd.vue'], resolve),
+		component: resolve => require(['@/views/user/address/add.vue'], resolve),
 		meta: {
 			title: '新增地址'
 		}
@@ -111,7 +119,7 @@ const routes = [
 	{
 		path: '/address/select',
 		name: 'selectaddress',
-		component: resolve => require(['@/views/user/address/AddressSelect.vue'], resolve),
+		component: resolve => require(['@/views/user/address/select.vue'], resolve),
 		meta: {
 			title: '选择地址'
 		}
@@ -119,7 +127,7 @@ const routes = [
 	{
 		path: '/order/:type',
 		name: 'order',
-		component: resolve => require(['@/views/order/Order.vue'], resolve),
+		component: resolve => require(['@/views/order/index.vue'], resolve),
 		meta: {
 			title: '我的订单',
 			requireAuth: true
@@ -128,7 +136,7 @@ const routes = [
 	{
 		path: '/coupon',
 		name: 'coupon',
-		component: resolve => require(['@/views/coupon/Coupon.vue'], resolve),
+		component: resolve => require(['@/views/coupon/index.vue'], resolve),
 		meta: {
 			title: '领取优惠券'
 		}
@@ -136,7 +144,7 @@ const routes = [
 	{
 		path: '/score',
 		name: 'score',
-		component: resolve => require(['@/views/score/Score.vue'], resolve),
+		component: resolve => require(['@/views/scoreMall/index.vue'], resolve),
 		meta: {
 			title: '积分商城'
 		}
@@ -144,7 +152,7 @@ const routes = [
 	{
 		path: '/score/detail/:id',
 		name: 'scoredetail',
-		component: resolve => require(['@/views/score/ScoreDetail.vue'], resolve),
+		component: resolve => require(['@/views/scoreMall/detail.vue'], resolve),
 		meta: {
 			title: '积分商城详情'
 		}
@@ -152,15 +160,15 @@ const routes = [
 	{
 		path: '/charge',
 		name: 'charge',
-		component: resolve => require(['@/views/charge/Charge.vue'], resolve),
+		component: resolve => require(['@/views/charge/index.vue'], resolve),
 		meta: {
 			title: '充值中心'
 		}
 	},
 	{
-		path: '/charge/log',
+		path: '/charge/record',
 		name: 'chargelog',
-		component: resolve => require(['@/views/charge/ChargeLog.vue'], resolve),
+		component: resolve => require(['@/views/charge/record.vue'], resolve),
 		meta: {
 			title: '充值记录'
 		}

@@ -203,10 +203,10 @@
 </template>
 
 <script>
-	import Photos from '@/views/product/Photos'
+	import Photos from '@/views/product/components/Photos'
 	import NoData from '@/components/NoData'
 	export default {
-		name: 'Product',
+		name: 'proDetail',
 		components: {
 			Photos,
 			NoData
