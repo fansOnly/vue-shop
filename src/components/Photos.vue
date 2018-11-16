@@ -2,13 +2,15 @@
 	<div class="banner">
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
-				<div v-for="(item, index) in something.photos" :key="index" class="swiper-slide"><img :src="item.url" alt=""></div>
+				<div v-for="(item, index) in product.photos" :key="index" class="swiper-slide">
+					<img :src="item.url" alt="">
+				</div>
 			</div>
 			<div class="swiper-pagination"></div>
 		</div>
-		<!-- <div class="swiperPages">{{bannerIndex}}/{{something.photos.length}}</div> -->
+		<!-- <div class="swiperPages">{{bannerIndex}}/{{product.photos.length}}</div> -->
 		<div class="swiperPages"></div>
-		<router-link v-if="something.video" to="" class="swiperVideo flex-box"><span class="iconfont icon-video"></span>视频</router-link>
+		<router-link v-if="product.video" :to="{name:'ProductVideo',params:{id:product.id}}" class="swiperVideo flex-box"><span class="iconfont icon-video"></span>视频</router-link>
 	</div>
 </template>
 
@@ -17,7 +19,7 @@
 	export default {
 		name: 'Photos',
 		props: {
-			something: Object
+			product: Object
 		},
 		mounted() {
 			new Swiper('.swiper-container', {

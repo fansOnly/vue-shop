@@ -3,7 +3,7 @@
 		<div class="charge_container">
 			<div class="charge_title">
 				<div>充值中心</div>
-				<router-link style="color: #ff495f;" :to="{name:'chargelog'}">充值记录</router-link>
+				<router-link style="color: #ff495f;" :to="{name:'ChargeRecord'}">充值记录</router-link>
 			</div>
 			<div class="charge-area">
 				<div :class="['charge-item', {selected: selected === item.vip}]" v-for="(item, index) in vipLevel"
@@ -47,7 +47,7 @@
 
 <script>
 	export default {
-		name: 'charge',
+		name: 'Charge',
 		data() {
 			return {
 				vipLevel: [
@@ -63,7 +63,6 @@
 			}
 		},
 		mounted() {
-			this.user_id = 1;
 			this.GetChargeTip();
 		},
 		methods: {

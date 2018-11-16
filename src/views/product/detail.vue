@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="pageItem" v-if="tabIndex == 1">
-				<Photos :something="product"></Photos>
+				<PhotosComponent :product="product"></PhotosComponent>
 				<div class="section section1 flex-box">
 					<div class="title1">
 						<div class="title">{{product.title}}</div>
@@ -111,7 +111,7 @@
 				<div class="ico-btn" @click="SetUserFav"><span :class="['iconfont', isfav ? 'icon-fav1' : 'icon-fav']"></span>
 					<div>收藏</div>
 				</div>
-				<router-link class="ico-btn" :to="{name:'cart'}"><span class="iconfont icon-cart2"></span>
+				<router-link class="ico-btn" :to="{name:'Cart'}"><span class="iconfont icon-cart2"></span>
 					<div>购物车</div><span class="cart-num">{{cartLength}}</span>
 				</router-link>
 				<div class="cart-btn cart-btn1" @click="openAttr('attr')">加入购物车</div>
@@ -203,12 +203,12 @@
 </template>
 
 <script>
-	import Photos from '@/views/product/components/Photos'
+	import PhotosComponent from '@/components/Photos'
 	import NoData from '@/components/NoData'
 	export default {
-		name: 'proDetail',
+		name: 'ProductDetail',
 		components: {
-			Photos,
+			PhotosComponent,
 			NoData
 		},
 		data() {
@@ -245,7 +245,6 @@
 		},
 		mounted() {
 			this.goods_id = this.$route.params.id;
-			this.user_id = 1;
 			window.addEventListener('scroll', Tools.throttle(this.handleScroll));
 			this.GetGoodsDetail();
 		},
@@ -301,13 +300,13 @@
 					this.couponsList = couponsList;
 				})
 			},
-			SetUserFav(){
+			SetUserFav(user_id){
 				const state = this.isfav ? 0 : 1;
-				this.$api.post('user/SetUserFav',{ goods_id: this.goods_id, user_id: this.user_id, state: state })
+				this.$api.post('user/SetUserFav',{ goods_id: this.goods_id, user_id, state: state })
 				.then(res => {
 					console.log("SetUserFav", res);
 					this.isfav = !this.isfav;
-					Toast(`${res.msg}`);
+					Toast.show(`${res.msg}`);
 				})
 			},
 			tabbar(e){

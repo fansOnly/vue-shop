@@ -12,7 +12,9 @@
 <script>
     export default {
         name: 'Share',
-        props: ['isshare']
+        props: {
+            isshare: Boolean
+        }
     }
 </script>
 <style scoped>

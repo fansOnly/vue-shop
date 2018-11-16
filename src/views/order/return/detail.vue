@@ -1,11 +1,10 @@
 <template>
     <div>
-        scorelog
+        return order
     </div>
 </template>
-
 <script>
     export default {
-        name: 'scorelog'
+        name: 'ReturnDetail'
     }
 </script>

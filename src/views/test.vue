@@ -17,7 +17,7 @@
 	// const plainOptions = ['Apple', 'Pear', 'Orange']
 	// const defaultCheckedList = ['Apple', 'Orange']
 	export default {
-		name: 'test',
+		name: 'Test',
 		components: {
 			'a-checkbox': Checkbox,
 			'a-checkbox-group': Checkbox.Group

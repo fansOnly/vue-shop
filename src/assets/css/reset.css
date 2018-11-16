@@ -357,37 +357,6 @@ textarea:-ms-input-placeholder {
 }
 
 
-
-
-.nomore {
-    position: relative;
-    padding: 10px;
-    color: #ccc;
-    font-size: 12px;
-    text-align: center;
-}
-
-.nomore:before {
-    content: "";
-    display: inline-block;
-    width: 70px;
-    margin-right: 10px;
-    height: 0;
-    border-top: 1px dashed #ddd;
-    vertical-align: middle;
-}
-
-.nomore:after {
-    content: "";
-    display: inline-block;
-    width: 70px;
-    margin-left: 10px;
-    height: 0;
-    border-top: 1px dashed #ddd;
-    vertical-align: middle;
-}
-
-
 /*arrow*/
 
 .arrow {
@@ -470,17 +439,6 @@ textarea:-ms-input-placeholder {
 .xstar.on {
     color: #fc6;
 }
-
-
-
-.noData {
-    text-align: center;
-}
-
-
-/* 加载更多 */
-.loadmore { display: block; width: 40%; height: 35px; margin: 25px auto; text-align: center; border: 1px solid #e5e5e5; border-radius: 3px; background: #f5f5f5; line-height: 35px; }
-.loading { width: 15px; height: 15px; vertical-align: middle; }
 
 
 .mask{ 

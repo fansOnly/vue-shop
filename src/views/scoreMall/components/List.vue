@@ -1,6 +1,6 @@
 <template>
         <div class="picList">
-            <router-link v-for="(item, index) in products" :key="index" :to="{ name: 'scoredetail', params: { id: item.id } }" class="picList-li">
+            <router-link v-for="(item, index) in products" :key="index" :to="{ name: 'ScoreDetail', params: { id: item.id } }" class="picList-li">
                 <div class="picList-imgBox">
                     <img v-if="item.thumbnail" :src="item.thumbnail">
                     <img v-else src="@/assets/imgicon.png">
@@ -19,6 +19,8 @@
     <script>
         export default {
             name: 'List',
-            props: ['products']
+            props: {
+			    roducts: Array
+		    }
         }
     </script>

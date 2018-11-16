@@ -12,67 +12,69 @@
                     <div v-if="item.state == 2">
                         <span class="orange1">默认地址</span>
                     </div>
-                    <div v-else @click="setDefault(item.id,index)"><span class="c3">设为默认</span>
+                    <div v-else @click="setDefault(index)"><span class="c3">设为默认</span>
                     </div>
                 </div>
                 <div class="option flex-box">
-                    <router-link :to="{name:'editaddress', params: {id: item.id}}" class="optionx"><span class="iconfont icon-edit"></span>编辑</router-link>
-                    <div class="optionx" @click="delAddress(item.id,index)"><span class="iconfont icon-delete"></span>删除</div>
+                    <router-link :to="{name:'EditAddress', params: {id: item.id}}" class="optionx"><span class="iconfont icon-edit"></span>编辑</router-link>
+                    <div class="optionx" @click="delAddress(index)"><span class="iconfont icon-delete"></span>删除</div>
                 </div>
             </div>
         </div>
 
-        <router-link :to="{name: 'addaddress'}" class="addAddress">新增收货地址</router-link>
+        <router-link :to="{name: 'AddAddress'}" class="addAddress">新增收货地址</router-link>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'addressx',
+        name: 'Addressx',
         data() {
             return {
                 addressList: []
             }
         },
         mounted() {
-            this.user_id = 1;
             this.GetAddress();
         },
         methods: {
-            GetAddress: function () {
+            GetAddress(user_id) {
                 this.$api.get('user/GetAddress', {
-                        user_id: this.user_id
+                        user_id
                     })
                     .then(res => {
                         console.log("GetAddress", res);
                         this.addressList = res.addressList;
                     })
             },
-            setDefault(id, index) {
+            setDefault(index, user_id) {
                 let addressList = this.addressList;
-                for (var i = 0; i < addressList.length; i++) {
-                    addressList[i].state = 1;
-                }
-                addressList[index].state = 2;
-                addressList.sort((a, b) => b.state - a.state);
+                const id = addressList[index].id;
                 this.$api.post('user/SetDefaultAddress', {
                         id: id,
-                        user_id: this.user_id
+                        user_id
                     })
                     .then(res => {
                         console.log("SetDefaultAddress", res);
-                        this.addressList = addressList;
+                        for (var i = 0; i < addressList.length; i++) {
+                            addressList[i].state = 1;
+                        }
+                        addressList[index].state = 2;
+                        addressList.sort((a, b) => b.state - a.state);
                     })
             },
-            delAddress(id, index) {
+            delAddress(index, user_id) {
+                let addressList = this.addressList;
+                const id = addressList[index].id;
                 this.$api.post('user/DeleteAddress', {
-                        id: id
+                        id: id,
+                        user_id
                     })
                     .then(res => {
                         console.log("DeleteAddress", res);
-                        this.addressList = this.addressList.splice(index, 1);
+                        addressList.splice(index, 1);
                     })
-            },
+            }
         }
     }
 </script>

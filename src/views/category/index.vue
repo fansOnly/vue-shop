@@ -10,14 +10,15 @@
 					<div v-if="cateIndex == second.parent_id" class="cateItem">
 						<div class="cateItem-t">{{second.name}}</div>
 						<div v-if="second.children.length" class="cate-ul flex-box">
-							<router-link v-for="(third, index2) in second.children" :key="index2" :to="{ name: 'prolist', params: { categoryId: third.id }}" class="cate-li ">
+							<router-link v-for="(third, index2) in second.children" :key="index2" :to="{ name: 'ProductList', params: { category_id: third.id }}"
+							 class="cate-li ">
 								<img v-if="third.more.thumbnail" :src="third.more.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{third.name}}</div>
 							</router-link>
 						</div>
 						<div v-else class="cate-ul flex-box">
-							<router-link class="cate-li " :to="{name:'prolist',params:{categoryId:third.id}}">
+							<router-link class="cate-li " :to="{name:'ProductList',params:{category_id:third.id}}">
 								<img v-if="second.thumbnail" :src="second.thumbnail" class="">
 								<img v-else src="~@/assets/imgicon.png" class="">
 								<div class="cate-li_t">{{second.name}}</div>
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
+	import Footer from '@/components/Footer.vue'
 	export default {
 		name: 'Category',
 		components: {
@@ -49,7 +50,8 @@ import Footer from '@/components/Footer.vue'
 			const windowHeight = window.screen.height;
 			const headerHeight = document.getElementById("header").offsetHeight;
 			const footerHeight = document.getElementById("footer").offsetHeight;
-			document.getElementById("category-container").style = "height:" + (windowHeight - headerHeight - footerHeight) + "px";
+			document.getElementById("category-container").style = "height:" + (windowHeight - headerHeight - footerHeight) +
+				"px";
 			this.getCategory();
 		},
 		methods: {
@@ -62,7 +64,7 @@ import Footer from '@/components/Footer.vue'
 							this.cateIndex = res.categories[0].id;
 						}
 					})
-					await this.getCategoryById(this.cateIndex);
+				await this.getCategoryById(this.cateIndex);
 			},
 			getCategoryById: function (id) {
 				this.$api.get('category/getCategoryById', {
@@ -83,7 +85,10 @@ import Footer from '@/components/Footer.vue'
 	}
 </script>
 <style scoped>
-	.categoty{ overflow: hidden;}
+	.categoty {
+		overflow: hidden;
+	}
+
 	.cateL {
 		width: 30%;
 		background: #f5f5f5;

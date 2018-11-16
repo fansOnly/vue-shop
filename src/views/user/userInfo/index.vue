@@ -46,7 +46,7 @@
 	} from 'ant-design-vue'
 
 	export default {
-		name: 'userinfo',
+		name: 'UserInfo',
 		components: {
 			'a-form': Form,
 			'a-form-item': Form.Item,

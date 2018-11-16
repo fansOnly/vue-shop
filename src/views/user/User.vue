@@ -2,19 +2,20 @@
 	<div class="page__bd">
 		<div class="user-x">
 			<div class="user-top">
-					<span v-if="iswxLogin" class="iconfont icon-tip" @click="openRules"></span>
-					
-					<div v-if="iswxLogin" class="user-head flex-box">
-						<div class="user_avatar">
-							<img class="avatar" :src="user.avatar" mode="widthFix">
-						</div>
-						<div class="user_info">
-							<div class="user_name">{{user.name}}</div>
-							<div class="div_tip"><span class="iconfont icon-level icon-v1"></span>{{user.title}}</div>
-							<div class="div_tip">成长值：{{user.growth}}</div>
-							<!-- <div class="div_tip">注册时间：{{user.create_time}}</div> -->
-						</div>
+				<span v-if="isLogin" class="iconfont icon-tip" @click="openRules"></span>
+				
+				<div v-if="isLogin" class="user-head flex-box">
+					<div class="user_avatar">
+						<img v-if="user.avatar" class="avatar" :src="user.avatar">
+						<img v-else class="avatar" src="@/assets/headicon.png">
 					</div>
+					<div class="user_info">
+						<div class="user_name">{{user.name}}</div>
+						<div class="div_tip"><span class="iconfont icon-level icon-v1"></span>{{user.title}}</div>
+						<div class="div_tip">成长值：{{user.growth}}</div>
+						<!-- <div class="div_tip">注册时间：{{user.create_time}}</div> -->
+					</div>
+				</div>
 				<div v-else>
 					<button v-if="canIUse" class="wxlogin"><span class="iconfont icon-wechat"></span>微信登录</button>
 					<div v-else class="wxlogin">请升级微信版本</div>
@@ -22,47 +23,47 @@
 			</div>
 		</div>
 
-		<div v-if="iswxLogin">
+		<div v-if="isLogin">
 			<div class="user-box order-box flex-box">
-				<router-link :to="{ name: 'order', params: { type: 'unpay' } }" class="order"><span v-if="count.unpay" class="count">{{count.unpay}}</span><span class="iconfont icon-order1 icon-order"></span>
+				<router-link :to="{ name: 'Order', params: { type: 'unpay' } }" class="order"><span v-if="count.unpay" class="count">{{count.unpay}}</span><span class="iconfont icon-order1 icon-order"></span>
 					<div>待支付</div>
 				</router-link>
-				<router-link :to="{ name: 'order', params: { type: 'unreceive' } }" class="order"><span v-if="count.unreceive" class="count">{{count.unreceive}}</span><span class="iconfont icon-order5 icon-order"></span>
+				<router-link :to="{ name: 'Order', params: { type: 'unreceive' } }" class="order"><span v-if="count.unreceive" class="count">{{count.unreceive}}</span><span class="iconfont icon-order5 icon-order"></span>
 					<div>待收货</div>
 				</router-link>
-				<router-link :to="{ name: 'order', params: { type: 'unevaluate' } }" class="order"><span v-if="count.unevaluate" class="count">{{count.unevaluate}}</span><span class="iconfont icon-order3 icon-order"></span>
+				<router-link :to="{ name: 'Order', params: { type: 'unevaluate' } }" class="order"><span v-if="count.unevaluate" class="count">{{count.unevaluate}}</span><span class="iconfont icon-order3 icon-order"></span>
 					<div>待评价</div>
 				</router-link>
-				<router-link :to="{ name: 'order', params: { type: 'all' } }" class="order"><span class="iconfont icon-order0 icon-order"></span>
+				<router-link :to="{ name: 'Order', params: { type: 'all' } }" class="order"><span class="iconfont icon-order0 icon-order"></span>
 					<div>全部订单</div>
 				</router-link>
 			</div>
 
 			<div class="user-box quan-box flex-box">
-				<router-link :to="{name:'charge'}" class="quan">
+				<router-link :to="{name:'Charge'}" class="quan">
 					<div class="pe1">{{count.wallet}}</div>钱包
 				</router-link>
-				<router-link :to="{name:'scorelog'}" class="quan">
+				<router-link :to="{name:'ScoreRecord'}" class="quan">
 					<div class="pe1">{{count.score}}</div>积分
 				</router-link>
-				<router-link to="coupon/index" class="quan">
+				<router-link :to="{name:'UserCoupon', params:{type:'unused'}}" class="quan">
 					<div class="pe1">{{count.coupon}}</div>优惠券
 				</router-link>
-				<router-link to="fav/index" class="quan">
+				<router-link :to="{name:'UserCollection', params:{type:'product'}}" class="quan">
 					<div class="pe1">{{count.fav}}</div>收藏
 				</router-link>
 			</div>
 
 			<div class="user-box acts-box">
-				<router-link :to="{name:'userinfo', params: {userId: user_id }}" class="acts">
+				<router-link :to="{name:'UserInfo'}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-user icon-acts"></span><span class="acts-t">个人信息</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
-				<router-link :to="{name:'addressx', params: {userId: user_id}}" class="acts">
+				<router-link :to="{name:'Addressx'}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-address2 icon-acts"></span><span class="acts-t">地址管理</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
-				<router-link to="charge/index" class="acts">
+				<router-link :to="{name:'Charge'}" class="acts">
 					<div class="acts-item"><span class="iconfont icon-charge icon-acts"></span><span class="acts-t">充值中心</span></div>
 					<div class="acts-item"><span class="arrow"></span></div>
 				</router-link>
@@ -155,32 +156,25 @@
 		},
 		data() {
 			return {
-				iswxLogin: true,
+				isLogin: false,
 				canIUse: true,
-				user_id: 0,
 				user: {},
 				count: {},
-				phone: null,
+				phone: '',
 				checkUpdate: true,
 				newVersion: true
 			}
 		},
 		mounted() {
-			this.user_id = 1;
-			this.GetUserInfo();
+			this.user = JSON.parse(localStorage.getItem("user"));
+			if(this.user){
+				this.isLogin = true;
+				this.GetNumList();
+			}
 		},
 		methods: {
-			async GetUserInfo(){
-				this.$api.get('User/GetUserInfo', {user_id: this.user_id})
-				.then(res=>{
-					console.log("GetUserInfo", res);
-					localStorage.setItem("user", res.user);
-					this.user = res.user;
-				})
-				await this.GetNumList();
-			},
-			GetNumList(){
-				this.$api.get('User/GetNumList', {user_id: this.user_id})
+			GetNumList(user_id){
+				this.$api.get('User/GetNumList', {user_id})
 				.then(res=>{
 					console.log("GetNumList", res);
 					this.count = res.count;
@@ -222,8 +216,6 @@
 .wxlogin { width: 74px; height: 74px; margin: 0 auto; padding: 0; background: #fff; border-radius: 100%; color: #51C332; font-size: 13px; line-height: 1; }
 .icon-wechat { display: block; font-size: 35px; margin-top: 12px; line-height: 1; color: #51C332; }
 
-
-
 .user-box { position: relative; margin-bottom: 10px; padding: 10px 0; background: #fff; }
 .user-box:before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0; border-top: 1px solid #eee; }
 .user-box:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 0; border-bottom: 1px solid #eee; }
@@ -247,8 +239,6 @@
 .icon-acts { display: inline-block; /*margin-right: 5px;*/ color: #666; font-size: 30px; line-height: 1; vertical-align: middle; }
 .arrowx { padding-right: 10px; }
 .phone { color: #999; }
-
-
 
 .mask { position: fixed; left: 0; right: 0; top: 0; bottom: 0; background: rgba(0,0,0,.6); z-index: 8; }
 .rules { position: fixed; left: 10%; right: 10%; top: 15%; bottom: 15%; padding: 0 15px; background: #fff; border-radius: 5px; z-index: 9; }

@@ -708,7 +708,8 @@ class Tools {
 			return timestamp;
 		}
 		// 秒数
-		var seconds = Math.floor(timestamp / 1000);
+		// var seconds = Math.floor(timestamp / 1000);
+		var seconds = timestamp;
 		// 天位
 		var day = Math.floor(seconds / (24 * 60 * 60));
 		var hour = Math.floor((seconds - day * 24 * 60 * 60) / 3600);

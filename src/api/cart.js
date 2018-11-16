@@ -1,4 +1,4 @@
-import request from '@/libs/request';
+import request from '@/utils/request';
 
 export default {
     GetUserCart(param, cb){

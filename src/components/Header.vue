@@ -51,6 +51,7 @@
 				this.isIndex = to.path === '/' ? true : false;
 				if(to.matched.some(record => record.meta.title)){
 					this.pageTitle = to.meta.title;
+					this.isshare = false;
 				}
 			}
 		},

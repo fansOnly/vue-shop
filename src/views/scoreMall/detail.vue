@@ -2,7 +2,7 @@
 	<div>
 		<div class="page__bd">
 			<div class="pageItem" v-if="tabIndex == 1">
-				<Photos :something="product"></Photos>
+				<PhotosComponent :product="product"></PhotosComponent>
 				<div class="section section1 flex-box">
 					<div class="title1">
 						<div class="title">{{product.title}}</div>
@@ -57,7 +57,7 @@
 						<span v-else class="plus" @click="plusNum">+</span>
 					</div>
 				</div>
-				<router-link v-if="isLogin && addressList.length" :to="{name:'selectaddress'}" class="pay-address flex-box">
+				<router-link v-if="isLogin && addressList.length" :to="{name:'SelectAddress'}" class="pay-address flex-box">
 					<div v-if="address.id" class="address">
 						<div class="item flex-box">
 							<div class="item-name">{{address.name}}</div>
@@ -69,7 +69,7 @@
 					<div v-else class="address">选择收获地址</div>
 					<span class="arrow"></span>
 				</router-link>
-				<router-link v-if="isLogin && !addressList.length" :to="{name:'addaddress'}" class="pay-address flex-box">添加地址<span class="arrow"></span></router-link>
+				<router-link v-if="isLogin && !addressList.length" :to="{name:'AddAddress'}" class="pay-address flex-box">添加地址<span class="arrow"></span></router-link>
 			</div>
 			<div class="buttonx flex-box">
 				<!-- <div class="cart-btn" @click="addCart">加入购物车</div> -->
@@ -80,11 +80,11 @@
 </template>
 
 <script>
-	import Photos from '@/views/scoreMall/components/Photos'
+	import PhotosComponent from '@/components/Photos'
 	export default {
-		name: 'scoredetail',
+		name: 'ScoreDetail',
 		components: {
-			Photos
+			PhotosComponent
 		},
 		data() {
 			return {

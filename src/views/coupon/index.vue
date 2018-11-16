@@ -1,27 +1,8 @@
 <template>
 	<div>
 		<div v-if="couponList.length" class="coupon">
-			<div v-for="(item, index) in couponList" :key="" :class="['coupon-li', item.status == -1 ? 'expire' : item.status == 2 ? 'used' : '']">
-				<div class="coupon-item flex-box">
-					<div :class="['coupon-price', item.status == -1 ? 'expire' : item.status == 2 ? 'used' : '']">
-						<div class="coupon-t1">￥<span class="sp1">{{item.jian}}</span></div>
-						<div class="coupon-t2">满{{item.man}}元可用</div>
-					</div>
-					<div class="coupon-desc">
-						<div class="coupon-p1">{{item.title}}</div>
-						<div class="coupon-p2">{{item.isAll ? '全品类通用券' : '部分商品可用'}}</div>
-						<div v-if="item.endless == 0" class="coupon-p3">{{item.use_start}}-{{item.use_end}}</div>
-						<div v-else class="coupon-p3">无限期</div>
-					</div>
-					<div class="coupon-select" @click="getTicket(item.id, index)">领取</div>
-				</div>
-			</div>
-
-			<div v-if="nomore" class="nomore">我是有底线的</div>
-			<div v-else class="loadmore" @click="loadmore">
-				<span v-if="loading"><img class="loading" src="@/assets/loading.gif" alt="loading..."></span>
-				<span v-else>加载更多</span>
-			</div>
+			<CouponComponents :couponList="couponList" :canIGet="true" @GetTicket="GetTicket"></CouponComponents>
+			<NoMore :nomore="nomore" :loading="loading" @loadmore="loadmore"></NoMore>
 		</div>
 		<NoData v-else title="优惠券列表"></NoData>
 	</div>
@@ -29,10 +10,14 @@
 
 <script>
 	import NoData from '@/components/NoData'
+	import NoMore from '@/components/NoMore'
+	import CouponComponents from '@/components/Coupon'
 	export default {
-		name: 'coupon',
+		name: 'Coupon',
 		components: {
-			NoData
+			NoData,
+			NoMore,
+			CouponComponents
 		},
 		data() {
 			return {
@@ -45,7 +30,7 @@
 			}
 		},
 		mounted() {
-			this.user_id = 1;
+			// this.user_id = 1;
 			this.GetAllCounponList(this.page);
 		},
 		methods: {
@@ -73,17 +58,20 @@
 					}
 				})
 			},
-			getTicket(id, index) {
-				const couponList = this.couponList;
-				couponList.splice(index, 1);
-				if (this.user_id) {
+			GetTicket(index) {
+				const id = this.couponList[index].id;
+				// if (this.user_id) {
 					this.$api.post('coupon/GetCoupon', {couponId:id,user_id: this.user_id })
 					.then(res => {
-						this.couponList = couponList;
+						this.couponList.splice(index, 1);
 					})
-				} else {
-					console.log("please login");
-				}
+				// } else {
+				// 	console.log("please login");
+				// 	this.$router.push({
+				// 		name: 'Login',
+				// 		query: { redirect: this.$route.fullPath }
+				// 	})
+				// }
 			},
 			loadmore() {
 				const total = this.total;
@@ -102,20 +90,4 @@
 
 <style scoped>
 .coupon { padding: 10px; }
-.coupon-li { position: relative; margin-bottom: 10px; background: #fff; border-top: 4px solid #4ad8da; border-radius: 3px; box-shadow: 0 1px 10px rgba(0,0,0,.1); overflow: hidden; font-size: 12px; }
-.coupon-li.expire { border-color: #ccc; }
-.coupon-li.used { border-color: green; }
-.coupon-li:after { content: ""; position: absolute; left: 34%; top: 0; bottom: 0; width: 0; border-left: 1px dashed #e5e5e5; }
-
-.coupon-item { height: 90px; justify-content: space-between; align-items: center; }
-.coupon-price { width: 35%; text-align: center; color: #4ad8da; }
-.coupon-price.expire { color: #ccc; }
-.coupon-price.used { color: green; }
-.sp1 { display: inline-block; font-size: 30px; line-height: 1; font-family: 'impact'; vertical-align: top; }
-.coupon-t2 { margin-top: 5px; }
-.coupon-desc { width: 50%; padding-left: 5%; }
-.coupon-select { width: 15%; text-align: center; }
-.coupon-p1 { font-size: 12px; }
-.coupon-p2 { font-size: 12px; color: #bbb; }
-.coupon-p3 { font-size: 12px; color: #ccc; }
 </style>

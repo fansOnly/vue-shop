@@ -5,9 +5,9 @@
 			<router-link to="/searchIndex" class="top-search"><span class="iconfont icon-search"></span>搜索商品</router-link>
 			<router-link to="/category" class="iconfont icon-category"></router-link>
 		</div>
-		<Banner :bannerList="bannerList" />
+		<BannerComponents :bannerList="bannerList" /></BannerComponents>
 		<div class="tabs_special">
-			<router-link :to="{name:'coupon'}" class="tabs_item">
+			<router-link :to="{name:'Coupon'}" class="tabs_item">
 				<img class="img" src="../assets/images/ico_01.png" />
 				<span class="tabs_title">领劵中心</span>
 			</router-link>
@@ -15,7 +15,7 @@
 				<img class="img" src="../assets/images/ico_02.png" />
 				<span class="tabs_title">热卖产品</span>
 			</router-link>
-			<router-link :to="{name:'score'}" class="tabs_item">
+			<router-link :to="{name:'Score'}" class="tabs_item">
 				<img class="img" src="../assets/images/ico_03.png" />
 				<span class="tabs_title">积分兑换</span>
 			</router-link>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-	import Banner from "../components/Banner.vue"
+	import BannerComponents from "../components/Banner.vue"
 	import Footer from "../components/Footer.vue";
 	const imgs = [{
 			class: 'pro-cate-t1',
@@ -105,7 +105,7 @@
 	export default {
 		name: 'Home',
 		components: {
-			Banner,
+			BannerComponents,
 			Footer
 		},
 		data(){

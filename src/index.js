@@ -1,11 +1,11 @@
 /*jshint esversion: 6 */
 import Vue from 'vue';
 import App from './App.vue';
-import request from './libs/request';
+import request from './utils/request';
 import router from './config/router';
 import store from './store/store';
-import Tools from './libs/Tools';
-import Toast from './libs/toast';
+import Tools from './utils/Tools';
+import Toast from './utils/toast';
 // import '//at.alicdn.com/t/font_667160_k1loj6k2ef.css';
 import '@/assets/css/reset.css';
 

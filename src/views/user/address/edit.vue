@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: "editaddress",
+        name: "EditAddress",
         data(){
             return {}
         }

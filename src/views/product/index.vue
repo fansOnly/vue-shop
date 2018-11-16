@@ -15,14 +15,10 @@
 		</div>
 
 		<div v-if="productList.length">
-			<List1 v-if="dismode" :products="productList"></List1>
-			<List2 v-else :products="productList"></List2>
+			<ListComponent1 v-if="dismode" :products="productList"></ListComponent1>
+			<ListComponent2 v-else :products="productList"></ListComponent2>
 
-			<div v-if="nomore" class="nomore">我是有底线的</div>
-			<div v-else class="loadmore" @click="loadmore">
-				<span v-if="loading"><img class="loading" src="@/assets/loading.gif" alt="loading..."></span>
-				<span v-else>加载更多</span>
-			</div>
+			<NoMore :nomore="nomore" :loading="loading" @loadmore="loadmore"></NoMore>
 		</div>
 		<NoData v-else title="产品列表"></NoData>
 	</div>
@@ -30,16 +26,18 @@
 
 <script>
 	import Search from '@/components/Search'
-	import List1 from '@/views/product/components/List1'
-	import List2 from '@/views/product/components/List2'
+	import ListComponent1 from './components/List1'
+	import ListComponent2 from './components/List2'
 	import NoData from '@/components/NoData'
+	import NoMore from '@/components/NoMore'
 	export default {
-		name: 'proIndex',
+		name: 'ProductList',
 		components: {
 			Search,
-			List1,
-			List2,
-			NoData
+			ListComponent1,
+			ListComponent2,
+			NoData,
+			NoMore
 		},
 		data() {
 			return {
@@ -47,7 +45,7 @@
 				up1: 0, // 销量默认升序 1-升序 2-降序
 				up2: 0, // 价格默认升序 1-升序 2-降序
 				dismode: true, // true -> 图片列表   false -> 图文列表
-				categoryId: 0,
+				category_id: 0,
 				productList: [],
 				page: 1,
 				total: 0,
@@ -57,14 +55,14 @@
 			}
 		},
 		mounted() {
-			this.categoryId = this.$route.params.categoryId;
+			this.category_id = this.$route.params.category_id;
 			this.dismode = localStorage.getItem("dismode") ? localStorage.getItem("dismode") : true;
 			this.GetGoodsList(this.page);
 		},
 		methods: {
 			GetGoodsList: function (page) {
 				this.$api.get('Goods/GetGoodsList', {
-						categoryId: this.categoryId,
+						categoryId: this.category_id,
 						page: page,
 						pageSize: this.pageSize,
 					})

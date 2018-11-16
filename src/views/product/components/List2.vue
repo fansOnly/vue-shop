@@ -1,6 +1,6 @@
 <template>
 	<div class="photoItem">
-		<router-link v-for="(item, index) in products" :key="" :to="{ name: 'product', params: { id: item.id } }"
+		<router-link v-for="(item, index) in products" :key="" :to="{ name: 'ProductDetail', params: { id: item.id } }"
 			class="photoItem-li">
 			<div class="photoItem-imgBox">
 				<img v-if="item.thumbnail" class="photoItem-img" :src="item.thumbnail" >
@@ -23,6 +23,8 @@
 <script>
 	export default {
 		name: 'List2',
-		props: ['products']
+		props: {
+			products: Array
+		}
 	}
 </script>

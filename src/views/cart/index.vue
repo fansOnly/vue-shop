@@ -8,15 +8,15 @@
 		<div v-if="carts.length" class="cart-section">
 			<div class="cart-title flex-box">
 				<div class="cart-shop">官方旗舰店</div>
-				<router-link v-if="couponsList.length && !editmode" to="" class="get-coupon">领取优惠券</router-link>
+				<router-link v-if="couponsList.length && !editmode" :to="{name:'Coupon'}" class="get-coupon">领取优惠券</router-link>
 			</div>
 			<div class="cart-box flex-box">
 				<a-checkbox-group  class="cart-left" :options="cartids" v-model="checkedCarts" @change="handleCheckedCartsChange" />
 
 				<div class="cart-right" style="width: 100%;">
 					<div v-for="(item, index) in carts" :key="index" class="cart-goods flex-box">
-						<div v-if="item.thumbnail" class="cart-img"><img class="cart-imgx" :src="item.thumbnail"></div>
-						<div v-else class="cart-img"><img class="cart-imgx" src="~@/assets/imgicon.png"></div>
+						<img v-if="item.thumbnail" class="cart-imgx" :src="item.thumbnail">
+						<img v-else class="cart-imgx" src="~@/assets/imgicon.png">
 						<div class="cart-dis">
 							<div class="cart-dis-t">{{item.title}}</div>
 							<div class="cart-dis-i">
@@ -61,7 +61,6 @@
 				<div>
 				<a-checkbox :checked="carts.length > 0 && checkAll" @change="handleCheckAllChange"></a-checkbox>&nbsp;全选
 				</div>
-
 				<div class="total">
 					<div>总计：<span class="pe1">￥<span class="pe2">{{total}}</span></span></div>
 					<div v-if="cheap > 0" class="pe4">立减:￥{{cheap}}</div>
@@ -76,7 +75,7 @@
 <script>
 	import Footer from '@/components/Footer'
 	import NoData from '@/components/NoData'
-	// import GetBestCoupon from "../libs/coupon.js"
+	// import GetBestCoupon from "../utils/coupon.js"
 	import { Checkbox, Modal } from 'ant-design-vue'
 	import {
 		mapGetters,
@@ -247,7 +246,7 @@
 				if(!this.checkedCarts.length){
 					alert('请选择');
 				}else{
-					this.$router.push('/');
+					this.$router.push({name:'OrderPay'});
 				}
 			},
 		}
@@ -341,16 +340,9 @@
 		height: 0;
 		border-bottom: 1px solid #eee;
 	}
-
-	.cart-img {
-		width: 115px;
-		height: 80px;
-		overflow: hidden;
-	}
-
 	.cart-imgx {
-		width: 100%;
-		height: 100%;
+		width: 80px;
+		height: 80px;
 	}
 
 	.cart-dis {

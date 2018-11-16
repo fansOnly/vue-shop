@@ -77,7 +77,7 @@
 
 <script>
 	import Footer from '@/components/Footer'
-	// import GetBestCoupon from "../libs/coupon.js"
+	// import GetBestCoupon from "../utils/coupon.js"
 	import { Checkbox, Modal } from 'ant-design-vue'
 	import {
 		mapGetters,

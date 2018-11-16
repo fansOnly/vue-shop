@@ -8,25 +8,25 @@
 <script>
     export default {
         name: 'nodata',
-        props: ['title']
+        props: {
+            title: String
+        }
     }
 </script>
 
 <style scoped>
-    /*noData*/
+    .noData {
+        margin-top: 40%;
+        transform: translateY(-50%);
+        text-align: center;
+    }
 
-.noData {
-    margin-top: 40%;
-    transform: translateY(-50%);
-    text-align: center;
-}
+    .noData-img {
+        width: 126px;
+    }
 
-.noData-img {
-    width: 126px;
-}
-
-.noData-txt {
-    color: #ccc;
-    font-size: 14px;
-}
+    .noData-txt {
+        color: #ccc;
+        font-size: 14px;
+    }
 </style>

@@ -7,11 +7,7 @@
 					<div class="price">+<span class="money">{{ item.total_fee }}</span></div>
 				</div>
 			</div>
-			<div v-if="nomore" class="nomore">我是有底线的</div>
-			<div v-else class="loadmore" @click="loadmore">
-				<span v-if="loading"><img class="loading" src="@/assets/loading.gif" alt="loading..."></span>
-				<span v-else>加载更多</span>
-			</div>
+			<NoMore :nomore="nomore" :loading="loading" @loadmore="loadmore"></NoMore>
 		</div>
 		<NoData v-else title="充值记录"></NoData>
 	</div>
@@ -19,10 +15,12 @@
 
 <script>
 	import NoData from '@/components/NoData'
+	import NoMore from '@/components/NoMore'
 	export default {
-		name: 'chargelog',
+		name: 'ChargeRecord',
 		components:{
-			NoData
+			NoData,
+			NoMore
 		},
 		data() {
 			return {
@@ -34,7 +32,6 @@
 			}
 		},
 		mounted() {
-			this.user_id = 1;
 			this.GetCharegList(this.page);
 		},
 		methods: {

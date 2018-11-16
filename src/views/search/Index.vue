@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Search></Search>
+		<SearchComponents></SearchComponents>
 		<div class="hotbox">
 			<div class="hots">热词搜索</div>
 			<div class="hotwords flex-box">
@@ -13,11 +13,11 @@
 
 
 <script>
-	import Search from '@/components/Search'
+	import SearchComponents from '@/components/Search'
 	export default {
-		name: 'searchIndex',
+		name: 'SearchIndex',
 		components: {
-			Search
+			SearchComponents
 		},
 		data() {
 			return {

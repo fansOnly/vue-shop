@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 const routes = [
 	{
 		path: '/',
-		name: 'home',
+		name: 'Home',
 		component: resolve => require(['@/views/Home.vue'], resolve),
 		meta: {
 			title: '首页'
@@ -13,7 +13,7 @@ const routes = [
 	},
 	{
 		path: '/login',
-		name: 'login',
+		name: 'Login',
 		component: resolve => require(['@/views/login/Login.vue'], resolve),
 		meta: {
 			title: '登录'
@@ -21,7 +21,7 @@ const routes = [
 	},
 	{
 		path: '/test/:id',
-		name: 'test',
+		name: 'Test',
 		component: resolve => require(['@/views/test.vue'], resolve),
 		meta: {
 			title: '测试'
@@ -29,7 +29,7 @@ const routes = [
 	},
 	{
 		path: '/search',
-		name: 'searchIndex',
+		name: 'SearchIndex',
 		component: resolve => require(['@/views/search/index.vue'], resolve),
 		meta: {
 			title: '搜索'
@@ -37,15 +37,15 @@ const routes = [
 	},
 	{
 		path: '/category',
-		name: 'category',
+		name: 'Category',
 		component: resolve => require(['@/views/category/index.vue'], resolve),
 		meta: {
 			title: '分类'
 		}
 	},
 	{
-		path: '/product/index/:categoryId',
-		name: 'proIndex',
+		path: '/product/index/:category_id',
+		name: 'ProductList',
 		component: resolve => require(['@/views/product/index.vue'], resolve),
 		meta: {
 			title: '产品列表'
@@ -53,15 +53,23 @@ const routes = [
 	},
 	{
 		path: '/product/detail/:id',
-		name: 'proDetail',
+		name: 'ProductDetail',
 		component: resolve => require(['@/views/product/detail.vue'], resolve),
 		meta: {
 			title: '产品详情'
 		}
 	},
 	{
+		path: '/product/video/:id',
+		name: 'ProductVideo',
+		component: resolve => require(['@/views/product/video/index.vue'], resolve),
+		meta: {
+			title: '产品视频'
+		}
+	},
+	{
 		path: '/cart',
-		name: 'cart',
+		name: 'Cart',
 		component: resolve => require(['@/views/cart/index.vue'], resolve),
 		meta: {
 			title: '购物车'
@@ -69,7 +77,7 @@ const routes = [
 	},
 	{
 		path: '/user',
-		name: 'user',
+		name: 'User',
 		component: resolve => require(['@/views/user/User.vue'], resolve),
 		meta: {
 			title: '我的',
@@ -77,56 +85,80 @@ const routes = [
 		}
 	},
 	{
-		path: '/user/userinfo',
-		name: 'userinfo',
+		path: '/user/userInfo',
+		name: 'UserInfo',
 		component: resolve => require(['@/views/user/userInfo/index.vue'], resolve),
 		meta: {
-			title: '我的信息'
+			title: '我的信息',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/user/scorelog',
-		name: 'scorelog',
-		component: resolve => require(['@/views/user/scoreLog/index.vue'], resolve),
+		path: '/user/coupon/:type',
+		name: 'UserCoupon',
+		component: resolve => require(['@/views/user/coupon/index.vue'], resolve),
 		meta: {
-			title: '积分记录'
+			title: '我的优惠券',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/address',
-		name: 'addressx',
+		path: '/user/collection/:type',
+		name: 'UserCollection',
+		component: resolve => require(['@/views/user/collection/index.vue'], resolve),
+		meta: {
+			title: '我的收藏',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/score/record',
+		name: 'ScoreRecord',
+		component: resolve => require(['@/views/user/scoreRecord/index.vue'], resolve),
+		meta: {
+			title: '积分记录',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/address',
+		name: 'Addressx',
 		component: resolve => require(['@/views/user/address/index.vue'], resolve),
 		meta: {
-			title: '地址管理'
+			title: '地址管理',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/address/edit/:id',
-		name: 'editaddress',
+		path: '/user/address/edit/:id',
+		name: 'EditAddress',
 		component: resolve => require(['@/views/user/address/edit.vue'], resolve),
 		meta: {
-			title: '编辑地址'
+			title: '编辑地址',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/address/add',
-		name: 'addaddress',
+		path: '/user/address/add',
+		name: 'AddAddress',
 		component: resolve => require(['@/views/user/address/add.vue'], resolve),
 		meta: {
-			title: '新增地址'
+			title: '新增地址',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/address/select',
-		name: 'selectaddress',
+		path: '/user/address/select',
+		name: 'SelectAddress',
 		component: resolve => require(['@/views/user/address/select.vue'], resolve),
 		meta: {
-			title: '选择地址'
+			title: '选择地址',
+			requireAuth: true
 		}
 	},
 	{
-		path: '/order/:type',
-		name: 'order',
+		path: '/user/order/:type',
+		name: 'Order',
 		component: resolve => require(['@/views/order/index.vue'], resolve),
 		meta: {
 			title: '我的订单',
@@ -134,8 +166,80 @@ const routes = [
 		}
 	},
 	{
+		path: '/user/order/pay',
+		name: 'OrderPay',
+		component: resolve => require(['@/views/order/pay/index.vue'], resolve),
+		meta: {
+			title: '订单支付',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/detail/:id',
+		name: 'OrderDetail',
+		component: resolve => require(['@/views/order/detail.vue'], resolve),
+		meta: {
+			title: '订单详情',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/evaluation/:order_id',
+		name: 'Evaluation',
+		component: resolve => require(['@/views/order/evaluation/index.vue'], resolve),
+		meta: {
+			title: '订单评价详情',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/evaluate/:order_id',
+		name: 'Evaluate',
+		component: resolve => require(['@/views/order/evaluation/evaluate.vue'], resolve),
+		meta: {
+			title: '评价订单',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/dilivery/:order_id',
+		name: 'Dilivery',
+		component: resolve => require(['@/views/order/dilivery/index.vue'], resolve),
+		meta: {
+			title: '订单快递详情',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/return/:order_id',
+		name: 'ReturnSubmit',
+		component: resolve => require(['@/views/order/return/index.vue'], resolve),
+		meta: {
+			title: '申请退货',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/return/dilivery/:order_id',
+		name: 'ReturnDilivery',
+		component: resolve => require(['@/views/order/return/dilivery.vue'], resolve),
+		meta: {
+			title: '退货物流提交',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/order/return/detail/:order_id',
+		name: 'ReturnDetail',
+		component: resolve => require(['@/views/order/return/detail.vue'], resolve),
+		meta: {
+			title: '退货物流详情',
+			requireAuth: true
+		}
+	},
+	{
 		path: '/coupon',
-		name: 'coupon',
+		name: 'Coupon',
 		component: resolve => require(['@/views/coupon/index.vue'], resolve),
 		meta: {
 			title: '领取优惠券'
@@ -143,7 +247,7 @@ const routes = [
 	},
 	{
 		path: '/score',
-		name: 'score',
+		name: 'Score',
 		component: resolve => require(['@/views/scoreMall/index.vue'], resolve),
 		meta: {
 			title: '积分商城'
@@ -151,7 +255,7 @@ const routes = [
 	},
 	{
 		path: '/score/detail/:id',
-		name: 'scoredetail',
+		name: 'ScoreDetail',
 		component: resolve => require(['@/views/scoreMall/detail.vue'], resolve),
 		meta: {
 			title: '积分商城详情'
@@ -159,18 +263,36 @@ const routes = [
 	},
 	{
 		path: '/charge',
-		name: 'charge',
+		name: 'Charge',
 		component: resolve => require(['@/views/charge/index.vue'], resolve),
 		meta: {
 			title: '充值中心'
 		}
 	},
 	{
-		path: '/charge/record',
-		name: 'chargelog',
+		path: '/user/charge/record',
+		name: 'ChargeRecord',
 		component: resolve => require(['@/views/charge/record.vue'], resolve),
 		meta: {
-			title: '充值记录'
+			title: '充值记录',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/feedback',
+		name: 'Feedback',
+		component: resolve => require(['@/views/user/feedback/index.vue'], resolve),
+		meta: {
+			title: '用户反馈',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/help',
+		name: 'Help',
+		component: resolve => require(['@/views/user/help/index.vue'], resolve),
+		meta: {
+			title: '帮助中心'
 		}
 	},
 ];

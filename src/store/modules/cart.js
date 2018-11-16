@@ -1,4 +1,4 @@
-import GetBestCouponByCart from "@/libs/coupon.js";
+import GetBestCouponByCart from "@/utils/coupon.js";
 import cart from '@/api/cart';
 
 // 状态树
