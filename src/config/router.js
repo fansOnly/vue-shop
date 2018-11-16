@@ -166,11 +166,20 @@ const routes = [
 		}
 	},
 	{
-		path: '/user/order/pay',
+		path: '/user/orderPay/:type',
 		name: 'OrderPay',
 		component: resolve => require(['@/views/order/pay/index.vue'], resolve),
 		meta: {
 			title: '订单支付',
+			requireAuth: true
+		}
+	},
+	{
+		path: '/user/OrderCoupon/:type',
+		name: 'OrderCoupon',
+		component: resolve => require(['@/views/order/coupon/index.vue'], resolve),
+		meta: {
+			title: '选择优惠券',
 			requireAuth: true
 		}
 	},

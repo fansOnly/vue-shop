@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="display:inline;">
         {{countdown}}
     </div>
 </template>
@@ -12,22 +12,22 @@
         data(){
             return {
                 countdown: '',
+                timetampx: this.timetamp
             }
         },
         computed:{
-            timetampx(){
-                return Number(this.timetamp);
-            }
+            // countdown(){
+                // return Tools.CountDown(this.timetampx, 2);
+            // },
         },
         watch:{
-            'timetamp'(e){
-                console.log(e);
+            'timetampx'(e){
                 this.countdown = Tools.CountDown(e, 2);
             }
         },
         mounted() {
             setInterval(()=>{
-                this.timetamp--
+                this.timetampx--
             }, 1000);
         },
     }

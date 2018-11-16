@@ -246,7 +246,7 @@
 				if(!this.checkedCarts.length){
 					alert('请选择');
 				}else{
-					this.$router.push({name:'OrderPay'});
+					this.$router.push({name:'OrderPay', params:{type:'cart'}});
 				}
 			},
 		}

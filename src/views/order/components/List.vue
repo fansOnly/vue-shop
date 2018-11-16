@@ -3,7 +3,7 @@
 		<div v-for="(item, index) in orderList" :key="index" class="order-li">
 			<div class="item item1 flex-box">
 				<div class="item-t1"><span class="c9">订单编号：</span>{{item.order_sn}}</div>
-				<span v-if="item.state == 1" class="iconfont icon-time1">{{item.countDownNum}}</span>
+				<span v-if="item.state == 1" class="iconfont icon-time1"><CountDown :timetamp="item.countDownNum"></CountDown></span>
 				<span v-if="item.state == 4 || item.state == 77 || item.state == 78 || item.state == 13" class="iconfont icon-delete" @click="delOrder(index)"></span>
 			</div>
 			<div class="item item1 flex-box">
@@ -82,8 +82,10 @@
 </template>
 
 <script>
+	import CountDown from '@/components/CountDown'
 	export default {
 		name: 'OrderList',
+		components: {CountDown},
 		props: {
 			orderList: Array
 		},

@@ -363,7 +363,9 @@
 				this.prices = prices;
 			},
 			addCart(){},
-			buyNow(){},
+			buyNow(){
+				this.$router.push({name:'OrderPay', params:{type:'buyNow'}});
+			},
 			getCoupon(){},
 			okNum(){},
 			minusNum(){
