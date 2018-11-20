@@ -41,10 +41,10 @@
 
 			<div class="user-box quan-box flex-box">
 				<router-link :to="{name:'Charge'}" class="quan">
-					<div class="pe1">{{count.wallet}}</div>钱包
+					<div class="pe1">{{user.wallet}}</div>钱包
 				</router-link>
 				<router-link :to="{name:'ScoreRecord'}" class="quan">
-					<div class="pe1">{{count.score}}</div>积分
+					<div class="pe1">{{user.score}}</div>积分
 				</router-link>
 				<router-link :to="{name:'UserCoupon', params:{type:'unused'}}" class="quan">
 					<div class="pe1">{{count.coupon}}</div>优惠券
@@ -149,6 +149,7 @@
 
 <script>
 	import Footer from '@/components/Footer'
+	import { mapGetters } from 'vuex'
 	export default {
 		name: 'User',
 		components: {
@@ -158,16 +159,20 @@
 			return {
 				isLogin: false,
 				canIUse: true,
-				user: {},
+				// user: {},
 				count: {},
 				phone: '',
 				checkUpdate: true,
 				newVersion: true
 			}
 		},
+		computed: {
+			...mapGetters({
+				user: 'user/GetUser'
+			})
+		},
 		mounted() {
-			this.user = JSON.parse(localStorage.getItem("user"));
-			if(this.user){
+			if(this.$store.state.user.user){
 				this.isLogin = true;
 				this.GetNumList();
 			}

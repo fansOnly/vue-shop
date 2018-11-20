@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 // import title from './modules/title.js';
 // import test from './modules/test.js';
 import cart from './modules/cart.js';
+import coupon from './modules/coupon.js';
+import user from './modules/user.js';
 
 Vue.use(Vuex);
 
@@ -11,7 +13,9 @@ const store = new Vuex.Store({
     modules: {
         // test,
         // title,
-        cart
+        cart,
+        coupon,
+        user
     }
 });
 

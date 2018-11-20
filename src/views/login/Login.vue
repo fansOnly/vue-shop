@@ -5,10 +5,16 @@
 </template>
 
 <script>
+    import { mapState, mapGetters, mapActions } from 'vuex'
     export default {
         name: 'Login',
         data(){
             return {}
+        },
+        computed: {
+            ...mapGetters({
+                user: 'user/GetUser'
+            })
         },
         mounted() {
             if(localStorage.getItem('token')){
@@ -16,6 +22,9 @@
             }
         },
         methods:{
+            ...mapActions({
+                SetUser: 'user/SetUser'
+            }),
             async login(){
                 // ...TODO登录逻辑
                 // ...TODO登录成功
@@ -28,7 +37,8 @@
                 this.$api.get('User/GetuserInfo', {user_id: this.user_id})
                 .then(res=>{
                     console.log("GetuserInfo", res);
-                    localStorage.setItem("user", JSON.stringify(res.user));
+                    this.SetUser({user: res.user});
+                    // localStorage.setItem("user", JSON.stringify(res.user));
                     // token加密
                     let sha256 = require("js-sha256").sha256;
                     const time = new Date().getTime();

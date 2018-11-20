@@ -96,16 +96,24 @@
 				total: '0.00', // 总价
 				total_fee: '0.00', // 优惠后价格
 				fare: '0.00', // 运费
-				coupon: '0.00', // 优惠
+				// coupon: '0.00', // 优惠
 				fullcut: '0.00', // 满减
 				content: '',
 				useCouponNum: 0,
-				checkedCouponNum: 0,
+				// checkedCouponNum: 0,
 				discount: 0,
 				radioValue: "1",
 				hasMoney: null,
 				category: '',
 				categories: []
+			}
+		},
+		computed: {
+			checkedCouponNum(){
+				return !Tools.isEmptyObject(this.$store.state.coupon.okCoupon) ? 1 : 0;
+			},
+			coupon(){
+				return !Tools.isEmptyObject(this.$store.state.coupon.okCoupon) ? (this.$store.state.coupon.okCoupon.jian).toFixed(2) : '0.00';
 			}
 		},
 		mounted() {
@@ -133,11 +141,12 @@
 			}
 		},
 		beforeDestroy() {
-			localStorage.removeItem("okCouponList");
-			localStorage.removeItem("cartsx");
+			// localStorage.removeItem("cartsx");
 		},
 		methods: {
-			wxPay() {},
+			wxPay() {
+				this.$store.commit('coupon/setCoupon',{});
+			},
 			SetOrderData() {},
 			pay() {
 				const address = this.address;
@@ -151,20 +160,6 @@
 				const checkedCouponNum = this.checkedCouponNum;
 				if (useCouponNum > 0) {
 					if (checkedCouponNum == 0) {
-						// App.WxService.showModal({
-						// 		title: '友情提示',
-						// 		content: '您有优惠券尚未使用，确定要直接支付吗？',
-						// 		confirmText: "确定",
-						// 		cancelText: "取消",
-						// 		// confirmColor: '#004098',
-						// 	})
-						// 	.then(res => {
-						// 		if (res.confirm == 1) {
-						// 			this.wxPay();
-						// 		} else {
-						// 			console.log("用户点击了取消");
-						// 		}
-						// 	})
 					} else {
 						this.wxPay();
 					}
@@ -288,7 +283,7 @@
 
 
 .pay-address { position: relative; margin-bottom: 10px; padding: 10px; background: #fff; justify-content: space-between; align-items: center; }
-.item { position: relative; padding: 5px 10px 0; align-items: center; }
+.item { position: relative; padding: 5px 10px 0; align-items: center; color: #333; }
 .item-name { width: 80px; }
 .item-tag { height: 15px; margin-left: 15px; padding: 0 10px; border: 1px solid #FF9500; color: #FF9500; font-size: 11px; line-height: 15px; }
 .arrow:after { position: static; }
@@ -316,7 +311,7 @@
 
 
 .section { margin: 10px 0; padding: 10px; background: #fff; }
-.section4 { justify-content: space-between; align-items: center; }
+.section4 { justify-content: space-between; align-items: center; color: #333; }
 .arrowx { font-size: 12px; }
 .arrowx:after { content: ""; display: inline-block; height: 10px; width: 10px; border-width: 1px 1px 0 0; border-color: #C8C8CD; border-style: solid; -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0); transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0); }
 .cr1 { padding: 0 1px; color: #FF0036; }
